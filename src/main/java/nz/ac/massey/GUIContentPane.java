@@ -22,4 +22,25 @@ public class GUIContentPane {
     // add stuff to the passed pane
     pane.add(button, c);
   }
+
+  // i dont really like passing in a blank pane from outside
+  // want to see if i can build and return it from here,
+  // makes more sense to me
+  public Container experiment() {
+    Container pane = new Container();
+    JButton button;
+    pane.setLayout(new GridBagLayout());
+    GridBagConstraints c = new GridBagConstraints();
+
+    button = new JButton("Button 1");
+
+    c.fill = GridBagConstraints.HORIZONTAL;
+    c.gridx = 0;
+    c.gridy = 0;
+
+    // add stuff to the passed pane
+    pane.add(button, c);
+
+    return pane;
+  }
 }

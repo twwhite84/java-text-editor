@@ -9,7 +9,8 @@ public class GUI {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     // pass frame's contentpane into this method to add the stuff
-    new GUIContentPane().addComponentsToPane(frame.getContentPane());
+    // new GUIContentPane().addComponentsToPane(frame.getContentPane());
+    frame.setContentPane(new GUIContentPane().experiment());
 
     frame.setSize(1024, 768);
     // frame.pack();
