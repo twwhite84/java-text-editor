@@ -5,15 +5,16 @@ import javax.swing.JFrame;
 public class GUI {
 
   public static void createAndShowGUI() {
-    JFrame frame = new JFrame("GridBagLayoutDemo");
+    JFrame frame = new JFrame("Text Editor");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    // pass frame's contentpane into this method to add the stuff
-    // new GUIContentPane().addComponentsToPane(frame.getContentPane());
-    frame.setContentPane(new GUIContentPane().experiment());
+    // add menu bar to the frame
+    frame.setJMenuBar(new GUIMenuBar().createMenuBar());
+
+    // add content pane to the frame
+    frame.setContentPane(new GUIContentPane().getContentPane());
 
     frame.setSize(1024, 768);
-    // frame.pack();
     frame.setVisible(true);
   }
 
