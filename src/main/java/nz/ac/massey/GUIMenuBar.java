@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -96,6 +97,7 @@ public class GUIMenuBar {
     menuSearch.setMnemonic(KeyEvent.VK_S);
     menuBar.add(menuSearch);
 
+    // search > search
     JMenuItem menuItemSearch = new JMenuItem("Search", KeyEvent.VK_S);
     menuSearch.add(menuItemSearch);
     menuItemSearch.addActionListener(new ActionListener() {
@@ -103,6 +105,48 @@ public class GUIMenuBar {
       @Override
       public void actionPerformed(ActionEvent e) {
         JOptionPane.showMessageDialog(menuItemSearch, "Search not implemented yet", "Todo", 0);
+      }
+
+    });
+
+    // view menu
+    JMenu menuView = new JMenu("View");
+    menuView.setMnemonic(KeyEvent.VK_V);
+    menuBar.add(menuView);
+
+    // view > word wrap
+    JCheckBoxMenuItem menuItemWrap = new JCheckBoxMenuItem("Word Wrap");
+    menuItemWrap.setMnemonic(KeyEvent.VK_W);
+    menuView.add(menuItemWrap);
+
+    menuItemWrap.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        String message;
+        if (menuItemWrap.isSelected())
+          message = "Wrap On";
+        else
+          message = "Wrap Off";
+        JOptionPane.showMessageDialog(menuItemWrap, message + "\nWord Wrap not implemented yet", "Todo", 0);
+      }
+
+    });
+
+    // view > status bar
+    JCheckBoxMenuItem menuItemStatusbar = new JCheckBoxMenuItem("Status Bar");
+    menuItemStatusbar.setMnemonic(KeyEvent.VK_S);
+    menuView.add(menuItemStatusbar);
+    menuItemStatusbar.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        String message;
+        if (menuItemStatusbar.isSelected())
+          message = "Status bar on";
+        else
+          message = "Status bar off";
+        JOptionPane.showMessageDialog(menuItemWrap, message + "\nStatus bar not implemented yet", "Todo", 0);
       }
 
     });
