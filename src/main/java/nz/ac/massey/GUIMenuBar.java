@@ -1,115 +1,77 @@
 package nz.ac.massey;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.KeyStroke;
+import javax.swing.JOptionPane;
 
 public class GUIMenuBar {
   public JMenuBar createMenuBar() {
-    JMenuBar menuBar;
-    JMenu menu, submenu;
-    JMenuItem menuItem;
-    JRadioButtonMenuItem rbMenuItem;
-    JCheckBoxMenuItem cbMenuItem;
+    JMenuBar menuBar = new JMenuBar();
 
-    // Create the menu bar.
-    menuBar = new JMenuBar();
+    // file menu
+    JMenu menuFile = new JMenu("File");
+    menuFile.setMnemonic(KeyEvent.VK_F);
+    menuBar.add(menuFile);
 
-    // Build the first menu.
-    menu = new JMenu("A Menu");
-    menu.setMnemonic(KeyEvent.VK_A);
-    menu.getAccessibleContext().setAccessibleDescription(
-        "The only menu in this program that has menu items");
-    menuBar.add(menu);
+    // file > new
+    JMenuItem menuItemNew = new JMenuItem("New", KeyEvent.VK_N);
+    menuFile.add(menuItemNew);
+    menuItemNew.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        JOptionPane.showMessageDialog(menuItemNew, "File > New not implemented yet", "Todo", 0);
+      }
+    });
 
-    // a group of JMenuItems
-    menuItem = new JMenuItem("A text-only menu item",
-        KeyEvent.VK_T);
-    // menuItem.setMnemonic(KeyEvent.VK_T); //used constructor instead
-    menuItem.setAccelerator(KeyStroke.getKeyStroke(
-        KeyEvent.VK_1, ActionEvent.ALT_MASK));
-    menuItem.getAccessibleContext().setAccessibleDescription(
-        "This doesn't really do anything");
-    menu.add(menuItem);
+    // file > open
+    JMenuItem menuItemOpen = new JMenuItem("Open", KeyEvent.VK_O);
+    menuFile.add(menuItemOpen);
+    menuItemOpen.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        JOptionPane.showMessageDialog(menuItemOpen, "File > Open not implemented yet", "Todo", 0);
+      }
+    });
 
-    ImageIcon icon = createImageIcon("images/middle.gif");
-    menuItem = new JMenuItem("Both text and icon", icon);
-    menuItem.setMnemonic(KeyEvent.VK_B);
-    menu.add(menuItem);
+    // file > save
+    JMenuItem menuItemSave = new JMenuItem("Save", KeyEvent.VK_S);
+    menuFile.add(menuItemSave);
+    menuItemSave.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        JOptionPane.showMessageDialog(menuItemSave, "File > Save not implemented yet", "Todo", 0);
+      }
+    });
 
-    menuItem = new JMenuItem(icon);
-    menuItem.setMnemonic(KeyEvent.VK_D);
-    menu.add(menuItem);
+    // file > settings
+    JMenuItem menuItemSettings = new JMenuItem("Settings", KeyEvent.VK_T);
+    menuFile.add(menuItemSettings);
+    menuItemSettings.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        JOptionPane.showMessageDialog(menuItemSettings, "File > Settings not implemented yet", "Todo", 0);
+      }
+    });
 
-    // a group of radio button menu items
-    menu.addSeparator();
-    ButtonGroup group = new ButtonGroup();
+    // file > print
+    JMenuItem menuItemPrint = new JMenuItem("Print", KeyEvent.VK_P);
+    menuFile.add(menuItemPrint);
+    menuItemPrint.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        JOptionPane.showMessageDialog(menuItemSettings, "File > Print not implemented yet", "Todo", 0);
+      }
+    });
 
-    rbMenuItem = new JRadioButtonMenuItem("A radio button menu item");
-    rbMenuItem.setSelected(true);
-    rbMenuItem.setMnemonic(KeyEvent.VK_R);
-    group.add(rbMenuItem);
-    menu.add(rbMenuItem);
-
-    rbMenuItem = new JRadioButtonMenuItem("Another one");
-    rbMenuItem.setMnemonic(KeyEvent.VK_O);
-    group.add(rbMenuItem);
-    menu.add(rbMenuItem);
-
-    // a group of check box menu items
-    menu.addSeparator();
-    cbMenuItem = new JCheckBoxMenuItem("A check box menu item");
-    cbMenuItem.setMnemonic(KeyEvent.VK_C);
-    menu.add(cbMenuItem);
-
-    cbMenuItem = new JCheckBoxMenuItem("Another one");
-    cbMenuItem.setMnemonic(KeyEvent.VK_H);
-    menu.add(cbMenuItem);
-
-    // a submenu
-    menu.addSeparator();
-    submenu = new JMenu("A submenu");
-    submenu.setMnemonic(KeyEvent.VK_S);
-
-    menuItem = new JMenuItem("An item in the submenu");
-    menuItem.setAccelerator(KeyStroke.getKeyStroke(
-        KeyEvent.VK_2, ActionEvent.ALT_MASK));
-    submenu.add(menuItem);
-
-    menuItem = new JMenuItem("Another item");
-    submenu.add(menuItem);
-    menu.add(submenu);
-
-    // Build second menu in the menu bar.
-    menu = new JMenu("Another Menu");
-    menu.setMnemonic(KeyEvent.VK_N);
-    menu.getAccessibleContext().setAccessibleDescription(
-        "This menu does nothing");
-    menuBar.add(menu);
+    // file > exit
+    JMenuItem menuItemExit = new JMenuItem("Exit", KeyEvent.VK_X);
+    menuFile.add(menuItemExit);
+    menuItemExit.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        JOptionPane.showMessageDialog(menuItemSettings, "File > Exit not implemented yet", "Todo", 0);
+      }
+    });
 
     return menuBar;
-  }
-
-  /** Returns an ImageIcon, or null if the path was invalid. */
-  protected static ImageIcon createImageIcon(String path) {
-    /*
-     * java.net.URL imgURL = MenuLookDemo.class.getResource(path);
-     * if (imgURL != null) {
-     * return new ImageIcon(imgURL);
-     * } else {
-     * System.err.println("Couldn't find file: " + path);
-     * return null;
-     * }
-     * }
-     */
-    return null; // placeholder
   }
 }
