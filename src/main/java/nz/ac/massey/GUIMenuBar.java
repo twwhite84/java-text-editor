@@ -151,6 +151,23 @@ public class GUIMenuBar {
 
     });
 
+    // help menu
+    JMenu menuHelp = new JMenu("Help");
+    menuHelp.setMnemonic(KeyEvent.VK_H);
+    menuBar.add(menuHelp);
+
+    // help > about
+    JMenuItem menuItemAbout = new JMenuItem("About", KeyEvent.VK_A);
+    menuHelp.add(menuItemAbout);
+    menuItemAbout.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        JOptionPane.showMessageDialog(menuItemAbout, "Help > About not implemented yet", "Todo", 0);
+      }
+
+    });
+
     return menuBar;
   }
 }
