@@ -20,7 +20,7 @@ public class GUIContentPane {
     c.gridx = 0;
     c.gridy = 0;
 
-    JTextArea textArea = new JTextArea(40, 80);
+    JTextArea textArea = new JTextArea(40, 120);
     textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 16));
     JScrollPane scrollPane = new JScrollPane(textArea);
     scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
