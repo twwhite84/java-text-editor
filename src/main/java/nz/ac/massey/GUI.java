@@ -14,7 +14,7 @@ public class GUI {
     // add content pane to the frame
     frame.setContentPane(new GUIContentPane().getContentPane());
 
-    frame.setSize(1024, 768);
+    frame.pack();
     frame.setVisible(true);
   }
 
