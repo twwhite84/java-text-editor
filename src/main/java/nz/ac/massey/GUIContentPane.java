@@ -11,6 +11,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class GUIContentPane {
+  private GUI gui;
+  private JLabel lblWordWrap, lblCurrentLine;
+  private JPanel statusBar;
+
+  public GUIContentPane(GUI gui) {
+    this.gui = gui;
+  }
 
   public Container getContentPane() {
 
@@ -33,25 +40,32 @@ public class GUIContentPane {
     c.gridx = 0;
     c.gridy = 1;
 
-    JPanel statusBar = new JPanel();
+    statusBar = new JPanel();
     statusBar.setLayout(new GridBagLayout());
 
     GridBagConstraints d = new GridBagConstraints();
     d.gridx = 0;
     d.ipady = 20;
     d.ipadx = 20;
-    JLabel lblCurrentLine = new JLabel("Current Line: 0");
+    lblCurrentLine = new JLabel("Current Line: 0");
     statusBar.add(lblCurrentLine, d);
 
     d = new GridBagConstraints();
     d.gridx = 1;
     d.ipady = 20;
     d.ipadx = 20;
-    JLabel lblWordWrap = new JLabel("Word Wrap: OFF");
+    lblWordWrap = new JLabel("Word Wrap: OFF");
     statusBar.add(lblWordWrap, d);
 
     pane.add(statusBar, c);
 
     return pane;
+  }
+
+  public void toggleWrapIndicator(Boolean wrapEnabled) {
+    if (wrapEnabled)
+      lblWordWrap.setText("Word Wrap: ON");
+    else if (!wrapEnabled)
+      lblWordWrap.setText("Word Wrap: OFF");
   }
 }

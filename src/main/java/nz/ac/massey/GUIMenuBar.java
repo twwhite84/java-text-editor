@@ -11,7 +11,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 public class GUIMenuBar {
-  public JMenuBar createMenuBar() {
+  private GUI gui;
+
+  public GUIMenuBar(GUI gui) {
+    this.gui = gui;
+  }
+
+  public JMenuBar getMenuBar() {
     JMenuBar menuBar = new JMenuBar();
 
     // file menu
@@ -123,12 +129,8 @@ public class GUIMenuBar {
 
       @Override
       public void actionPerformed(ActionEvent e) {
-        String message;
-        if (menuItemWrap.isSelected())
-          message = "Wrap On";
-        else
-          message = "Wrap Off";
-        JOptionPane.showMessageDialog(menuItemWrap, message + "\nWord Wrap not implemented yet", "Todo", 0);
+        // not actually implemented yet, this just toggles the indicator
+        gui.guiContentPane.toggleWrapIndicator(menuItemWrap.isSelected());
       }
 
     });
