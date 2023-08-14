@@ -2,10 +2,6 @@ package nz.ac.massey;
 
 import javax.swing.JFrame;
 
-// i set this class up to act like a central hub
-// injects itself through the menubar and contentpane class constructors
-// so they can access methods on each other via protected variables below
-// not sure if best approach?
 public class GUI {
   protected GUIMenuBar guiMenuBar;
   protected GUIContentPane guiContentPane;

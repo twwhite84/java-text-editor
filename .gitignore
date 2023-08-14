@@ -5,3 +5,5 @@ out/
 .project
 target/
 *.class
+src/main/java/nz/ac/massey/GUI.java
+.vscode
