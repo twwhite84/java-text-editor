@@ -1,9 +1,11 @@
 package nz.ac.massey.gui;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 /**
  * Represents the menu bar at the top of the application.
@@ -40,7 +42,17 @@ public class TextEditorMenuBar extends JMenuBar {
         // file > open
         JMenuItem menuItemOpen = new JMenuItem("Open", KeyEvent.VK_O);
         menuFile.add(menuItemOpen);
-        menuItemOpen.addActionListener(e -> JOptionPane.showMessageDialog(menuItemOpen, "File > Open not implemented yet", "Todo", 0));
+
+        JFileChooser fileChooser = new JFileChooser();
+
+        menuItemOpen.addActionListener(e -> {
+            int result = fileChooser.showOpenDialog(gui);
+
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                gui.openFile(file);
+            }
+        });
 
         // file > save
         JMenuItem menuItemSave = new JMenuItem("Save", KeyEvent.VK_S);

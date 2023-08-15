@@ -1,5 +1,7 @@
 package nz.ac.massey.gui;
 
+import lombok.Getter;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -23,6 +25,12 @@ public class TextEditorContentPane extends Container {
      */
     private JPanel statusBar;
 
+    /**
+     * The actual editable text area
+     */
+    @Getter
+    private JTextArea textArea;
+
     public TextEditorContentPane(TextEditorGUI gui) {
         this.gui = gui;
 
@@ -38,7 +46,7 @@ public class TextEditorContentPane extends Container {
 
         GridBagConstraints c = new GridBagConstraints();
 
-        JTextArea textArea = new JTextArea(4, 30);
+        textArea = new JTextArea(4, 30);
         textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 16));
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
