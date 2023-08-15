@@ -52,6 +52,7 @@ public class TextEditorGUI extends JFrame {
         setTitle(file.getName());
 
         // Read contents of file into text area
+        // @todo Support .rtf, .odt and code files
         try {
             String fileContent = new String(Files.readAllBytes(Paths.get(file.getPath())));
             guiContentPane.getTextArea().setText(fileContent);

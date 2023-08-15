@@ -1,6 +1,7 @@
 package nz.ac.massey.gui;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
@@ -37,10 +38,59 @@ public class TextEditorMenuBar extends JMenuBar {
         menuItemNew.addActionListener(e -> JOptionPane.showMessageDialog(menuItemNew, "File > New not implemented yet", "Todo", 0));
 
         // file > open
+        // @todo Refactor into it's own class
         JMenuItem menuItemOpen = new JMenuItem("Open", KeyEvent.VK_O);
         menuFile.add(menuItemOpen);
 
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setAcceptAllFileFilterUsed(false);
+
+        // Add file filters for supported types
+        // @todo Add support for code based files
+        fileChooser.addChoosableFileFilter(new FileFilter() {
+            public String getDescription() {
+                return "Text Files (*.txt)";
+            }
+
+            public boolean accept(File f) {
+                if (f.isDirectory()) {
+                    return true;
+                } else {
+                    String filename = f.getName().toLowerCase();
+                    return filename.endsWith(".text") || filename.endsWith(".txt");
+                }
+            }
+        });
+
+        fileChooser.addChoosableFileFilter(new FileFilter() {
+            public String getDescription() {
+                return "OpenDocument Text (*.odt)";
+            }
+
+            public boolean accept(File f) {
+                if (f.isDirectory()) {
+                    return true;
+                } else {
+                    String filename = f.getName().toLowerCase();
+                    return filename.endsWith(".odt");
+                }
+            }
+        });
+
+        fileChooser.addChoosableFileFilter(new FileFilter() {
+            public String getDescription() {
+                return "Rich Text Format (*.rtf)";
+            }
+
+            public boolean accept(File f) {
+                if (f.isDirectory()) {
+                    return true;
+                } else {
+                    String filename = f.getName().toLowerCase();
+                    return filename.endsWith(".rtf");
+                }
+            }
+        });
 
         menuItemOpen.addActionListener(e -> {
             int result = fileChooser.showOpenDialog(gui);
