@@ -6,7 +6,7 @@ import java.awt.*;
 /**
  * Holds all content of the editor and displays it
  */
-public class TextEditorContentPane {
+public class TextEditorContentPane extends Container {
 
     /**
      * Injected instance of main GUI
@@ -25,17 +25,16 @@ public class TextEditorContentPane {
 
     public TextEditorContentPane(TextEditorGUI gui) {
         this.gui = gui;
+
+        init();
     }
 
     /**
      * Get instance of the content pane
-     * <p>
-     * TODO: Convert this class to Container object
      */
-    public Container getContentPane() {
+    public void init() {
         // main text area
-        Container pane = new Container();
-        pane.setLayout(new GridBagLayout());
+        setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
 
@@ -51,7 +50,7 @@ public class TextEditorContentPane {
         c.weightx = 1;
         c.weighty = 1;
 
-        pane.add(scrollPane, c);
+        add(scrollPane, c);
 
         // status bar
         c = new GridBagConstraints();
@@ -76,9 +75,7 @@ public class TextEditorContentPane {
         lblWordWrap = new JLabel("Word Wrap: OFF");
         statusBar.add(lblWordWrap, d);
 
-        pane.add(statusBar, c);
-
-        return pane;
+        add(statusBar, c);
     }
 
     public void toggleWrapIndicator(Boolean wrapEnabled) {

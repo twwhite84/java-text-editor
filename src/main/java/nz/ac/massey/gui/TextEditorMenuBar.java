@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
  * Represents the menu bar at the top of the application.
  * Allows accessing of menus such as "File", "Search" etc.
  */
-public class TextEditorMenuBar {
+public class TextEditorMenuBar extends JMenuBar {
 
     /**
      * Injected instance of main GUI
@@ -18,20 +18,18 @@ public class TextEditorMenuBar {
 
     public TextEditorMenuBar(TextEditorGUI gui) {
         this.gui = gui;
+
+        init();
     }
 
     /**
      * Get instance of the menu bar
-     * <p>
-     * TODO: Convert this class to JMenuBar object
      */
-    public JMenuBar getMenuBar() {
-        JMenuBar menuBar = new JMenuBar();
-
+    public void init() {
         // file menu
         JMenu menuFile = new JMenu("File");
         menuFile.setMnemonic(KeyEvent.VK_F);
-        menuBar.add(menuFile);
+        add(menuFile);
 
         // file > new
         JMenuItem menuItemNew = new JMenuItem("New", KeyEvent.VK_N);
@@ -67,7 +65,7 @@ public class TextEditorMenuBar {
         // search menu
         JMenu menuSearch = new JMenu("Search");
         menuSearch.setMnemonic(KeyEvent.VK_S);
-        menuBar.add(menuSearch);
+        add(menuSearch);
 
         // search > search
         JMenuItem menuItemSearch = new JMenuItem("Search", KeyEvent.VK_S);
@@ -77,7 +75,7 @@ public class TextEditorMenuBar {
         // view menu
         JMenu menuView = new JMenu("View");
         menuView.setMnemonic(KeyEvent.VK_V);
-        menuBar.add(menuView);
+        add(menuView);
 
         // view > word wrap
         JCheckBoxMenuItem menuItemWrap = new JCheckBoxMenuItem("Word Wrap");
@@ -105,13 +103,11 @@ public class TextEditorMenuBar {
         // help menu
         JMenu menuHelp = new JMenu("Help");
         menuHelp.setMnemonic(KeyEvent.VK_H);
-        menuBar.add(menuHelp);
+        add(menuHelp);
 
         // help > about
         JMenuItem menuItemAbout = new JMenuItem("About", KeyEvent.VK_A);
         menuHelp.add(menuItemAbout);
         menuItemAbout.addActionListener(e -> JOptionPane.showMessageDialog(menuItemAbout, "Help > About not implemented yet", "Todo", 0));
-
-        return menuBar;
     }
 }

@@ -6,7 +6,7 @@ import javax.swing.*;
  * This is the main instance of the GUI for the text editor. It will hold all
  * state of the editor window as multiple of these windows can be created.
  */
-public class TextEditorGUI {
+public class TextEditorGUI extends JFrame {
 
     /**
      * Top menu bar of application
@@ -19,23 +19,27 @@ public class TextEditorGUI {
     protected TextEditorContentPane guiContentPane;
 
     public TextEditorGUI() {
+        // When starting new instance, it is an "Untitled" file
+        super("Untitled");
+
         guiMenuBar = new TextEditorMenuBar(this);
         guiContentPane = new TextEditorContentPane(this);
+
+        init();
     }
 
     /**
      * Setup the main GUI for a new instance
      */
-    public void createAndShowGUI() {
-        JFrame frame = new JFrame("Text Editor");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setJMenuBar(guiMenuBar.getMenuBar());
-        frame.setContentPane(guiContentPane.getContentPane());
-        frame.setSize(900, 400);
-        frame.setVisible(true);
+    private void init() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setJMenuBar(guiMenuBar);
+        setContentPane(guiContentPane);
+        setSize(900, 400);
+        setVisible(true);
 
         // Center on screen
-        frame.setLocationRelativeTo(null);
+        setLocationRelativeTo(null);
     }
 
 }
