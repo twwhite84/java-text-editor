@@ -1,9 +1,6 @@
 package nz.ac.massey.gui;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
@@ -96,7 +93,7 @@ public class TextEditorMenuBar extends JMenuBar {
 
         menuItemWrap.addActionListener(e -> {
             // not actually implemented yet, this just toggles the indicator
-            gui.guiContentPane.toggleWrapIndicator(menuItemWrap.isSelected());
+            gui.getGuiContentPane().toggleWrapIndicator(menuItemWrap.isSelected());
         });
 
         // view > status bar

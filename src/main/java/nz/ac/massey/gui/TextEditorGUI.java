@@ -1,7 +1,6 @@
 package nz.ac.massey.gui;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.swing.*;
 import java.io.*;
@@ -19,18 +18,19 @@ public class TextEditorGUI extends JFrame {
      * {@code null} if no open file
      */
     @Getter
-    @Setter
     private File openFile;
 
     /**
      * Top menu bar of application
      */
-    protected TextEditorMenuBar guiMenuBar;
+    @Getter
+    private TextEditorMenuBar guiMenuBar;
 
     /**
      * Main content pane of application
      */
-    protected TextEditorContentPane guiContentPane;
+    @Getter
+    private TextEditorContentPane guiContentPane;
 
     public TextEditorGUI() {
         // When starting new instance, it is an "Untitled" file
