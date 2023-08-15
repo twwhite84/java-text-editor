@@ -54,8 +54,16 @@ public class TextEditorGUI extends JFrame {
         // Read contents of file into text area
         // @todo Support .rtf, .odt and code files
         try {
-            String fileContent = new String(Files.readAllBytes(Paths.get(file.getPath())));
-            guiContentPane.getTextArea().setText(fileContent);
+            if (file.getName().toLowerCase().endsWith(".txt") || file.getName().toLowerCase().endsWith(".rtf")) {
+                // This method works for basic text-based files, .txt, .rtf
+                String fileContent = new String(Files.readAllBytes(Paths.get(file.getPath())));
+                guiContentPane.getTextArea().setText(fileContent);
+            } else if (file.getName().toLowerCase().endsWith(".odt")) {
+                // Process OpenDocument Text files
+            } else {
+                // Not supported extension if somehow opened
+                JOptionPane.showMessageDialog(this, "File type not supported", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (IOException ex) {
             // TODO: Show error prompt
             System.err.println("There was an error attempting to open that file");

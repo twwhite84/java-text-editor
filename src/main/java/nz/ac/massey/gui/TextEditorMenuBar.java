@@ -46,7 +46,7 @@ public class TextEditorMenuBar extends JMenuBar {
         fileChooser.setAcceptAllFileFilterUsed(false);
 
         // Add file filters for supported types
-        // @todo Add support for code based files
+        // @todo Add support for code based files, issue #14
         fileChooser.addChoosableFileFilter(new FileFilter() {
             public String getDescription() {
                 return "Text Files (*.txt)";
@@ -57,7 +57,7 @@ public class TextEditorMenuBar extends JMenuBar {
                     return true;
                 } else {
                     String filename = f.getName().toLowerCase();
-                    return filename.endsWith(".text") || filename.endsWith(".txt");
+                    return filename.endsWith(".txt");
                 }
             }
         });
