@@ -1,5 +1,5 @@
 # This workflow will run all tests with maven and ensure the project compiles successfully
-name: Java CI with Maven
+name: Run Maven Tests
 
 on:
   pull_request_target:
