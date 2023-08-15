@@ -36,15 +36,21 @@ public class TextEditorContentPane {
         // main text area
         Container pane = new Container();
         pane.setLayout(new GridBagLayout());
+
         GridBagConstraints c = new GridBagConstraints();
 
-        c.gridx = 0;
-        c.gridy = 0;
-
-        JTextArea textArea = new JTextArea(40, 120);
+        JTextArea textArea = new JTextArea(4, 30);
         textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 16));
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        // Resize text field to window
+        c.fill = GridBagConstraints.BOTH;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.weightx = 1;
+        c.weighty = 1;
+
         pane.add(scrollPane, c);
 
         // status bar
@@ -59,6 +65,7 @@ public class TextEditorContentPane {
         d.gridx = 0;
         d.ipady = 20;
         d.ipadx = 20;
+
         lblCurrentLine = new JLabel("Current Line: 0");
         statusBar.add(lblCurrentLine, d);
 

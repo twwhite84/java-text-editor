@@ -31,8 +31,11 @@ public class TextEditorGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setJMenuBar(guiMenuBar.getMenuBar());
         frame.setContentPane(guiContentPane.getContentPane());
-        frame.pack();
+        frame.setSize(900, 400);
         frame.setVisible(true);
+
+        // Center on screen
+        frame.setLocationRelativeTo(null);
     }
 
 }
