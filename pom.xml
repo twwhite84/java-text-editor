@@ -25,6 +25,9 @@
                 <configuration>
                     <failOnViolation>false</failOnViolation>
                     <printFailingErrors>true</printFailingErrors>
+                    <rulesets>
+                        <ruleset>ruleset.xml</ruleset>
+                    </rulesets>
                 </configuration>
                 <executions>
                     <execution>
