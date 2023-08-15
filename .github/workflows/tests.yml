@@ -21,4 +21,8 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Tests with Maven
-      run: mvn test
+      run: mvn --update-snapshots test
+    - uses: pmd/pmd-github-action@v1
+      with:
+        rulesets: 'ruleset.xml'
+        analyzeModifiedFilesOnly: false
