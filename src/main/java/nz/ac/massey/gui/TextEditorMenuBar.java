@@ -41,7 +41,7 @@ public class TextEditorMenuBar {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(menuItemNew, "File > New not implemented yet", "Todo", 0);
+                gui.fileNew.menuFileNew();
             }
 
         });

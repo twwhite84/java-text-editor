@@ -18,9 +18,15 @@ public class TextEditorGUI {
      */
     protected TextEditorContentPane guiContentPane;
 
+    /**
+     * File > New class
+     */
+    protected TextEditorFileNew fileNew;
+
     public TextEditorGUI() {
         guiMenuBar = new TextEditorMenuBar(this);
         guiContentPane = new TextEditorContentPane(this);
+        fileNew = new TextEditorFileNew();
     }
 
     /**
@@ -28,7 +34,7 @@ public class TextEditorGUI {
      */
     public void createAndShowGUI() {
         JFrame frame = new JFrame("Text Editor");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setJMenuBar(guiMenuBar.getMenuBar());
         frame.setContentPane(guiContentPane.getContentPane());
         frame.setSize(900, 400);
