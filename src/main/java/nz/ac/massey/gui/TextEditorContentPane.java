@@ -1,12 +1,10 @@
 package nz.ac.massey.gui;
 
 import javax.swing.*;
-import javax.swing.text.DefaultEditorKit;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.beans.PropertyChangeListener;
 
 /**
@@ -84,18 +82,17 @@ public class TextEditorContentPane {
 
         pane.add(statusBar, c);
 
-        // see if i can add a key listener
         InputMap inputMap = textArea.getInputMap();
         ActionMap actionMap = textArea.getActionMap();
 
-        // Ctrl-b to go backward one character
+        // ctrl + n : file > new keyboard shortcut
         KeyStroke key = KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK);
         inputMap.put(key, "fileNew");
         actionMap.put("fileNew", new Action() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("ctrl + n pressed");
+                gui.fileNew.menuFileNew();
             }
 
             @Override
