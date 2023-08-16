@@ -18,9 +18,15 @@ public class TextEditorGUI {
      */
     protected TextEditorContentPane guiContentPane;
 
+    /**
+     * File > New class
+     */
+    protected TextEditorFileNew fileNew;
+
     public TextEditorGUI() {
         guiMenuBar = new TextEditorMenuBar(this);
         guiContentPane = new TextEditorContentPane(this);
+        fileNew = new TextEditorFileNew();
     }
 
     /**
