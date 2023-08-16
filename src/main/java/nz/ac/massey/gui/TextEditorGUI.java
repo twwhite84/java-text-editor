@@ -1,5 +1,8 @@
 package nz.ac.massey.gui;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.*;
 
 /**
@@ -34,7 +37,6 @@ public class TextEditorGUI {
      */
     public void createAndShowGUI() {
         JFrame frame = new JFrame("Text Editor");
-        // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setJMenuBar(guiMenuBar.getMenuBar());
         frame.setContentPane(guiContentPane.getContentPane());

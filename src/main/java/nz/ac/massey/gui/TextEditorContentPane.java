@@ -1,7 +1,13 @@
 package nz.ac.massey.gui;
 
 import javax.swing.*;
+import javax.swing.text.DefaultEditorKit;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.beans.PropertyChangeListener;
 
 /**
  * Holds all content of the editor and displays it
@@ -78,11 +84,55 @@ public class TextEditorContentPane {
 
         pane.add(statusBar, c);
 
+        // see if i can add a key listener
+        InputMap inputMap = textArea.getInputMap();
+        ActionMap actionMap = textArea.getActionMap();
+
+        // Ctrl-b to go backward one character
+        KeyStroke key = KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK);
+        inputMap.put(key, "fileNew");
+        actionMap.put("fileNew", new Action() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("ctrl + n pressed");
+            }
+
+            @Override
+            public Object getValue(String key) {
+                return null;
+            }
+
+            @Override
+            public void putValue(String key, Object value) {
+            }
+
+            @Override
+            public void setEnabled(boolean b) {
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return true;
+            }
+
+            @Override
+            public void addPropertyChangeListener(PropertyChangeListener listener) {
+            }
+
+            @Override
+            public void removePropertyChangeListener(PropertyChangeListener listener) {
+            }
+
+        });
+
         return pane;
     }
 
     public void toggleWrapIndicator(Boolean wrapEnabled) {
-        if (wrapEnabled) lblWordWrap.setText("Word Wrap: ON");
-        else if (!wrapEnabled) lblWordWrap.setText("Word Wrap: OFF");
+        if (wrapEnabled)
+            lblWordWrap.setText("Word Wrap: ON");
+        else if (!wrapEnabled)
+            lblWordWrap.setText("Word Wrap: OFF");
     }
 }
