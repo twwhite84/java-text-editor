@@ -1,13 +1,11 @@
 package nz.ac.massey.gui;
 
 import lombok.Getter;
+import nz.ac.massey.SimpleKeybindAction;
 
 import javax.swing.*;
-
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.beans.PropertyChangeListener;
 
 /**
  * Holds all content of the editor and displays it
@@ -92,43 +90,25 @@ public class TextEditorContentPane extends Container {
         InputMap inputMap = textArea.getInputMap();
         ActionMap actionMap = textArea.getActionMap();
 
+        setupKeybinds(inputMap, actionMap);
+    }
+
+    /**
+     * Setup all application keybinds
+     *
+     * @param inputMap  The input map
+     * @param actionMap The assigned action map
+     */
+    private void setupKeybinds(InputMap inputMap, ActionMap actionMap) {
         // ctrl + n : file > new keyboard shortcut
-        KeyStroke key = KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK);
-        inputMap.put(key, "fileNew");
-        actionMap.put("fileNew", new Action() {
+        KeyStroke newKey = KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK);
+        inputMap.put(newKey, "fileNew");
+        actionMap.put("fileNew", new SimpleKeybindAction((e) -> gui.runAction("new")));
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                gui.fileNew.menuFileNew();
-            }
-
-            @Override
-            public Object getValue(String key) {
-                return null;
-            }
-
-            @Override
-            public void putValue(String key, Object value) {
-            }
-
-            @Override
-            public void setEnabled(boolean b) {
-            }
-
-            @Override
-            public boolean isEnabled() {
-                return true;
-            }
-
-            @Override
-            public void addPropertyChangeListener(PropertyChangeListener listener) {
-            }
-
-            @Override
-            public void removePropertyChangeListener(PropertyChangeListener listener) {
-            }
-
-        });
+        // ctrl + o : file > open keyboard shortcut
+        KeyStroke openKey = KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK);
+        inputMap.put(openKey, "fileOpen");
+        actionMap.put("fileOpen", new SimpleKeybindAction((e) -> gui.runAction("open")));
     }
 
     public void toggleWrapIndicator(Boolean wrapEnabled) {

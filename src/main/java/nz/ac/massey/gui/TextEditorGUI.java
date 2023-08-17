@@ -1,6 +1,9 @@
 package nz.ac.massey.gui;
 
 import lombok.Getter;
+import nz.ac.massey.action.NewFileAction;
+import nz.ac.massey.action.OpenFileAction;
+import nz.ac.massey.action.TextEditorAction;
 import org.odftoolkit.odfdom.doc.OdfDocument;
 import org.odftoolkit.odfdom.doc.OdfTextDocument;
 
@@ -8,6 +11,8 @@ import javax.swing.*;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This is the main instance of the GUI for the text editor. It will hold all
@@ -16,9 +21,9 @@ import java.nio.file.Paths;
 public class TextEditorGUI extends JFrame {
 
     /**
-     * File > New class
+     * Map of all registered actions
      */
-    protected TextEditorFileNew fileNew;
+    private final Map<String, TextEditorAction> registeredActions = new HashMap<>();
 
     /**
      * The current open file.
@@ -45,9 +50,36 @@ public class TextEditorGUI extends JFrame {
 
         guiMenuBar = new TextEditorMenuBar(this);
         guiContentPane = new TextEditorContentPane(this);
-        fileNew = new TextEditorFileNew();
 
         init();
+        registerActions();
+    }
+
+
+
+    /**
+     * Attempt to run action with name for this editor instance
+     *
+     * @param name Name of the action
+     */
+    public void runAction(String name) {
+        if (!registeredActions.containsKey(name)) {
+            System.err.println("Action `" + name + "` is not registered");
+            return;
+        }
+
+        // Run action
+        TextEditorAction foundAction = registeredActions.get(name);
+        foundAction.performAction(this);
+    }
+
+    /**
+     * Register a new action to be run throughout the program
+     *
+     * @param action Action to be run
+     */
+    public void registerAction(TextEditorAction action) {
+        registeredActions.put(action.getName(), action);
     }
 
     /**
@@ -82,6 +114,14 @@ public class TextEditorGUI extends JFrame {
             JOptionPane.showMessageDialog(this, "There was an error attempting to open that file", "Error", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }
+    }
+
+    /**
+     * Register all actions for the application
+     */
+    private void registerActions() {
+        registerAction(new NewFileAction());
+        registerAction(new OpenFileAction());
     }
 
     /**
