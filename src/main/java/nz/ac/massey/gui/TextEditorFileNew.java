@@ -5,10 +5,6 @@ package nz.ac.massey.gui;
  */
 public class TextEditorFileNew {
   public void menuFileNew() {
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      public void run() {
-        new TextEditorGUI().createAndShowGUI();
-      }
-    });
+    javax.swing.SwingUtilities.invokeLater(TextEditorGUI::new);
   }
 }

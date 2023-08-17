@@ -35,14 +35,7 @@ public class TextEditorMenuBar extends JMenuBar {
         JMenuItem menuItemNew = new JMenuItem("New", KeyEvent.VK_N);
         menuFile.add(menuItemNew);
 
-        menuItemNew.addActionListener(e -> JOptionPane.showMessageDialog(menuItemNew, "File > New not implemented yet", "Todo", 0));
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                gui.fileNew.menuFileNew();
-            }
-
-        });
+        menuItemNew.addActionListener(e -> gui.fileNew.menuFileNew());
 
         // file > open
         // @todo Refactor into it's own class

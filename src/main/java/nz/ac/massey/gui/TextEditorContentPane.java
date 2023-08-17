@@ -87,7 +87,7 @@ public class TextEditorContentPane extends Container {
         lblWordWrap = new JLabel("Word Wrap: OFF");
         statusBar.add(lblWordWrap, d);
 
-        pane.add(statusBar, c);
+        add(statusBar, c);
 
         InputMap inputMap = textArea.getInputMap();
         ActionMap actionMap = textArea.getActionMap();
@@ -129,8 +129,6 @@ public class TextEditorContentPane extends Container {
             }
 
         });
-
-        return pane;
     }
 
     public void toggleWrapIndicator(Boolean wrapEnabled) {
