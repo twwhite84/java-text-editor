@@ -1,6 +1,9 @@
 package nz.ac.massey.gui;
 
+import nz.ac.massey.SimpleKeybindAction;
+
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 /**
@@ -31,18 +34,13 @@ public class TextEditorMenuBar extends JMenuBar {
 
         // file > new
         JMenuItem menuItemNew = new JMenuItem("New", KeyEvent.VK_N);
+        menuItemNew.setAction(new SimpleKeybindAction(gui, "New", KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK)));
         menuFile.add(menuItemNew);
 
-        menuItemNew.addActionListener(e -> gui.runAction("new"));
-
         // file > open
-        // @todo Refactor into it's own class
         JMenuItem menuItemOpen = new JMenuItem("Open", KeyEvent.VK_O);
+        menuItemOpen.setAction(new SimpleKeybindAction(gui, "Open", KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK)));
         menuFile.add(menuItemOpen);
-
-        menuItemOpen.addActionListener(e -> {
-            gui.runAction("open");
-        });
 
         // file > save
         JMenuItem menuItemSave = new JMenuItem("Save", KeyEvent.VK_S);

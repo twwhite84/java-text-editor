@@ -8,7 +8,7 @@ import nz.ac.massey.gui.TextEditorGUI;
 public class NewFileAction extends TextEditorAction {
 
     public NewFileAction() {
-        super("new");
+        super("New");
     }
 
     @Override

@@ -1,52 +1,41 @@
 package nz.ac.massey;
 
-import lombok.AllArgsConstructor;
+import nz.ac.massey.gui.TextEditorGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
-import java.util.function.Consumer;
 
-@AllArgsConstructor
-public class SimpleKeybindAction implements Action {
+/**
+ * Represents a menu action that is assigned to a keybind
+ */
+public class SimpleKeybindAction extends AbstractAction {
 
     /**
-     * The action to run on keybind
+     * GUI Instance
      */
-    private Consumer<ActionEvent> action;
+    private final TextEditorGUI gui;
 
-    @Override
-    public Object getValue(String key) {
-        return null;
-    }
+    /**
+     * Name of the {@link nz.ac.massey.action.TextEditorAction} to run
+     */
+    private final String name;
 
-    @Override
-    public void putValue(String key, Object value) {
+    /**
+     * Keybind associated with this action
+     */
+    private final KeyStroke keybind;
 
-    }
+    public SimpleKeybindAction(TextEditorGUI gui, String name, KeyStroke keybind) {
+        super(name);
+        this.gui = gui;
+        this.name = name;
+        this.keybind = keybind;
 
-    @Override
-    public void setEnabled(boolean b) {
-
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-
-    }
-
-    @Override
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-
+        putValue(Action.ACCELERATOR_KEY, keybind);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.action.accept(e);
+        gui.runAction(name);
     }
 }

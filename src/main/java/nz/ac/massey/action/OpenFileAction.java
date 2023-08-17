@@ -12,7 +12,7 @@ import java.io.File;
 public class OpenFileAction extends TextEditorAction {
 
     public OpenFileAction() {
-        super("open");
+        super("Open");
     }
 
     @Override

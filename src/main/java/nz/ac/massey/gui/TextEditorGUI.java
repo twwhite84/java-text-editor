@@ -51,35 +51,16 @@ public class TextEditorGUI extends JFrame {
         guiMenuBar = new TextEditorMenuBar(this);
         guiContentPane = new TextEditorContentPane(this);
 
-        init();
         registerActions();
-    }
-
-
-
-    /**
-     * Attempt to run action with name for this editor instance
-     *
-     * @param name Name of the action
-     */
-    public void runAction(String name) {
-        if (!registeredActions.containsKey(name)) {
-            System.err.println("Action `" + name + "` is not registered");
-            return;
-        }
-
-        // Run action
-        TextEditorAction foundAction = registeredActions.get(name);
-        foundAction.performAction(this);
+        init();
     }
 
     /**
-     * Register a new action to be run throughout the program
-     *
-     * @param action Action to be run
+     * Register all actions for the application
      */
-    public void registerAction(TextEditorAction action) {
-        registeredActions.put(action.getName(), action);
+    private void registerActions() {
+        registerAction(new NewFileAction());
+        registerAction(new OpenFileAction());
     }
 
     /**
@@ -117,14 +98,6 @@ public class TextEditorGUI extends JFrame {
     }
 
     /**
-     * Register all actions for the application
-     */
-    private void registerActions() {
-        registerAction(new NewFileAction());
-        registerAction(new OpenFileAction());
-    }
-
-    /**
      * Setup the main GUI for a new instance
      */
     private void init() {
@@ -136,6 +109,31 @@ public class TextEditorGUI extends JFrame {
 
         // Center on screen
         setLocationRelativeTo(null);
+    }
+
+    /**
+     * Attempt to run action with name for this editor instance
+     *
+     * @param name Name of the action
+     */
+    public void runAction(String name) {
+        if (!registeredActions.containsKey(name)) {
+            System.err.println("Action `" + name + "` is not registered");
+            return;
+        }
+
+        // Run action
+        TextEditorAction foundAction = registeredActions.get(name);
+        foundAction.performAction(this);
+    }
+
+    /**
+     * Register a new action to be run throughout the program
+     *
+     * @param action Action to be run
+     */
+    public void registerAction(TextEditorAction action) {
+        registeredActions.put(action.getName(), action);
     }
 
 }

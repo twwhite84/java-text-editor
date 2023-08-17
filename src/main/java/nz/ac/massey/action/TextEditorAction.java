@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import nz.ac.massey.gui.TextEditorGUI;
 
-import java.util.function.Consumer;
-
 /**
  * Represents a function or action that the editor can perform.
  * Usually invoked from the menu bar
