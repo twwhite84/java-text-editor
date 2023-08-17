@@ -101,7 +101,7 @@ public class TextEditorGUI extends JFrame {
      * Setup the main GUI for a new instance
      */
     private void init() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setJMenuBar(guiMenuBar);
         setContentPane(guiContentPane);
         setSize(900, 400);
