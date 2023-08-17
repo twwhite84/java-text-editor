@@ -32,12 +32,18 @@ public class TextEditorGUI extends JFrame {
     @Getter
     private TextEditorContentPane guiContentPane;
 
+    /**
+     * File > New class
+     */
+    protected TextEditorFileNew fileNew;
+
     public TextEditorGUI() {
         // When starting new instance, it is an "Untitled" file
         super("Untitled");
 
         guiMenuBar = new TextEditorMenuBar(this);
         guiContentPane = new TextEditorContentPane(this);
+        fileNew = new TextEditorFileNew();
 
         init();
     }
