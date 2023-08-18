@@ -23,7 +23,8 @@ public class TextEditorGUI {
     /**
      * Internal window frame used for the application
      */
-    protected final JFrame frame;
+    @Getter
+    private final JFrame frame;
 
     /**
      * Map of all registered actions
@@ -53,7 +54,7 @@ public class TextEditorGUI {
         registerActions();
 
         // Setup UI in non ci environment
-        if (System.getenv("GITHUB_ACTIONS") != null) {
+        if (System.getenv("GITHUB_ACTIONS") == null) {
             // When starting new instance, it is an "Untitled" file
             this.frame = new JFrame("Untitled");
 
@@ -83,7 +84,7 @@ public class TextEditorGUI {
      */
     public void openFile(File file) {
         this.openFile = file;
-        if (System.getenv("GITHUB_ACTIONS") != null) {
+        if (System.getenv("GITHUB_ACTIONS") == null) {
             frame.setTitle(file.getName());
         }
 
@@ -103,7 +104,7 @@ public class TextEditorGUI {
 
                 document.close();
             } else {
-                if (System.getenv("GITHUB_ACTIONS") != null) {
+                if (System.getenv("GITHUB_ACTIONS") == null) {
                     // Not supported extension if somehow opened
                     JOptionPane.showMessageDialog(frame, "File type not supported", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
@@ -111,7 +112,7 @@ public class TextEditorGUI {
                 }
             }
         } catch (Exception ex) {
-            if (System.getenv("GITHUB_ACTIONS") != null) {
+            if (System.getenv("GITHUB_ACTIONS") == null) {
                 JOptionPane.showMessageDialog(frame, "There was an error attempting to open that file", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 System.err.println("There was an error attempting to open that file");

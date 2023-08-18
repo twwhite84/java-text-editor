@@ -67,7 +67,7 @@ public class OpenFileAction extends TextEditorAction {
             }
         });
 
-        int result = fileChooser.showOpenDialog(gui);
+        int result = fileChooser.showOpenDialog(gui.getFrame());
 
         if (result == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
