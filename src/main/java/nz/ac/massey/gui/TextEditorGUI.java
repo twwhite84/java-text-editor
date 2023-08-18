@@ -3,6 +3,7 @@ package nz.ac.massey.gui;
 import lombok.Getter;
 import nz.ac.massey.action.NewFileAction;
 import nz.ac.massey.action.OpenFileAction;
+import nz.ac.massey.action.SearchAction;
 import nz.ac.massey.action.TextEditorAction;
 import org.odftoolkit.odfdom.doc.OdfDocument;
 import org.odftoolkit.odfdom.doc.OdfTextDocument;
@@ -75,6 +76,7 @@ public class TextEditorGUI {
     private void registerActions() {
         registerAction(new NewFileAction());
         registerAction(new OpenFileAction());
+        registerAction(new SearchAction());
     }
 
     /**
@@ -113,7 +115,8 @@ public class TextEditorGUI {
             }
         } catch (Exception ex) {
             if (System.getenv("GITHUB_ACTIONS") == null) {
-                JOptionPane.showMessageDialog(frame, "There was an error attempting to open that file", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(frame, "There was an error attempting to open that file", "Error",
+                        JOptionPane.ERROR_MESSAGE);
             } else {
                 System.err.println("There was an error attempting to open that file");
             }
