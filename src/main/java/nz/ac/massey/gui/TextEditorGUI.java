@@ -18,7 +18,12 @@ import java.util.Map;
  * This is the main instance of the GUI for the text editor. It will hold all
  * state of the editor window as multiple of these windows can be created.
  */
-public class TextEditorGUI extends JFrame {
+public class TextEditorGUI {
+
+    /**
+     * Internal window frame used for the application
+     */
+    protected final JFrame frame;
 
     /**
      * Map of all registered actions
@@ -45,15 +50,22 @@ public class TextEditorGUI extends JFrame {
     private final TextEditorContentPane guiContentPane;
 
     public TextEditorGUI() {
-        // When starting new instance, it is an "Untitled" file
-        super("Untitled");
-
-        guiMenuBar = new TextEditorMenuBar(this);
-        guiContentPane = new TextEditorContentPane(this);
-
         registerActions();
 
-        init();
+        // Setup UI in non ci environment
+        if (System.getenv("GITHUB_ACTIONS") != null) {
+            // When starting new instance, it is an "Untitled" file
+            this.frame = new JFrame("Untitled");
+
+            guiMenuBar = new TextEditorMenuBar(this);
+            guiContentPane = new TextEditorContentPane(this);
+
+            init();
+        } else {
+            this.frame = null;
+            this.guiContentPane = null;
+            this.guiMenuBar = null;
+        }
     }
 
     /**
@@ -71,7 +83,9 @@ public class TextEditorGUI extends JFrame {
      */
     public void openFile(File file) {
         this.openFile = file;
-        setTitle(file.getName());
+        if (System.getenv("GITHUB_ACTIONS") != null) {
+            frame.setTitle(file.getName());
+        }
 
         // Read contents of file into text area
         try {
@@ -91,14 +105,14 @@ public class TextEditorGUI extends JFrame {
             } else {
                 if (System.getenv("GITHUB_ACTIONS") != null) {
                     // Not supported extension if somehow opened
-                    JOptionPane.showMessageDialog(this, "File type not supported", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "File type not supported", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
                     System.err.println("File type not supported");
                 }
             }
         } catch (Exception ex) {
             if (System.getenv("GITHUB_ACTIONS") != null) {
-                JOptionPane.showMessageDialog(this, "There was an error attempting to open that file", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(frame, "There was an error attempting to open that file", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 System.err.println("There was an error attempting to open that file");
             }
@@ -110,14 +124,14 @@ public class TextEditorGUI extends JFrame {
      * Setup the main GUI for a new instance
      */
     private void init() {
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setJMenuBar(guiMenuBar);
-        setContentPane(guiContentPane);
-        setSize(900, 400);
-        setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setJMenuBar(guiMenuBar);
+        frame.setContentPane(guiContentPane);
+        frame.setSize(900, 400);
+        frame.setVisible(true);
 
         // Center on screen
-        setLocationRelativeTo(null);
+        frame.setLocationRelativeTo(null);
     }
 
     /**
