@@ -1,14 +1,16 @@
 package nz.ac.massey.gui;
 
 import lombok.Getter;
-import nz.ac.massey.action.NewFileAction;
-import nz.ac.massey.action.OpenFileAction;
-import nz.ac.massey.action.TextEditorAction;
+import lombok.Setter;
+import nz.ac.massey.action.*;
 import org.odftoolkit.odfdom.doc.OdfDocument;
 import org.odftoolkit.odfdom.doc.OdfTextDocument;
 
 import javax.swing.*;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -37,6 +39,13 @@ public class TextEditorGUI {
      */
     @Getter
     private File openFile;
+
+    /**
+     * Internal state if this editor instance has been saved to a file
+     */
+    @Getter
+    @Setter
+    private boolean saved;
 
     /**
      * Top menu bar of application
@@ -75,8 +84,71 @@ public class TextEditorGUI {
     private void registerActions() {
         registerAction(new NewFileAction());
         registerAction(new OpenFileAction());
+        registerAction(new SaveAction());
+        registerAction(new SaveAsAction());
     }
 
+    /**
+     * Save the contents of the editor to the specified file
+     * and set the current opened file to this file. Used on first save
+     * or if wanting to create a new file from existing
+     * 
+     * @param file File object to be created
+     */
+    public void saveAs(File file) {
+        // Assign open file
+        this.openFile = file;
+
+        // Update title of editor
+        frame.setTitle(openFile.getName());
+
+        // Now call save action to write bytes to that file
+        save();
+    }
+
+    /**
+     * Save the contents of the editor to the opened file. Must have
+     * an open file or will be prompted to {@link #saveAs(File)}
+     */
+    public void save() {
+        // If no open file, prompt to save as
+        if (this.openFile == null) {
+            runAction("Save As");
+            return;
+        }
+
+        // Read bytes from text editor
+        String content = guiContentPane.getTextArea().getText();
+
+        // Save to file
+        save(content);
+    }
+
+    /**
+     * Save string content to the opened file
+     *
+     * @param content Content in string format
+     */
+    public void save(String content) {
+        try {
+            BufferedWriter fileWriter = new BufferedWriter(new FileWriter(this.openFile));
+            fileWriter.write(content);
+            fileWriter.close();
+
+            // Set state to saved
+            setSaved(true);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+
+            if (System.getenv("GITHUB_ACTIONS") == null) {
+                // Error while saving
+                JOptionPane.showMessageDialog(frame, "There was an error trying to save", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                System.err.println("There was an error trying to save");
+            }
+        }
+    }
+    
     /**
      * Open a file and populate the contents of the editor
      *
