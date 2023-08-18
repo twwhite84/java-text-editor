@@ -1,16 +1,16 @@
 package nz.ac.massey.gui;
 
-import javax.swing.*;
+import lombok.Getter;
+import nz.ac.massey.SimpleKeybindAction;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.beans.PropertyChangeListener;
 
 /**
  * Holds all content of the editor and displays it
  */
-public class TextEditorContentPane {
+public class TextEditorContentPane extends Container {
 
     /**
      * Injected instance of main GUI
@@ -27,23 +27,28 @@ public class TextEditorContentPane {
      */
     private JPanel statusBar;
 
+    /**
+     * The actual editable text area
+     */
+    @Getter
+    private JTextArea textArea;
+
     public TextEditorContentPane(TextEditorGUI gui) {
         this.gui = gui;
+
+        init();
     }
 
     /**
      * Get instance of the content pane
-     * <p>
-     * TODO: Convert this class to Container object
      */
-    public Container getContentPane() {
+    public void init() {
         // main text area
-        Container pane = new Container();
-        pane.setLayout(new GridBagLayout());
+        setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
 
-        JTextArea textArea = new JTextArea(4, 30);
+        textArea = new JTextArea(4, 30);
         textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 16));
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -55,7 +60,7 @@ public class TextEditorContentPane {
         c.weightx = 1;
         c.weighty = 1;
 
-        pane.add(scrollPane, c);
+        add(scrollPane, c);
 
         // status bar
         c = new GridBagConstraints();
@@ -80,50 +85,7 @@ public class TextEditorContentPane {
         lblWordWrap = new JLabel("Word Wrap: OFF");
         statusBar.add(lblWordWrap, d);
 
-        pane.add(statusBar, c);
-
-        InputMap inputMap = textArea.getInputMap();
-        ActionMap actionMap = textArea.getActionMap();
-
-        // ctrl + n : file > new keyboard shortcut
-        KeyStroke key = KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK);
-        inputMap.put(key, "fileNew");
-        actionMap.put("fileNew", new Action() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                gui.fileNew.menuFileNew();
-            }
-
-            @Override
-            public Object getValue(String key) {
-                return null;
-            }
-
-            @Override
-            public void putValue(String key, Object value) {
-            }
-
-            @Override
-            public void setEnabled(boolean b) {
-            }
-
-            @Override
-            public boolean isEnabled() {
-                return true;
-            }
-
-            @Override
-            public void addPropertyChangeListener(PropertyChangeListener listener) {
-            }
-
-            @Override
-            public void removePropertyChangeListener(PropertyChangeListener listener) {
-            }
-
-        });
-
-        return pane;
+        add(statusBar, c);
     }
 
     public void toggleWrapIndicator(Boolean wrapEnabled) {
