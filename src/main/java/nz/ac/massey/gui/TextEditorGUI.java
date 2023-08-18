@@ -65,7 +65,7 @@ public class TextEditorGUI {
         // Setup UI in non ci environment
         if (System.getenv("GITHUB_ACTIONS") == null) {
             // When starting new instance, it is an "Untitled" file
-            this.frame = new JFrame("Untitled");
+            this.frame = new JFrame("Untitled*");
 
             guiMenuBar = new TextEditorMenuBar(this);
             guiContentPane = new TextEditorContentPane(this);
@@ -190,6 +190,24 @@ public class TextEditorGUI {
                 System.err.println("There was an error attempting to open that file");
             }
             ex.printStackTrace();
+        }
+
+        // Is saved when opening a file
+        this.setSaved(true);
+    }
+
+    /**
+     * Set internal save state of editor. Also updates title of window
+     * to reflect state
+     *
+     * @param saved If is saved or not
+     */
+    public void setSaved(boolean saved) {
+        if (saved) {
+            // Update title to saved state
+            if (this.openFile != null) frame.setTitle(this.openFile.getName());
+        } else {
+            if (this.openFile != null) frame.setTitle(this.openFile.getName() + "*");
         }
     }
 
