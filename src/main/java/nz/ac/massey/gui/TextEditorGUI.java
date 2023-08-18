@@ -52,6 +52,7 @@ public class TextEditorGUI extends JFrame {
         guiContentPane = new TextEditorContentPane(this);
 
         registerActions();
+
         init();
     }
 
@@ -88,11 +89,19 @@ public class TextEditorGUI extends JFrame {
 
                 document.close();
             } else {
-                // Not supported extension if somehow opened
-                JOptionPane.showMessageDialog(this, "File type not supported", "Error", JOptionPane.ERROR_MESSAGE);
+                if (System.getenv("GITHUB_ACTIONS") != null) {
+                    // Not supported extension if somehow opened
+                    JOptionPane.showMessageDialog(this, "File type not supported", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    System.err.println("File type not supported");
+                }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "There was an error attempting to open that file", "Error", JOptionPane.ERROR_MESSAGE);
+            if (System.getenv("GITHUB_ACTIONS") != null) {
+                JOptionPane.showMessageDialog(this, "There was an error attempting to open that file", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                System.err.println("There was an error attempting to open that file");
+            }
             ex.printStackTrace();
         }
     }
