@@ -1,15 +1,5 @@
 package nz.ac.massey.action;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 import nz.ac.massey.gui.TextEditorGUI;
 
 public class SearchAction extends TextEditorAction {
@@ -32,44 +22,9 @@ public class SearchAction extends TextEditorAction {
      * 
      * //need to highlight
      */
+    // gui.getGuiContentPane().toggleSearchFrame();
+    gui.getGuiContentPane().toggleSearchPanel();
 
-    JInternalFrame searchFrame = new JInternalFrame("Search", false, true);
-
-    JPanel searchPanel = new JPanel(new GridBagLayout());
-    GridBagConstraints c = new GridBagConstraints();
-
-    c.gridx = 0;
-    c.gridy = 0;
-    JLabel lblSearch = new JLabel("Search");
-    searchPanel.add(lblSearch, c);
-
-    c = new GridBagConstraints();
-    c.gridx = 0;
-    c.gridy = 1;
-    JTextField txtSearchField = new JTextField(20);
-    searchPanel.add(txtSearchField, c);
-
-    c = new GridBagConstraints();
-    c.gridx = 1;
-    c.gridy = 0;
-    JButton btnSearchNext = new JButton("Next");
-    searchPanel.add(btnSearchNext);
-
-    c = new GridBagConstraints();
-    c.gridx = 1;
-    c.gridy = 1;
-    JButton btnSearchPrev = new JButton("Prev");
-    searchPanel.add(btnSearchPrev);
-
-    // components here
-
-    searchFrame.setContentPane(searchPanel);
-    searchFrame.pack();
-
-    c = new GridBagConstraints();
-    c.anchor = GridBagConstraints.NORTH;
-    gui.getGuiContentPane().add(searchFrame, c);
-    searchFrame.setVisible(true);
   }
 
 }
