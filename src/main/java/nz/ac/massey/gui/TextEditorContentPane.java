@@ -6,6 +6,7 @@ import nz.ac.massey.SimpleKeybindAction;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * Holds all content of the editor and displays it
@@ -25,6 +26,7 @@ public class TextEditorContentPane extends Container {
     /**
      * Search panel text field
      */
+    @Getter
     private JTextField txtSearchField;
 
     /**
@@ -127,6 +129,7 @@ public class TextEditorContentPane extends Container {
         contentPaneConstraints.gridx = 0;
         contentPaneConstraints.gridy = 2;
         add(statusBar, contentPaneConstraints);
+
     }
 
     public void toggleWrapIndicator(Boolean wrapEnabled) {
@@ -136,6 +139,9 @@ public class TextEditorContentPane extends Container {
             lblWordWrap.setText("Word Wrap: OFF");
     }
 
+    /**
+     * called from SearchToggleAction in response to menu selection or Ctrl+F
+     */
     public void toggleSearchPanel() {
         if (searchPanel.isVisible())
             searchPanel.setVisible(false);

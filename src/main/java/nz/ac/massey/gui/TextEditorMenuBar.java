@@ -35,38 +35,44 @@ public class TextEditorMenuBar extends JMenuBar {
         // file > new
         JMenuItem menuItemNew = new JMenuItem("New", KeyEvent.VK_N);
         menuItemNew
-                .setAction(new SimpleKeybindAction(gui, "New", KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK)));
+                .setAction(new SimpleKeybindAction(gui, "New",
+                        KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK)));
         menuFile.add(menuItemNew);
 
         // file > open
         JMenuItem menuItemOpen = new JMenuItem("Open", KeyEvent.VK_O);
         menuItemOpen.setAction(
-                new SimpleKeybindAction(gui, "Open", KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK)));
+                new SimpleKeybindAction(gui, "Open",
+                        KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK)));
         menuFile.add(menuItemOpen);
 
         // file > save
         JMenuItem menuItemSave = new JMenuItem("Save", KeyEvent.VK_S);
         menuFile.add(menuItemSave);
         menuItemSave.addActionListener(
-                e -> JOptionPane.showMessageDialog(menuItemSave, "File > Save not implemented yet", "Todo", 0));
+                e -> JOptionPane.showMessageDialog(menuItemSave, "File > Save not implemented yet",
+                        "Todo", 0));
 
         // file > settings
         JMenuItem menuItemSettings = new JMenuItem("Settings", KeyEvent.VK_T);
         menuFile.add(menuItemSettings);
         menuItemSettings.addActionListener(
-                e -> JOptionPane.showMessageDialog(menuItemSettings, "File > Settings not implemented yet", "Todo", 0));
+                e -> JOptionPane.showMessageDialog(menuItemSettings,
+                        "File > Settings not implemented yet", "Todo", 0));
 
         // file > print
         JMenuItem menuItemPrint = new JMenuItem("Print", KeyEvent.VK_P);
         menuFile.add(menuItemPrint);
         menuItemPrint.addActionListener(
-                e -> JOptionPane.showMessageDialog(menuItemSettings, "File > Print not implemented yet", "Todo", 0));
+                e -> JOptionPane.showMessageDialog(menuItemSettings, "File > Print not implemented yet",
+                        "Todo", 0));
 
         // file > exit
         JMenuItem menuItemExit = new JMenuItem("Exit", KeyEvent.VK_X);
         menuFile.add(menuItemExit);
         menuItemExit.addActionListener(
-                e -> JOptionPane.showMessageDialog(menuItemSettings, "File > Exit not implemented yet", "Todo", 0));
+                e -> JOptionPane.showMessageDialog(menuItemSettings, "File > Exit not implemented yet",
+                        "Todo", 0));
 
         // search menu
         JMenu menuSearch = new JMenu("Search");
@@ -77,7 +83,8 @@ public class TextEditorMenuBar extends JMenuBar {
         JMenuItem menuItemSearch = new JMenuItem("Search", KeyEvent.VK_S);
         menuSearch.add(menuItemSearch);
         menuItemSearch.setAction(
-                new SimpleKeybindAction(gui, "Search", KeyStroke.getKeyStroke(KeyEvent.VK_F, Event.CTRL_MASK)));
+                new SimpleKeybindAction(gui, "Search",
+                        KeyStroke.getKeyStroke(KeyEvent.VK_F, Event.CTRL_MASK)));
 
         // view menu
         JMenu menuView = new JMenu("View");
@@ -104,7 +111,8 @@ public class TextEditorMenuBar extends JMenuBar {
                 message = "Status bar on";
             else
                 message = "Status bar off";
-            JOptionPane.showMessageDialog(menuItemWrap, message + "\nStatus bar not implemented yet", "Todo", 0);
+            JOptionPane.showMessageDialog(menuItemWrap, message + "\nStatus bar not implemented yet",
+                    "Todo", 0);
         });
 
         // help menu
@@ -116,6 +124,7 @@ public class TextEditorMenuBar extends JMenuBar {
         JMenuItem menuItemAbout = new JMenuItem("About", KeyEvent.VK_A);
         menuHelp.add(menuItemAbout);
         menuItemAbout.addActionListener(
-                e -> JOptionPane.showMessageDialog(menuItemAbout, "Help > About not implemented yet", "Todo", 0));
+                e -> JOptionPane.showMessageDialog(menuItemAbout, "Help > About not implemented yet",
+                        "Todo", 0));
     }
 }

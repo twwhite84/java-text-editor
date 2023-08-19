@@ -1,5 +1,8 @@
 package nz.ac.massey.action;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import nz.ac.massey.gui.TextEditorGUI;
 
 public class SearchAction extends TextEditorAction {
@@ -22,8 +25,35 @@ public class SearchAction extends TextEditorAction {
      * 
      * //need to highlight
      */
-    // gui.getGuiContentPane().toggleSearchFrame();
+
+    // toggle the search panel
     gui.getGuiContentPane().toggleSearchPanel();
+
+    // String query = gui.getGuiContentPane().getTxtSearchField().toString();
+
+    // listeners for the search pane
+
+    gui.getGuiContentPane()
+        .getTxtSearchField()
+        .addKeyListener(new KeyListener() {
+          String query;
+
+          @Override
+          public void keyTyped(KeyEvent e) {
+            System.out.println(e.getKeyChar());
+          }
+
+          @Override
+          public void keyPressed(KeyEvent e) {
+          }
+
+          @Override
+          public void keyReleased(KeyEvent e) {
+            query = gui.getGuiContentPane().getTxtSearchField().getText();
+            System.out.println(query);
+          }
+
+        });
 
   }
 
