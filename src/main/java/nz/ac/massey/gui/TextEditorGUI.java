@@ -205,11 +205,13 @@ public class TextEditorGUI {
     public void setSaved(boolean saved) {
         this.saved = saved;
 
-        if (saved) {
-            // Update title to saved state
-            if (this.openFile != null) frame.setTitle(this.openFile.getName());
-        } else {
-            if (this.openFile != null) frame.setTitle(this.openFile.getName() + "*");
+        if (System.getenv("GITHUB_ACTIONS") == null) {
+            if (saved) {
+                // Update title to saved state
+                if (this.openFile != null) frame.setTitle(this.openFile.getName());
+            } else {
+                if (this.openFile != null) frame.setTitle(this.openFile.getName() + "*");
+            }
         }
     }
 
