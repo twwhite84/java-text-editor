@@ -1,9 +1,13 @@
 package nz.ac.massey.action;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter.HighlightPainter;
 
 import nz.ac.massey.gui.TextEditorGUI;
 
@@ -44,25 +48,33 @@ public class SearchAction extends TextEditorAction {
   }
 
   private void searchTextArea(TextEditorGUI gui, String query) {
+    JTextArea txtArea = gui.getGuiContentPane().getTextArea();
+    HighlightPainter painter = new DefaultHighlighter.DefaultHighlightPainter(Color.CYAN);
+
+    txtArea.getHighlighter().removeAllHighlights();
+
     if (query.length() == 0) {
       gui.getGuiContentPane().getLblMatches().setText("Search Matches: 0");
       return;
     }
 
-    String textArea = gui.getGuiContentPane().getTextArea().getText();
+    String textAreaText = gui.getGuiContentPane().getTextArea().getText();
 
     // count up how many matches there are in the textarea
     int offset = 0, count = 0;
 
-    while (textArea.indexOf(query, offset) != -1) {
-      offset = textArea.indexOf(query, offset);
-      offset += query.length();
-      count++;
+    while (textAreaText.indexOf(query, offset) != -1) {
+      try {
+        offset = textAreaText.indexOf(query, offset);
+        txtArea.getHighlighter().addHighlight(offset, offset + query.length(), painter);
+        offset += query.length();
+        count++;
+      } catch (Exception ex) {
+        ex.printStackTrace();
+      }
     }
 
-    System.out.println(count);
     gui.getGuiContentPane().getLblMatches().setText("Search Matches: " + count);
-
   }
 
 }

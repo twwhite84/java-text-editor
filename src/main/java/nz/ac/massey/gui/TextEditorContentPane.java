@@ -147,9 +147,10 @@ public class TextEditorContentPane extends Container {
      * called from SearchToggleAction in response to menu selection or Ctrl+F
      */
     public void toggleSearchPanel() {
-        if (searchPanel.isVisible())
+        if (searchPanel.isVisible()) {
+            textArea.getHighlighter().removeAllHighlights();
             searchPanel.setVisible(false);
-        else {
+        } else {
             searchPanel.setVisible(true);
             txtSearchField.requestFocus();
         }
