@@ -38,13 +38,13 @@ public class TextEditorGUI {
      * {@code null} if no open file
      */
     @Getter
+    @Setter
     private File openFile;
 
     /**
      * Internal state if this editor instance has been saved to a file
      */
     @Getter
-    @Setter
     private boolean saved;
 
     /**
@@ -203,6 +203,8 @@ public class TextEditorGUI {
      * @param saved If is saved or not
      */
     public void setSaved(boolean saved) {
+        this.saved = saved;
+
         if (saved) {
             // Update title to saved state
             if (this.openFile != null) frame.setTitle(this.openFile.getName());

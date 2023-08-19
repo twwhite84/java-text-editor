@@ -6,3 +6,6 @@ out/
 target/
 *.class
 .vscode/
+
+# File used in testing
+src/test/resources/myfile.txt
