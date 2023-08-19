@@ -4,8 +4,10 @@ import lombok.Getter;
 import nz.ac.massey.SimpleKeybindAction;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 /**
  * Holds all content of the editor and displays it
@@ -50,6 +52,23 @@ public class TextEditorContentPane extends Container {
 
         textArea = new JTextArea(4, 30);
         textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 16));
+        // When updating text, set file to unsaved state
+        textArea.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                gui.setSaved(false);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                gui.setSaved(false);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                gui.setSaved(false);
+            }
+        });
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
