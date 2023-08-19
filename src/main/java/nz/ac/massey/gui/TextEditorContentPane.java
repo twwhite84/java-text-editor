@@ -5,8 +5,6 @@ import nz.ac.massey.SimpleKeybindAction;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 /**
  * Holds all content of the editor and displays it
@@ -28,6 +26,12 @@ public class TextEditorContentPane extends Container {
      */
     @Getter
     private JTextField txtSearchField;
+
+    /**
+     * Search panel match count label
+     */
+    @Getter
+    private JLabel lblMatches;
 
     /**
      * The actual editable text area
@@ -62,7 +66,7 @@ public class TextEditorContentPane extends Container {
         searchPanelConstraints.gridx = 0;
         searchPanelConstraints.gridy = 0;
         searchPanelConstraints.anchor = GridBagConstraints.WEST;
-        JLabel lblMatches = new JLabel("Search Matches: 0");
+        lblMatches = new JLabel("Search Matches: 0");
         searchPanel.add(lblMatches, searchPanelConstraints);
 
         searchPanelConstraints = new GridBagConstraints();
