@@ -143,17 +143,4 @@ public class TextEditorContentPane extends Container {
         else if (!wrapEnabled)
             lblWordWrap.setText("Word Wrap: OFF");
     }
-
-    /**
-     * called from SearchToggleAction in response to menu selection or Ctrl+F
-     */
-    public void toggleSearchPanel() {
-        if (searchPanel.isVisible()) {
-            textArea.getHighlighter().removeAllHighlights();
-            searchPanel.setVisible(false);
-        } else {
-            searchPanel.setVisible(true);
-            txtSearchField.requestFocus();
-        }
-    }
 }

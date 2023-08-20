@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.text.DefaultHighlighter;
@@ -51,7 +52,7 @@ public class SearchAction extends TextEditorAction {
     }
 
     // toggle the search panel
-    gui.getGuiContentPane().toggleSearchPanel();
+    toggleSearchPanel(gui);
 
     // removing any existing listeners when toggled
     JButton btnNext = gui.getGuiContentPane().getBtnSearchNext();
@@ -189,5 +190,19 @@ public class SearchAction extends TextEditorAction {
     // move cursor to selected match and update count label
     txtArea.setCaretPosition(offsets.get(selectionIndex));
     gui.getGuiContentPane().getLblMatches().setText("Search Matches: " + offsets.size());
+  }
+
+  public void toggleSearchPanel(TextEditorGUI gui) {
+    JPanel searchPanel = gui.getGuiContentPane().getSearchPanel();
+    JTextField searchTextField = gui.getGuiContentPane().getTxtSearchField();
+    JTextArea mainTextArea = gui.getGuiContentPane().getTextArea();
+
+    if (searchPanel.isVisible()) {
+      mainTextArea.getHighlighter().removeAllHighlights();
+      searchPanel.setVisible(false);
+    } else {
+      searchPanel.setVisible(true);
+      searchTextField.requestFocus();
+    }
   }
 }
