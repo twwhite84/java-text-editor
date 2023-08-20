@@ -102,7 +102,11 @@ public class SearchAction extends TextEditorAction {
     txtArea.addMouseListener(new MouseListener() {
       @Override
       public void mouseClicked(MouseEvent e) {
-        gui.getGuiContentPane().toggleSearchPanel();
+        // only fire if search panel currently open
+        if (gui.getGuiContentPane().getSearchPanel().isVisible()) {
+          gui.getGuiContentPane().toggleSearchPanel();
+        }
+
       }
 
       @Override

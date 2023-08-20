@@ -19,6 +19,7 @@ public class TextEditorContentPane extends Container {
     /**
      * Search panel
      */
+    @Getter
     private JPanel searchPanel;
 
     /**
