@@ -145,14 +145,14 @@ public class SearchAction extends TextEditorAction {
    * @param gui
    * @param query
    */
-  private void searchTextArea(TextEditorGUI gui, String query) {
+  public int searchTextArea(TextEditorGUI gui, String query) {
     JTextArea txtArea = gui.getGuiContentPane().getTextArea();
     txtArea.getHighlighter().removeAllHighlights();
 
     // no query entered
     if (query.length() == 0) {
       gui.getGuiContentPane().getLblMatches().setText("Search Matches: 0");
-      return;
+      return 0;
     }
 
     HighlightPainter unselected = new DefaultHighlighter.DefaultHighlightPainter(Color.LIGHT_GRAY);
@@ -170,7 +170,7 @@ public class SearchAction extends TextEditorAction {
     // no matches found
     if (offsets.isEmpty()) {
       gui.getGuiContentPane().getLblMatches().setText("Search Matches: 0");
-      return;
+      return 0;
     }
 
     // highlight the unselected matches grey
@@ -196,6 +196,7 @@ public class SearchAction extends TextEditorAction {
     // move cursor to selected match and update count label
     txtArea.setCaretPosition(offsets.get(selectionIndex));
     gui.getGuiContentPane().getLblMatches().setText("Search Matches: " + offsets.size());
+    return offsets.size();
   }
 
   /**

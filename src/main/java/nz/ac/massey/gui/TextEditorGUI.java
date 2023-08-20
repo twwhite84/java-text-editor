@@ -125,6 +125,13 @@ public class TextEditorGUI {
     }
 
     /**
+     * Search the textarea, get count of matches
+     */
+    public int search(String query) {
+        return new SearchAction().searchTextArea(this, query);
+    }
+
+    /**
      * Setup the main GUI for a new instance
      */
     private void init() {
