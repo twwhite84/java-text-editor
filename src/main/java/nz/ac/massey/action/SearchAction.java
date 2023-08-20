@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.text.DefaultHighlighter;
@@ -39,10 +40,21 @@ public class SearchAction extends TextEditorAction {
     // toggle the search panel
     gui.getGuiContentPane().toggleSearchPanel();
 
-    // listeners for the search pane
+    // removing any existing listeners when toggled
+    JButton btnNext = gui.getGuiContentPane().getBtnSearchNext();
+    JButton btnPrev = gui.getGuiContentPane().getBtnSearchPrev();
+
+    for (ActionListener al : btnNext.getActionListeners()) {
+      btnNext.removeActionListener(al);
+    }
+
+    for (ActionListener al : btnPrev.getActionListeners()) {
+      btnPrev.removeActionListener(al);
+    }
+
+    // adding listeners for the search pane
     JTextField searchField = gui.getGuiContentPane().getTxtSearchField();
     searchField.addKeyListener(new KeyListener() {
-
       @Override
       public void keyTyped(KeyEvent e) {
       }
@@ -56,11 +68,9 @@ public class SearchAction extends TextEditorAction {
         selectionIndex = 0;
         searchTextArea(gui, searchField.getText());
       }
-
     });
 
-    gui.getGuiContentPane().getBtnSearchNext().addActionListener(new ActionListener() {
-
+    btnNext.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         System.out.println("next clicked");
@@ -69,11 +79,9 @@ public class SearchAction extends TextEditorAction {
           selectionIndex = 0;
         searchTextArea(gui, searchField.getText());
       }
-
     });
 
-    gui.getGuiContentPane().getBtnSearchPrev().addActionListener(new ActionListener() {
-
+    btnPrev.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         System.out.println("prev clicked");
@@ -82,9 +90,7 @@ public class SearchAction extends TextEditorAction {
           selectionIndex = offsets.size() - 1;
         searchTextArea(gui, searchField.getText());
       }
-
     });
-
   }
 
   private void searchTextArea(TextEditorGUI gui, String query) {
@@ -139,5 +145,4 @@ public class SearchAction extends TextEditorAction {
     txtArea.setCaretPosition(offsets.get(selectionIndex));
     gui.getGuiContentPane().getLblMatches().setText("Search Matches: " + offsets.size());
   }
-
 }
