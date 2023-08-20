@@ -63,6 +63,7 @@ public class SearchAction extends TextEditorAction {
 
       @Override
       public void actionPerformed(ActionEvent e) {
+        System.out.println("next clicked");
         selectionIndex++;
         if (selectionIndex >= offsets.size())
           selectionIndex = 0;
@@ -75,6 +76,7 @@ public class SearchAction extends TextEditorAction {
 
       @Override
       public void actionPerformed(ActionEvent e) {
+        System.out.println("prev clicked");
         selectionIndex--;
         if (selectionIndex < 0)
           selectionIndex = offsets.size() - 1;
@@ -133,6 +135,8 @@ public class SearchAction extends TextEditorAction {
       ex.printStackTrace();
     }
 
+    // move cursor to selected match and update count label
+    txtArea.setCaretPosition(offsets.get(selectionIndex));
     gui.getGuiContentPane().getLblMatches().setText("Search Matches: " + offsets.size());
   }
 
