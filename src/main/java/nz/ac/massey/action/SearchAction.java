@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -44,6 +46,7 @@ public class SearchAction extends TextEditorAction {
     JButton btnNext = gui.getGuiContentPane().getBtnSearchNext();
     JButton btnPrev = gui.getGuiContentPane().getBtnSearchPrev();
     JTextField searchField = gui.getGuiContentPane().getTxtSearchField();
+    JTextArea txtArea = gui.getGuiContentPane().getTextArea();
     for (ActionListener al : btnNext.getActionListeners()) {
       btnNext.removeActionListener(al);
     }
@@ -52,6 +55,9 @@ public class SearchAction extends TextEditorAction {
     }
     for (KeyListener kl : searchField.getKeyListeners()) {
       searchField.removeKeyListener(kl);
+    }
+    for (MouseListener ml : txtArea.getMouseListeners()) {
+      txtArea.removeMouseListener(ml);
     }
 
     // adding listeners for the search pane
@@ -74,6 +80,7 @@ public class SearchAction extends TextEditorAction {
     btnNext.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
+        System.out.println("next");
         selectionIndex++;
         if (selectionIndex >= offsets.size())
           selectionIndex = 0;
@@ -84,10 +91,34 @@ public class SearchAction extends TextEditorAction {
     btnPrev.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
+        System.out.println("prev");
         selectionIndex--;
         if (selectionIndex < 0)
           selectionIndex = offsets.size() - 1;
         searchTextArea(gui, searchField.getText());
+      }
+    });
+
+    txtArea.addMouseListener(new MouseListener() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        gui.getGuiContentPane().toggleSearchPanel();
+      }
+
+      @Override
+      public void mousePressed(MouseEvent e) {
+      }
+
+      @Override
+      public void mouseReleased(MouseEvent e) {
+      }
+
+      @Override
+      public void mouseEntered(MouseEvent e) {
+      }
+
+      @Override
+      public void mouseExited(MouseEvent e) {
       }
     });
   }
