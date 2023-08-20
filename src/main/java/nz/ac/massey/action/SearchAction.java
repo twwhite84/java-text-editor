@@ -32,12 +32,23 @@ public class SearchAction extends TextEditorAction {
    */
   private ArrayList<Integer> offsets;
 
+  /**
+   * default mouse listener backup, used to restore mouse behaviour. set once.
+   */
+  private MouseListener initialMouseListener;
+
   public SearchAction() {
     super("Search");
   }
 
   @Override
   public void performAction(TextEditorGUI gui) {
+    // when first time performing action, backup the default mouse listener
+    if (initialMouseListener == null) {
+      for (MouseListener ml : gui.getGuiContentPane().getTextArea().getMouseListeners()) {
+        initialMouseListener = ml;
+      }
+    }
 
     // toggle the search panel
     gui.getGuiContentPane().toggleSearchPanel();
@@ -60,71 +71,71 @@ public class SearchAction extends TextEditorAction {
       txtArea.removeMouseListener(ml);
     }
 
-    // adding listeners for the search pane
-    searchField.addKeyListener(new KeyListener() {
-      @Override
-      public void keyTyped(KeyEvent e) {
-      }
-
-      @Override
-      public void keyPressed(KeyEvent e) {
-      }
-
-      @Override
-      public void keyReleased(KeyEvent e) {
-        selectionIndex = 0;
-        searchTextArea(gui, searchField.getText());
-      }
-    });
-
-    btnNext.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        System.out.println("next");
-        selectionIndex++;
-        if (selectionIndex >= offsets.size())
-          selectionIndex = 0;
-        searchTextArea(gui, searchField.getText());
-      }
-    });
-
-    btnPrev.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        System.out.println("prev");
-        selectionIndex--;
-        if (selectionIndex < 0)
-          selectionIndex = offsets.size() - 1;
-        searchTextArea(gui, searchField.getText());
-      }
-    });
-
-    txtArea.addMouseListener(new MouseListener() {
-      @Override
-      public void mouseClicked(MouseEvent e) {
-        // only fire if search panel currently open
-        if (gui.getGuiContentPane().getSearchPanel().isVisible()) {
-          gui.getGuiContentPane().toggleSearchPanel();
+    // if searchpanel is open then add listeners, otherwise restore mouse
+    if (gui.getGuiContentPane().getSearchPanel().isVisible()) {
+      searchField.addKeyListener(new KeyListener() {
+        @Override
+        public void keyTyped(KeyEvent e) {
         }
 
-      }
+        @Override
+        public void keyPressed(KeyEvent e) {
+        }
 
-      @Override
-      public void mousePressed(MouseEvent e) {
-      }
+        @Override
+        public void keyReleased(KeyEvent e) {
+          selectionIndex = 0;
+          searchTextArea(gui, searchField.getText());
+        }
+      });
 
-      @Override
-      public void mouseReleased(MouseEvent e) {
-      }
+      btnNext.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          selectionIndex++;
+          if (selectionIndex >= offsets.size())
+            selectionIndex = 0;
+          searchTextArea(gui, searchField.getText());
+        }
+      });
 
-      @Override
-      public void mouseEntered(MouseEvent e) {
-      }
+      btnPrev.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          selectionIndex--;
+          if (selectionIndex < 0)
+            selectionIndex = offsets.size() - 1;
+          searchTextArea(gui, searchField.getText());
+        }
+      });
 
-      @Override
-      public void mouseExited(MouseEvent e) {
-      }
-    });
+      txtArea.addMouseListener(new MouseListener() {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+          performAction(gui);
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+
+      });
+    } else {
+      txtArea.addMouseListener(initialMouseListener);
+    }
   }
 
   private void searchTextArea(TextEditorGUI gui, String query) {
