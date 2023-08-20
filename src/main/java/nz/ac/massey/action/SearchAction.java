@@ -24,7 +24,7 @@ import nz.ac.massey.gui.TextEditorGUI;
 public class SearchAction extends TextEditorAction {
 
   /**
-   * selectionIndex is for tracking which match is selected
+   * stores the index of the currently selected match from all matches
    */
   private int selectionIndex;
 
@@ -139,6 +139,12 @@ public class SearchAction extends TextEditorAction {
     }
   }
 
+  /**
+   * search logic
+   * 
+   * @param gui
+   * @param query
+   */
   private void searchTextArea(TextEditorGUI gui, String query) {
     JTextArea txtArea = gui.getGuiContentPane().getTextArea();
     txtArea.getHighlighter().removeAllHighlights();
@@ -192,6 +198,11 @@ public class SearchAction extends TextEditorAction {
     gui.getGuiContentPane().getLblMatches().setText("Search Matches: " + offsets.size());
   }
 
+  /**
+   * sets visibility of panel and clears highlighting
+   * 
+   * @param gui
+   */
   public void toggleSearchPanel(TextEditorGUI gui) {
     JPanel searchPanel = gui.getGuiContentPane().getSearchPanel();
     JTextField searchTextField = gui.getGuiContentPane().getTxtSearchField();
