@@ -3,6 +3,7 @@ package nz.ac.massey.action;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -15,6 +16,11 @@ import nz.ac.massey.gui.TextEditorGUI;
  * Toggles the search panel and handles panel events
  */
 public class SearchAction extends TextEditorAction {
+
+  /**
+   * selectionIndex is for tracking which match is selected
+   */
+  private int selectionIndex;
 
   public SearchAction() {
     super("Search");
@@ -48,33 +54,55 @@ public class SearchAction extends TextEditorAction {
   }
 
   private void searchTextArea(TextEditorGUI gui, String query) {
+    selectionIndex = 0;
     JTextArea txtArea = gui.getGuiContentPane().getTextArea();
-    HighlightPainter painter = new DefaultHighlighter.DefaultHighlightPainter(Color.CYAN);
-
     txtArea.getHighlighter().removeAllHighlights();
 
+    // no query entered
     if (query.length() == 0) {
       gui.getGuiContentPane().getLblMatches().setText("Search Matches: 0");
       return;
     }
 
-    String textAreaText = gui.getGuiContentPane().getTextArea().getText();
+    HighlightPainter unselected = new DefaultHighlighter.DefaultHighlightPainter(Color.LIGHT_GRAY);
+    HighlightPainter selected = new DefaultHighlighter.DefaultHighlightPainter(Color.CYAN);
 
-    // count up how many matches there are in the textarea
-    int offset = 0, count = 0;
+    int offset = 0;
+    ArrayList<Integer> offsets = new ArrayList<Integer>();
 
-    while (textAreaText.indexOf(query, offset) != -1) {
+    while (txtArea.getText().indexOf(query, offset) != -1) {
+      offset = txtArea.getText().indexOf(query, offset);
+      offsets.add(offset);
+      offset += query.length();
+    }
+
+    // no matches found
+    if (offsets.isEmpty()) {
+      gui.getGuiContentPane().getLblMatches().setText("Search Matches: 0");
+      return;
+    }
+
+    // highlight the unselected matches grey
+    for (int i = 0; i < offsets.size(); i++) {
+      if (i == selectionIndex)
+        continue;
+      int current_offset = offsets.get(i);
       try {
-        offset = textAreaText.indexOf(query, offset);
-        txtArea.getHighlighter().addHighlight(offset, offset + query.length(), painter);
-        offset += query.length();
-        count++;
+        txtArea.getHighlighter().addHighlight(current_offset, current_offset + query.length(), unselected);
       } catch (Exception ex) {
         ex.printStackTrace();
       }
     }
 
-    gui.getGuiContentPane().getLblMatches().setText("Search Matches: " + count);
+    // highlight the currently selected match cyan
+    try {
+      txtArea.getHighlighter().addHighlight(offsets.get(selectionIndex), offsets.get(selectionIndex) + query.length(),
+          selected);
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+
+    gui.getGuiContentPane().getLblMatches().setText("Search Matches: " + offsets.size());
   }
 
 }
