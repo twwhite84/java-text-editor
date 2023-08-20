@@ -43,17 +43,18 @@ public class SearchAction extends TextEditorAction {
     // removing any existing listeners when toggled
     JButton btnNext = gui.getGuiContentPane().getBtnSearchNext();
     JButton btnPrev = gui.getGuiContentPane().getBtnSearchPrev();
-
+    JTextField searchField = gui.getGuiContentPane().getTxtSearchField();
     for (ActionListener al : btnNext.getActionListeners()) {
       btnNext.removeActionListener(al);
     }
-
     for (ActionListener al : btnPrev.getActionListeners()) {
       btnPrev.removeActionListener(al);
     }
+    for (KeyListener kl : searchField.getKeyListeners()) {
+      searchField.removeKeyListener(kl);
+    }
 
     // adding listeners for the search pane
-    JTextField searchField = gui.getGuiContentPane().getTxtSearchField();
     searchField.addKeyListener(new KeyListener() {
       @Override
       public void keyTyped(KeyEvent e) {
@@ -73,7 +74,6 @@ public class SearchAction extends TextEditorAction {
     btnNext.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        System.out.println("next clicked");
         selectionIndex++;
         if (selectionIndex >= offsets.size())
           selectionIndex = 0;
@@ -84,7 +84,6 @@ public class SearchAction extends TextEditorAction {
     btnPrev.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        System.out.println("prev clicked");
         selectionIndex--;
         if (selectionIndex < 0)
           selectionIndex = offsets.size() - 1;
