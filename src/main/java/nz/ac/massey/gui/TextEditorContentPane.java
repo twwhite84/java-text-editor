@@ -22,16 +22,16 @@ public class TextEditorContentPane extends Container {
     private JPanel searchPanel;
 
     /**
-     * Search panel text field
+     * Search panel elements
      */
     @Getter
     private JTextField txtSearchField;
 
-    /**
-     * Search panel match count label
-     */
     @Getter
     private JLabel lblMatches;
+
+    @Getter
+    private JButton btnSearchNext, btnSearchPrev;
 
     /**
      * The actual editable text area
@@ -78,13 +78,13 @@ public class TextEditorContentPane extends Container {
         searchPanelConstraints = new GridBagConstraints();
         searchPanelConstraints.gridx = 1;
         searchPanelConstraints.gridy = 0;
-        JButton btnSearchNext = new JButton("Next");
+        btnSearchNext = new JButton("Next");
         searchPanel.add(btnSearchNext, searchPanelConstraints);
 
         searchPanelConstraints = new GridBagConstraints();
         searchPanelConstraints.gridx = 1;
         searchPanelConstraints.gridy = 1;
-        JButton btnSearchPrev = new JButton("Prev");
+        btnSearchPrev = new JButton("Prev");
         searchPanel.add(btnSearchPrev, searchPanelConstraints);
 
         // main text area

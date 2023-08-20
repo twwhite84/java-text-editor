@@ -1,6 +1,8 @@
 package nz.ac.massey.action;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -21,6 +23,11 @@ public class SearchAction extends TextEditorAction {
    * selectionIndex is for tracking which match is selected
    */
   private int selectionIndex;
+
+  /**
+   * holds cursor offsets from 0 for start of all matches in search
+   */
+  private ArrayList<Integer> offsets;
 
   public SearchAction() {
     super("Search");
@@ -46,6 +53,31 @@ public class SearchAction extends TextEditorAction {
 
       @Override
       public void keyReleased(KeyEvent e) {
+        selectionIndex = 0;
+        searchTextArea(gui, searchField.getText());
+      }
+
+    });
+
+    gui.getGuiContentPane().getBtnSearchNext().addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        selectionIndex++;
+        if (selectionIndex >= offsets.size())
+          selectionIndex = 0;
+        searchTextArea(gui, searchField.getText());
+      }
+
+    });
+
+    gui.getGuiContentPane().getBtnSearchPrev().addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        selectionIndex--;
+        if (selectionIndex < 0)
+          selectionIndex = offsets.size() - 1;
         searchTextArea(gui, searchField.getText());
       }
 
@@ -54,7 +86,6 @@ public class SearchAction extends TextEditorAction {
   }
 
   private void searchTextArea(TextEditorGUI gui, String query) {
-    selectionIndex = 0;
     JTextArea txtArea = gui.getGuiContentPane().getTextArea();
     txtArea.getHighlighter().removeAllHighlights();
 
@@ -68,7 +99,7 @@ public class SearchAction extends TextEditorAction {
     HighlightPainter selected = new DefaultHighlighter.DefaultHighlightPainter(Color.CYAN);
 
     int offset = 0;
-    ArrayList<Integer> offsets = new ArrayList<Integer>();
+    offsets = new ArrayList<Integer>();
 
     while (txtArea.getText().indexOf(query, offset) != -1) {
       offset = txtArea.getText().indexOf(query, offset);
