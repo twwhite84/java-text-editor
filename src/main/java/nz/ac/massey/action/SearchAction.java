@@ -137,7 +137,7 @@ public class SearchAction extends TextEditorAction {
      * @param query The string used to match
      */
     public int searchTextArea(TextEditorGUI gui, String query) {
-        JTextArea txtArea;
+        JTextArea txtArea = null;
 
         if (System.getenv("GITHUB_ACTIONS") == null) {
             txtArea = gui.getGuiContentPane().getTextArea();
@@ -160,7 +160,7 @@ public class SearchAction extends TextEditorAction {
 
         // Perform search
         while (gui.getContent().indexOf(query, offset) != -1) {
-            offset = txtArea.getText().indexOf(query, offset);
+            offset = gui.getContent().indexOf(query, offset);
             offsets.add(offset);
             offset += query.length();
         }
