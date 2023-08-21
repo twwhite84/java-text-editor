@@ -4,6 +4,9 @@ import javax.swing.JOptionPane;
 
 import nz.ac.massey.gui.TextEditorGUI;
 
+/**
+ * Exits the currently selected frame
+ */
 public class ExitAction extends TextEditorAction {
 
     public ExitAction() {
