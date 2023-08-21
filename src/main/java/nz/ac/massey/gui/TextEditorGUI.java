@@ -242,7 +242,9 @@ public class TextEditorGUI {
      */
     public void saveAs(File file) {
         // Assign open file
-        this.openFile = file;
+        if (!file.getName().endsWith(".pdf")) {
+            this.openFile = file;
+        }
 
         if (file.getName().endsWith(".txt")) {
             // Update title of editor
@@ -290,8 +292,6 @@ public class TextEditorGUI {
      * @param content Content in string format
      */
     public void save(String content) {
-        System.out.println(content);
-
         try {
             BufferedWriter fileWriter = new BufferedWriter(new FileWriter(this.openFile));
             fileWriter.write(content);
