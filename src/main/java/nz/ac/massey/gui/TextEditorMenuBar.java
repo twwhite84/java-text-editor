@@ -48,10 +48,13 @@ public class TextEditorMenuBar extends JMenuBar {
 
         // file > save
         JMenuItem menuItemSave = new JMenuItem("Save", KeyEvent.VK_S);
+        menuItemSave.setAction(new SimpleKeybindAction(gui, "Save", KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK)));
         menuFile.add(menuItemSave);
-        menuItemSave.addActionListener(
-                e -> JOptionPane.showMessageDialog(menuItemSave, "File > Save not implemented yet",
-                        "Todo", 0));
+
+        // file > save as
+        JMenuItem menuItemSaveAs = new JMenuItem("Save As", KeyEvent.VK_A);
+        menuItemSaveAs.setAction(new SimpleKeybindAction(gui, "Save As", KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.SHIFT_MASK | Event.CTRL_MASK)));
+        menuFile.add(menuItemSaveAs);
 
         // file > settings
         JMenuItem menuItemSettings = new JMenuItem("Settings", KeyEvent.VK_T);
