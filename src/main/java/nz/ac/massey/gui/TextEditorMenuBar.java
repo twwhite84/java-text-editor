@@ -34,37 +34,48 @@ public class TextEditorMenuBar extends JMenuBar {
 
         // file > new
         JMenuItem menuItemNew = new JMenuItem("New", KeyEvent.VK_N);
-        menuItemNew.setAction(new SimpleKeybindAction(gui, "New", KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK)));
+        menuItemNew
+                .setAction(new SimpleKeybindAction(gui, "New",
+                        KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK)));
         menuFile.add(menuItemNew);
 
         // file > open
         JMenuItem menuItemOpen = new JMenuItem("Open", KeyEvent.VK_O);
-        menuItemOpen.setAction(new SimpleKeybindAction(gui, "Open", KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK)));
+        menuItemOpen.setAction(
+                new SimpleKeybindAction(gui, "Open",
+                        KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK)));
         menuFile.add(menuItemOpen);
 
         // file > save
         JMenuItem menuItemSave = new JMenuItem("Save", KeyEvent.VK_S);
-        menuItemSave.setAction(new SimpleKeybindAction(gui, "Save", KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK)));
+        menuItemSave.setAction(new SimpleKeybindAction(gui, "Save",
+                KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK)));
         menuFile.add(menuItemSave);
 
         // file > save as
         JMenuItem menuItemSaveAs = new JMenuItem("Save As", KeyEvent.VK_A);
-        menuItemSaveAs.setAction(new SimpleKeybindAction(gui, "Save As", KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.SHIFT_MASK | Event.CTRL_MASK)));
+        menuItemSaveAs.setAction(new SimpleKeybindAction(gui, "Save As",
+                KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.SHIFT_MASK | Event.CTRL_MASK)));
         menuFile.add(menuItemSaveAs);
 
         // file > settings
         JMenuItem menuItemSettings = new JMenuItem("Settings", KeyEvent.VK_T);
         menuFile.add(menuItemSettings);
-        menuItemSettings.addActionListener(e -> JOptionPane.showMessageDialog(menuItemSettings, "File > Settings not implemented yet", "Todo", 0));
+        menuItemSettings.addActionListener(
+                e -> JOptionPane.showMessageDialog(menuItemSettings,
+                        "File > Settings not implemented yet", "Todo", 0));
 
         // file > print
         JMenuItem menuItemPrint = new JMenuItem("Print", KeyEvent.VK_P);
         menuFile.add(menuItemPrint);
-        menuItemPrint.addActionListener(e -> JOptionPane.showMessageDialog(menuItemSettings, "File > Print not implemented yet", "Todo", 0));
+        menuItemPrint.addActionListener(
+                e -> JOptionPane.showMessageDialog(menuItemSettings, "File > Print not implemented yet",
+                        "Todo", 0));
 
         // file > exit
         JMenuItem menuItemExit = new JMenuItem("Exit", KeyEvent.VK_X);
-        menuItemExit.setAction(new SimpleKeybindAction(gui, "Exit", KeyStroke.getKeyStroke(KeyEvent.VK_F4, Event.ALT_MASK)));
+        menuItemExit.setAction(new SimpleKeybindAction(gui, "Exit",
+                KeyStroke.getKeyStroke(KeyEvent.VK_F4, Event.ALT_MASK)));
         menuFile.add(menuItemExit);
 
         // search menu
@@ -75,7 +86,9 @@ public class TextEditorMenuBar extends JMenuBar {
         // search > search
         JMenuItem menuItemSearch = new JMenuItem("Search", KeyEvent.VK_S);
         menuSearch.add(menuItemSearch);
-        menuItemSearch.addActionListener(e -> JOptionPane.showMessageDialog(menuItemSearch, "Search not implemented yet", "Todo", 0));
+        menuItemSearch.setAction(
+                new SimpleKeybindAction(gui, "Search",
+                        KeyStroke.getKeyStroke(KeyEvent.VK_F, Event.CTRL_MASK)));
 
         // view menu
         JMenu menuView = new JMenu("View");
@@ -102,7 +115,8 @@ public class TextEditorMenuBar extends JMenuBar {
                 message = "Status bar on";
             else
                 message = "Status bar off";
-            JOptionPane.showMessageDialog(menuItemWrap, message + "\nStatus bar not implemented yet", "Todo", 0);
+            JOptionPane.showMessageDialog(menuItemWrap, message + "\nStatus bar not implemented yet",
+                    "Todo", 0);
         });
 
         // help menu
@@ -113,6 +127,8 @@ public class TextEditorMenuBar extends JMenuBar {
         // help > about
         JMenuItem menuItemAbout = new JMenuItem("About", KeyEvent.VK_A);
         menuHelp.add(menuItemAbout);
-        menuItemAbout.addActionListener(e -> JOptionPane.showMessageDialog(menuItemAbout, "Help > About not implemented yet", "Todo", 0));
+        menuItemAbout.addActionListener(
+                e -> JOptionPane.showMessageDialog(menuItemAbout, "Help > About not implemented yet",
+                        "Todo", 0));
     }
 }
