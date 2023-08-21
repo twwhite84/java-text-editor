@@ -137,9 +137,10 @@ public class SearchAction extends TextEditorAction {
      * @param query The string used to match
      */
     public int searchTextArea(TextEditorGUI gui, String query) {
-        JTextArea txtArea = gui.getGuiContentPane().getTextArea();
+        JTextArea txtArea;
 
         if (System.getenv("GITHUB_ACTIONS") == null) {
+            txtArea = gui.getGuiContentPane().getTextArea();
             txtArea.getHighlighter().removeAllHighlights();
         }
 
