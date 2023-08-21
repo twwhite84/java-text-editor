@@ -20,7 +20,9 @@ public abstract class TextEditorAction {
 
     /**
      * The action function that consumes the main GUI window
+     *
+     * @return If that action was performed successfully
      */
-    public abstract void performAction(TextEditorGUI gui);
+    public abstract boolean performAction(TextEditorGUI gui);
 
 }

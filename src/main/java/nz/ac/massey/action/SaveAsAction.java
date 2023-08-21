@@ -16,7 +16,7 @@ public class SaveAsAction extends TextEditorAction {
     }
 
     @Override
-    public void performAction(TextEditorGUI gui) {
+    public boolean performAction(TextEditorGUI gui) {
         // Prompt to choose file location
         JFileChooser fileChooser = new JFileChooser();
 
@@ -72,6 +72,9 @@ public class SaveAsAction extends TextEditorAction {
             }
 
             gui.saveAs(file);
+            return true;
         }
+
+        return false;
     }
 }

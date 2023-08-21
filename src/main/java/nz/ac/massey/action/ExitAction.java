@@ -14,7 +14,7 @@ public class ExitAction extends TextEditorAction {
     }
 
     @Override
-    public void performAction(TextEditorGUI gui) {
+    public boolean performAction(TextEditorGUI gui) {
         if (!gui.isSaved()) {
             if (gui.getOpenFile() == null && gui.getGuiContentPane().getTextArea().getText().length() == 0) {
                 gui.getFrame().dispose();
@@ -23,8 +23,8 @@ public class ExitAction extends TextEditorAction {
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
                 switch (choice) {
                     case JOptionPane.YES_OPTION:
-                        gui.save();
-                        gui.getFrame().dispose();
+                        if (gui.save())
+                            gui.getFrame().dispose();
                         break;
 
                     case JOptionPane.NO_OPTION:
@@ -38,5 +38,7 @@ public class ExitAction extends TextEditorAction {
         } else {
             gui.getFrame().dispose();
         }
+
+        return true;
     }
 }

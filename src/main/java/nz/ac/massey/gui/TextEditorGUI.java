@@ -243,7 +243,7 @@ public class TextEditorGUI {
      *
      * @param file File object to be created
      */
-    public void saveAs(File file) {
+    public boolean saveAs(File file) {
         // Assign open file
         if (!file.getName().endsWith(".pdf")) {
             this.openFile = file;
@@ -254,11 +254,12 @@ public class TextEditorGUI {
             frame.setTitle(openFile.getName());
 
             // Now call save action to write bytes to that file
-            save();
+            return save();
         } else if (file.getName().endsWith(".pdf")) {
             // "Export" to PDF format
             try (PDDocument document = getPdfFile()) {
                 document.save(file.getPath());
+                return true;
             } catch (IOException ex) {
                 if (System.getenv("GITHUB_ACTIONS") == null) {
                     // Error while saving
@@ -269,24 +270,25 @@ public class TextEditorGUI {
                 ex.printStackTrace();
             }
         }
+
+        return false;
     }
 
     /**
      * Save the contents of the editor to the opened file. Must have
      * an open file or will be prompted to {@link #saveAs(File)}
      */
-    public void save() {
+    public boolean save() {
         // If no open file, prompt to save as
         if (this.openFile == null) {
-            runAction("Save As");
-            return;
+            return runAction("Save As");
         }
 
         // Read bytes from text editor
         String content = guiContentPane.getTextArea().getText();
 
         // Save to file
-        save(content);
+        return save(content);
     }
 
     /**
@@ -294,7 +296,7 @@ public class TextEditorGUI {
      *
      * @param content Content in string format
      */
-    public void save(String content) {
+    public boolean save(String content) {
         try {
             BufferedWriter fileWriter = new BufferedWriter(new FileWriter(this.openFile));
             fileWriter.write(content);
@@ -302,6 +304,7 @@ public class TextEditorGUI {
 
             // Set state to saved
             setSaved(true);
+            return true;
         } catch (IOException ex) {
             ex.printStackTrace();
 
@@ -313,6 +316,8 @@ public class TextEditorGUI {
                 System.err.println("There was an error trying to save");
             }
         }
+
+        return false;
     }
 
     /**
@@ -421,16 +426,17 @@ public class TextEditorGUI {
      * Attempt to run action with name for this editor instance
      *
      * @param name Name of the action
+     * @return If the action was run successfully
      */
-    public void runAction(String name) {
+    public boolean runAction(String name) {
         if (!registeredActions.containsKey(name)) {
             System.err.println("Action `" + name + "` is not registered");
-            return;
+            return false;
         }
 
         // Run action
         TextEditorAction foundAction = registeredActions.get(name);
-        foundAction.performAction(this);
+        return foundAction.performAction(this);
     }
 
     /**

@@ -2,6 +2,8 @@ package nz.ac.massey.action;
 
 import nz.ac.massey.gui.TextEditorGUI;
 
+import javax.swing.*;
+
 /**
  * Create a new window with a new file object
  */
@@ -12,7 +14,8 @@ public class NewFileAction extends TextEditorAction {
     }
 
     @Override
-    public void performAction(TextEditorGUI gui) {
-        javax.swing.SwingUtilities.invokeLater(TextEditorGUI::new);
+    public boolean performAction(TextEditorGUI gui) {
+        SwingUtilities.invokeLater(TextEditorGUI::new);
+        return true;
     }
 }
