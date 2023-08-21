@@ -12,7 +12,8 @@ public class SaveAction extends TextEditorAction {
     }
 
     @Override
-    public void performAction(TextEditorGUI gui) {
+    public boolean performAction(TextEditorGUI gui) {
         gui.save();
+        return true;
     }
 }

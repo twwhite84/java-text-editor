@@ -34,7 +34,7 @@ public class SearchAction extends TextEditorAction {
     }
 
     @Override
-    public void performAction(TextEditorGUI gui) {
+    public boolean performAction(TextEditorGUI gui) {
         // when first time performing action, backup the default mouse listener
         if (initialMouseListener == null) {
             for (MouseListener ml : gui.getGuiContentPane().getTextArea().getMouseListeners()) {
@@ -128,6 +128,8 @@ public class SearchAction extends TextEditorAction {
         } else {
             txtArea.addMouseListener(initialMouseListener);
         }
+
+        return true;
     }
 
     /**

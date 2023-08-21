@@ -14,6 +14,9 @@ import org.odftoolkit.odfdom.doc.OdfDocument;
 import org.odftoolkit.odfdom.doc.OdfTextDocument;
 
 import javax.swing.*;
+
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -94,7 +97,6 @@ public class TextEditorGUI {
         }
     }
 
-
     /**
      * Set the content of the text editor
      */
@@ -127,6 +129,7 @@ public class TextEditorGUI {
         registerAction(new SearchAction());
         registerAction(new SaveAction());
         registerAction(new SaveAsAction());
+        registerAction(new ExitAction());
     }
 
     /**
@@ -240,7 +243,7 @@ public class TextEditorGUI {
      *
      * @param file File object to be created
      */
-    public void saveAs(File file) {
+    public boolean saveAs(File file) {
         // Assign open file
         if (!file.getName().endsWith(".pdf")) {
             this.openFile = file;
@@ -251,11 +254,12 @@ public class TextEditorGUI {
             frame.setTitle(openFile.getName());
 
             // Now call save action to write bytes to that file
-            save();
+            return save();
         } else if (file.getName().endsWith(".pdf")) {
             // "Export" to PDF format
             try (PDDocument document = getPdfFile()) {
                 document.save(file.getPath());
+                return true;
             } catch (IOException ex) {
                 if (System.getenv("GITHUB_ACTIONS") == null) {
                     // Error while saving
@@ -266,24 +270,25 @@ public class TextEditorGUI {
                 ex.printStackTrace();
             }
         }
+
+        return false;
     }
 
     /**
      * Save the contents of the editor to the opened file. Must have
      * an open file or will be prompted to {@link #saveAs(File)}
      */
-    public void save() {
+    public boolean save() {
         // If no open file, prompt to save as
         if (this.openFile == null) {
-            runAction("Save As");
-            return;
+            return runAction("Save As");
         }
 
         // Read bytes from text editor
         String content = guiContentPane.getTextArea().getText();
 
         // Save to file
-        save(content);
+        return save(content);
     }
 
     /**
@@ -291,7 +296,7 @@ public class TextEditorGUI {
      *
      * @param content Content in string format
      */
-    public void save(String content) {
+    public boolean save(String content) {
         try {
             BufferedWriter fileWriter = new BufferedWriter(new FileWriter(this.openFile));
             fileWriter.write(content);
@@ -299,16 +304,20 @@ public class TextEditorGUI {
 
             // Set state to saved
             setSaved(true);
+            return true;
         } catch (IOException ex) {
             ex.printStackTrace();
 
             if (System.getenv("GITHUB_ACTIONS") == null) {
                 // Error while saving
-                JOptionPane.showMessageDialog(frame, "There was an error trying to save", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(frame, "There was an error trying to save", "Error",
+                        JOptionPane.ERROR_MESSAGE);
             } else {
                 System.err.println("There was an error trying to save");
             }
         }
+
+        return false;
     }
 
     /**
@@ -371,11 +380,20 @@ public class TextEditorGUI {
         if (System.getenv("GITHUB_ACTIONS") == null) {
             if (saved) {
                 // Update title to saved state
-                if (this.openFile != null) frame.setTitle(this.openFile.getName());
+                if (this.openFile != null)
+                    frame.setTitle(this.openFile.getName());
             } else {
-                if (this.openFile != null) frame.setTitle(this.openFile.getName() + "*");
+                if (this.openFile != null)
+                    frame.setTitle(this.openFile.getName() + "*");
             }
         }
+    }
+
+    /**
+     * exit current window
+     */
+    public void exit() {
+        new ExitAction().performAction(this);
     }
 
     /**
@@ -389,7 +407,12 @@ public class TextEditorGUI {
      * Setup the main GUI for a new instance
      */
     private void init() {
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                exit();
+            }
+        });
         frame.setJMenuBar(guiMenuBar);
         frame.setContentPane(guiContentPane);
         frame.setSize(900, 400);
@@ -403,16 +426,17 @@ public class TextEditorGUI {
      * Attempt to run action with name for this editor instance
      *
      * @param name Name of the action
+     * @return If the action was run successfully
      */
-    public void runAction(String name) {
+    public boolean runAction(String name) {
         if (!registeredActions.containsKey(name)) {
             System.err.println("Action `" + name + "` is not registered");
-            return;
+            return false;
         }
 
         // Run action
         TextEditorAction foundAction = registeredActions.get(name);
-        foundAction.performAction(this);
+        return foundAction.performAction(this);
     }
 
     /**

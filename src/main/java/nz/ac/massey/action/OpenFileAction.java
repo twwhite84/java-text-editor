@@ -16,7 +16,7 @@ public class OpenFileAction extends TextEditorAction {
     }
 
     @Override
-    public void performAction(TextEditorGUI gui) {
+    public boolean performAction(TextEditorGUI gui) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setAcceptAllFileFilterUsed(false);
 
@@ -72,6 +72,9 @@ public class OpenFileAction extends TextEditorAction {
         if (result == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             gui.openFile(file);
+            return true;
         }
+
+        return false;
     }
 }

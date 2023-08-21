@@ -48,12 +48,14 @@ public class TextEditorMenuBar extends JMenuBar {
 
         // file > save
         JMenuItem menuItemSave = new JMenuItem("Save", KeyEvent.VK_S);
-        menuItemSave.setAction(new SimpleKeybindAction(gui, "Save", KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK)));
+        menuItemSave.setAction(new SimpleKeybindAction(gui, "Save",
+                KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK)));
         menuFile.add(menuItemSave);
 
         // file > save as
         JMenuItem menuItemSaveAs = new JMenuItem("Save As", KeyEvent.VK_A);
-        menuItemSaveAs.setAction(new SimpleKeybindAction(gui, "Save As", KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.SHIFT_MASK | Event.CTRL_MASK)));
+        menuItemSaveAs.setAction(new SimpleKeybindAction(gui, "Save As",
+                KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.SHIFT_MASK | Event.CTRL_MASK)));
         menuFile.add(menuItemSaveAs);
 
         // file > settings
@@ -72,10 +74,9 @@ public class TextEditorMenuBar extends JMenuBar {
 
         // file > exit
         JMenuItem menuItemExit = new JMenuItem("Exit", KeyEvent.VK_X);
+        menuItemExit.setAction(new SimpleKeybindAction(gui, "Exit",
+                KeyStroke.getKeyStroke(KeyEvent.VK_F4, Event.ALT_MASK)));
         menuFile.add(menuItemExit);
-        menuItemExit.addActionListener(
-                e -> JOptionPane.showMessageDialog(menuItemSettings, "File > Exit not implemented yet",
-                        "Todo", 0));
 
         // search menu
         JMenu menuSearch = new JMenu("Search");
