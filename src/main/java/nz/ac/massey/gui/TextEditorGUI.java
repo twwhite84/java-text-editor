@@ -2,7 +2,14 @@ package nz.ac.massey.gui;
 
 import lombok.Getter;
 import lombok.Setter;
+import nz.ac.massey.PDFUtils;
 import nz.ac.massey.action.*;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.odftoolkit.odfdom.doc.OdfDocument;
 import org.odftoolkit.odfdom.doc.OdfTextDocument;
 
@@ -13,7 +20,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -121,6 +130,110 @@ public class TextEditorGUI {
     }
 
     /**
+     * Return a PDF file saved with the content of the editor.
+     * Should be used in a try-with-resources statement to auto close the file
+     *
+     * @return The PDF file
+     */
+    public PDDocument getPdfFile() {
+        PDDocument doc = new PDDocument();
+        String content = guiContentPane.getTextArea().getText();
+
+        try {
+            // Create PDF
+            PDPage page = new PDPage();
+            doc.addPage(page);
+            PDPageContentStream contentStream = new PDPageContentStream(doc, page);
+
+            // Font config
+            PDFont pdfFont = PDType1Font.HELVETICA;
+            float fontSize = 14;
+            float leading = 1.5f * fontSize;
+
+            // Get dimensions of PDF page
+            PDRectangle mediabox = page.getMediaBox();
+            float margin = 72;
+            float width = mediabox.getWidth() - 2 * margin;
+            float startX = mediabox.getLowerLeftX() + margin;
+            float startY = mediabox.getUpperRightY() - margin;
+
+            // Split content between newlines and perform an auto
+            // line split when line is longer then document
+            List<String> lines = new ArrayList<>();
+            String[] splitLines = content.split("\n");
+            for (String text : splitLines) {
+                int lastSpace = -1;
+                if (text.length() > 0) {
+                    while (text.length() > 0) {
+                        int spaceIndex = text.indexOf(' ', lastSpace + 1);
+                        if (spaceIndex < 0)
+                            spaceIndex = text.length();
+                        String subString = PDFUtils.santiseString(text.substring(0, spaceIndex));
+                        float size = fontSize * pdfFont.getStringWidth(subString) / 1000;
+                        if (size > width) {
+                            if (lastSpace < 0)
+                                lastSpace = spaceIndex;
+                            subString = text.substring(0, lastSpace);
+                            lines.add(subString);
+                            text = text.substring(lastSpace).trim();
+                            lastSpace = -1;
+                        } else if (spaceIndex == text.length()) {
+                            lines.add(text);
+                            text = "";
+                        } else {
+                            lastSpace = spaceIndex;
+                        }
+                    }
+                } else {
+                    // If blank line, print blank line
+                    lines.add(" ");
+                }
+            }
+
+            // Start cursor
+            contentStream.beginText();
+            contentStream.setFont(pdfFont, fontSize);
+            contentStream.newLineAtOffset(startX, startY);
+
+            float currentY = startY;
+
+            // For each line to write
+            for (String line : lines) {
+                // Remove illegal text
+                line = PDFUtils.santiseString(line);
+
+                // Go down document
+                currentY -= leading;
+
+                // If goes below page
+                if (currentY <= margin) {
+                    contentStream.endText();
+                    contentStream.close();
+
+                    // Start on new page
+                    PDPage new_Page = new PDPage();
+                    doc.addPage(new_Page);
+                    contentStream = new PDPageContentStream(doc, new_Page);
+                    contentStream.beginText();
+                    contentStream.setFont(pdfFont, fontSize);
+                    contentStream.newLineAtOffset(startX, startY);
+                    currentY = startY;
+                }
+
+                contentStream.showText(line);
+                contentStream.newLineAtOffset(0, -leading);
+            }
+            contentStream.endText();
+            contentStream.close();
+        } catch (Exception ex) {
+            System.err.println("There was an error converting file to PDF");
+            ex.printStackTrace();
+        }
+
+        return doc;
+    }
+
+    /**
      * Save the contents of the editor to the specified file
      * and set the current opened file to this file. Used on first save
      * or if wanting to create a new file from existing
@@ -129,13 +242,30 @@ public class TextEditorGUI {
      */
     public void saveAs(File file) {
         // Assign open file
-        this.openFile = file;
+        if (!file.getName().endsWith(".pdf")) {
+            this.openFile = file;
+        }
 
-        // Update title of editor
-        frame.setTitle(openFile.getName());
+        if (file.getName().endsWith(".txt")) {
+            // Update title of editor
+            frame.setTitle(openFile.getName());
 
-        // Now call save action to write bytes to that file
-        save();
+            // Now call save action to write bytes to that file
+            save();
+        } else if (file.getName().endsWith(".pdf")) {
+            // "Export" to PDF format
+            try (PDDocument document = getPdfFile()) {
+                document.save(file.getPath());
+            } catch (IOException ex) {
+                if (System.getenv("GITHUB_ACTIONS") == null) {
+                    // Error while saving
+                    JOptionPane.showMessageDialog(frame, "Error saving file to PDF format", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    System.err.println("Error saving file to PDF format");
+                }
+                ex.printStackTrace();
+            }
+        }
     }
 
     /**
