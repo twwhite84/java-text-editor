@@ -37,7 +37,23 @@ public class SaveAsAction extends TextEditorAction {
             }
         };
 
+        FileFilter pdfFilter = new FileFilter() {
+            public String getDescription() {
+                return "PDF Document (*.pdf)";
+            }
+
+            public boolean accept(File f) {
+                if (f.isDirectory()) {
+                    return true;
+                } else {
+                    String filename = f.getName().toLowerCase();
+                    return filename.endsWith(".pdf");
+                }
+            }
+        };
+
         fileChooser.addChoosableFileFilter(textFilter);
+        fileChooser.addChoosableFileFilter(pdfFilter);
         fileChooser.setFileFilter(textFilter);
 
         int result = fileChooser.showSaveDialog(gui.getFrame());
