@@ -20,8 +20,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This is the main instance of the GUI for the text editor. It will hold all
@@ -137,81 +139,87 @@ public class TextEditorGUI {
         PDDocument doc = new PDDocument();
         String content = guiContentPane.getTextArea().getText();
 
-        // TODO: Fix new line breaks
         try {
+            // Create PDF
             PDPage page = new PDPage();
             doc.addPage(page);
             PDPageContentStream contentStream = new PDPageContentStream(doc, page);
 
+            // Font config
             PDFont pdfFont = PDType1Font.HELVETICA;
-            float fontSize = 16;
+            float fontSize = 14;
             float leading = 1.5f * fontSize;
 
+            // Get dimensions of PDF page
             PDRectangle mediabox = page.getMediaBox();
             float margin = 72;
-            float width = mediabox.getWidth() - 2*margin;
+            float width = mediabox.getWidth() - 2 * margin;
             float startX = mediabox.getLowerLeftX() + margin;
             float startY = mediabox.getUpperRightY() - margin;
 
-            String text = content;
+            // Split content between newlines and perform an auto
+            // line split when line is longer then document
             List<String> lines = new ArrayList<>();
-            int lastSpace = -1;
-            while (text.length() > 0)
-            {
-                int spaceIndex = text.indexOf(' ', lastSpace + 1);
-                if (spaceIndex < 0)
-                    spaceIndex = text.length();
-                String subString = PDFUtils.santiseString(text.substring(0, spaceIndex));
-                float size = fontSize * pdfFont.getStringWidth(subString) / 1000;
-                if (size > width)
-                {
-                    if (lastSpace < 0)
-                        lastSpace = spaceIndex;
-                    subString = text.substring(0, lastSpace);
-                    lines.add(subString);
-                    text = text.substring(lastSpace).trim();
-                    lastSpace = -1;
-                }
-                else if (spaceIndex == text.length())
-                {
-                    lines.add(text);
-                    text = "";
-                }
-                else
-                {
-                    lastSpace = spaceIndex;
+            String[] splitLines = content.split("\n");
+            for (String text : splitLines) {
+                int lastSpace = -1;
+                if (text.length() > 0) {
+                    while (text.length() > 0) {
+                        int spaceIndex = text.indexOf(' ', lastSpace + 1);
+                        if (spaceIndex < 0)
+                            spaceIndex = text.length();
+                        String subString = PDFUtils.santiseString(text.substring(0, spaceIndex));
+                        float size = fontSize * pdfFont.getStringWidth(subString) / 1000;
+                        if (size > width) {
+                            if (lastSpace < 0)
+                                lastSpace = spaceIndex;
+                            subString = text.substring(0, lastSpace);
+                            lines.add(subString);
+                            text = text.substring(lastSpace).trim();
+                            lastSpace = -1;
+                        } else if (spaceIndex == text.length()) {
+                            lines.add(text);
+                            text = "";
+                        } else {
+                            lastSpace = spaceIndex;
+                        }
+                    }
+                } else {
+                    // If blank line, print blank line
+                    lines.add(" ");
                 }
             }
 
+            // Start cursor
             contentStream.beginText();
             contentStream.setFont(pdfFont, fontSize);
             contentStream.newLineAtOffset(startX, startY);
-            float currentY=startY;
 
-            List<String> splitLines = new ArrayList<>();
+            float currentY = startY;
+
+            // For each line to write
             for (String line : lines) {
-                String[] split = line.split("\n");
-                splitLines.addAll(Arrays.stream(split).collect(Collectors.toList()));
-            }
-
-            for (String line: splitLines)
-            {
+                // Remove illegal text
                 line = PDFUtils.santiseString(line);
-                currentY -=leading;
 
-                if(currentY<=margin)
-                {
+                // Go down document
+                currentY -= leading;
 
+                // If goes below page
+                if (currentY <= margin) {
                     contentStream.endText();
                     contentStream.close();
+
+                    // Start on new page
                     PDPage new_Page = new PDPage();
                     doc.addPage(new_Page);
                     contentStream = new PDPageContentStream(doc, new_Page);
                     contentStream.beginText();
                     contentStream.setFont(pdfFont, fontSize);
                     contentStream.newLineAtOffset(startX, startY);
-                    currentY=startY;
+                    currentY = startY;
                 }
+
                 contentStream.showText(line);
                 contentStream.newLineAtOffset(0, -leading);
             }
@@ -282,6 +290,8 @@ public class TextEditorGUI {
      * @param content Content in string format
      */
     public void save(String content) {
+        System.out.println(content);
+
         try {
             BufferedWriter fileWriter = new BufferedWriter(new FileWriter(this.openFile));
             fileWriter.write(content);
