@@ -97,16 +97,19 @@ public class TextEditorContentPane extends Container {
         textArea.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
+                gui.setContent(textArea.getText(), false);
                 gui.setSaved(false);
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
+                gui.setContent(textArea.getText(), false);
                 gui.setSaved(false);
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
+                gui.setContent(textArea.getText(), false);
                 gui.setSaved(false);
             }
         });

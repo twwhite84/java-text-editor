@@ -3,7 +3,6 @@ package nz.ac.massey.gui;
 import lombok.Getter;
 import lombok.Setter;
 import nz.ac.massey.action.*;
-
 import org.odftoolkit.odfdom.doc.OdfDocument;
 import org.odftoolkit.odfdom.doc.OdfTextDocument;
 
@@ -35,6 +34,18 @@ public class TextEditorGUI {
     private final Map<String, TextEditorAction> registeredActions = new HashMap<>();
 
     /**
+     * Top menu bar of application
+     */
+    @Getter
+    private final TextEditorMenuBar guiMenuBar;
+
+    /**
+     * Main content pane of application
+     */
+    @Getter
+    private final TextEditorContentPane guiContentPane;
+
+    /**
      * The current open file.
      * {@code null} if no open file
      */
@@ -49,16 +60,11 @@ public class TextEditorGUI {
     private boolean saved;
 
     /**
-     * Top menu bar of application
+     * Internal state of the text of the editor. Used for easier
+     * manipulation and accessing in the CI environment.
      */
     @Getter
-    private final TextEditorMenuBar guiMenuBar;
-
-    /**
-     * Main content pane of application
-     */
-    @Getter
-    private final TextEditorContentPane guiContentPane;
+    private String content;
 
     public TextEditorGUI() {
         registerActions();
@@ -79,6 +85,30 @@ public class TextEditorGUI {
         }
     }
 
+
+    /**
+     * Set the content of the text editor
+     */
+    public void setContent(String content) {
+        this.setContent(content, true);
+    }
+
+    /**
+     * Set the content of the text editor
+     *
+     * @param content        Content as string
+     * @param updateTextArea If this will update the text area pane as well
+     */
+    public void setContent(String content, boolean updateTextArea) {
+        // Update internal content
+        this.content = content;
+
+        // Update text area
+        if (System.getenv("GITHUB_ACTIONS") == null && updateTextArea) {
+            getGuiContentPane().getTextArea().setText(content);
+        }
+    }
+
     /**
      * Register all actions for the application
      */
@@ -94,7 +124,7 @@ public class TextEditorGUI {
      * Save the contents of the editor to the specified file
      * and set the current opened file to this file. Used on first save
      * or if wanting to create a new file from existing
-     * 
+     *
      * @param file File object to be created
      */
     public void saveAs(File file) {
@@ -150,7 +180,7 @@ public class TextEditorGUI {
             }
         }
     }
-    
+
     /**
      * Open a file and populate the contents of the editor
      *
@@ -167,14 +197,14 @@ public class TextEditorGUI {
             if (file.getName().toLowerCase().endsWith(".txt") || file.getName().toLowerCase().endsWith(".rtf")) {
                 // This method works for basic text-based files, .txt, .rtf
                 String fileContent = new String(Files.readAllBytes(Paths.get(file.getPath())));
-                guiContentPane.getTextArea().setText(fileContent);
+                setContent(fileContent);
             } else if (file.getName().toLowerCase().endsWith(".odt")) {
                 // Process OpenDocument Text files (.odt)
                 OdfTextDocument document = (OdfTextDocument) OdfDocument.loadDocument(file);
 
                 // Buggy, does not format correctly *sigh*
                 String textContent = document.getContentRoot().getTextContent();
-                guiContentPane.getTextArea().setText(textContent);
+                setContent(textContent);
 
                 document.close();
             } else {
