@@ -86,6 +86,7 @@ public class TextEditorGUI {
         registerAction(new OpenFileAction());
         registerAction(new SaveAction());
         registerAction(new SaveAsAction());
+        registerAction(new ExitAction());
     }
 
     /**

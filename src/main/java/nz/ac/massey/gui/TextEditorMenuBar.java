@@ -64,8 +64,8 @@ public class TextEditorMenuBar extends JMenuBar {
 
         // file > exit
         JMenuItem menuItemExit = new JMenuItem("Exit", KeyEvent.VK_X);
+        menuItemExit.setAction(new SimpleKeybindAction(gui, "Exit", KeyStroke.getKeyStroke(KeyEvent.VK_F4, Event.ALT_MASK)));
         menuFile.add(menuItemExit);
-        menuItemExit.addActionListener(e -> JOptionPane.showMessageDialog(menuItemSettings, "File > Exit not implemented yet", "Todo", 0));
 
         // search menu
         JMenu menuSearch = new JMenu("Search");
