@@ -136,7 +136,7 @@ public class TextEditorContentPane extends Container {
                     int offset = textArea.getCaretPosition();
                     int line = textArea.getLineOfOffset(textArea.getCaretPosition());
                     int column = offset - Utilities.getRowStart(textArea, offset);
-                    System.out.println((line + 1) + ", " + (column + 1));
+                    lblPosition.setText("Line " + (line + 1) + ", Column " + (column + 1));
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -151,7 +151,7 @@ public class TextEditorContentPane extends Container {
         statusBar = new JPanel(new GridBagLayout());
         GridBagConstraints statusBarConstraints;
 
-        lblPosition = new JLabel("Current Line: 0");
+        lblPosition = new JLabel("Line 1, Column 1");
         statusBarConstraints = new GridBagConstraints();
         statusBarConstraints.gridx = 0;
         statusBarConstraints.ipady = 20;
