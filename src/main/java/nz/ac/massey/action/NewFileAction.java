@@ -15,7 +15,8 @@ public class NewFileAction extends TextEditorAction {
 
     @Override
     public boolean performAction(TextEditorGUI gui) {
-        SwingUtilities.invokeLater(TextEditorGUI::new);
+        // Create new window with same config
+        SwingUtilities.invokeLater(() -> new TextEditorGUI(gui.getConfig()));
         return true;
     }
 }

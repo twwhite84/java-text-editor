@@ -1,6 +1,7 @@
 package nz.ac.massey;
 
 import junit.framework.TestCase;
+import nz.ac.massey.config.TextEditorConfigLoader;
 import nz.ac.massey.gui.TextEditorGUI;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ public class SearchTest extends TestCase {
     /**
      * Test instance of GUI to remove UI code
      */
-    TextEditorGUI gui = new TextEditorGUI();
+    TextEditorGUI gui = new TextEditorGUI(new TextEditorConfigLoader(new File("config.yml")).load());
 
     @Test
     public void testSearch() throws IOException {

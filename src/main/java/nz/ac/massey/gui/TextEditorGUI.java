@@ -3,6 +3,7 @@ package nz.ac.massey.gui;
 import lombok.Getter;
 import lombok.Setter;
 import nz.ac.massey.PDFUtils;
+import nz.ac.massey.config.TextEditorConfig;
 import nz.ac.massey.action.*;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -33,6 +34,12 @@ import java.util.Map;
  * state of the editor window as multiple of these windows can be created.
  */
 public class TextEditorGUI {
+
+    /**
+     * Config used for the editor
+     */
+    @Getter
+    private final TextEditorConfig config;
 
     /**
      * Internal window frame used for the application
@@ -78,7 +85,9 @@ public class TextEditorGUI {
     @Getter
     private String content;
 
-    public TextEditorGUI() {
+    public TextEditorGUI(TextEditorConfig config) {
+        this.config = config;
+
         registerActions();
 
         // Setup UI in non ci environment
