@@ -92,7 +92,7 @@ public class TextEditorContentPane extends Container {
 
         // main text area
         textArea = new JTextArea(4, 30);
-        textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 16));
+        textArea.setFont(new Font(gui.getConfig().getDefaultFont(), Font.PLAIN, gui.getConfig().getDefaultFontSize()));
         // When updating text, set file to unsaved state
         textArea.getDocument().addDocumentListener(new DocumentListener() {
             @Override

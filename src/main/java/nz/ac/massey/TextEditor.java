@@ -3,6 +3,7 @@ package nz.ac.massey;
 import nz.ac.massey.gui.TextEditorGUI;
 
 import javax.swing.*;
+import java.io.File;
 
 /**
  * Entry point of application. Will start GUI.
@@ -14,6 +15,9 @@ public class TextEditor {
         } catch (Exception e) {
         }
 
-        javax.swing.SwingUtilities.invokeLater(TextEditorGUI::new);
+        // Load config
+        TextEditorConfigLoader loader = new TextEditorConfigLoader(new File("config.yml"));
+
+        SwingUtilities.invokeLater(() -> new TextEditorGUI(loader.load()));
     }
 }
