@@ -97,7 +97,9 @@ public class TextEditorContentPane extends Container {
 
         // main text area
         textArea = new RSyntaxTextArea(4, 30);
-        textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 16));
+        textArea.setFont(new Font(gui.getConfig().getDefaultFont(), Font.PLAIN, gui.getConfig().getDefaultFontSize()));
+        textArea.setForeground(gui.getConfig().getFontColour());
+        textArea.setBackground(gui.getConfig().getBackground());
         // When updating text, set file to unsaved state
         textArea.getDocument().addDocumentListener(new DocumentListener() {
             @Override

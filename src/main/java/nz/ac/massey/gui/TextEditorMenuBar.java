@@ -58,18 +58,11 @@ public class TextEditorMenuBar extends JMenuBar {
                 KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.SHIFT_MASK | Event.CTRL_MASK)));
         menuFile.add(menuItemSaveAs);
 
-        // file > settings
-        JMenuItem menuItemSettings = new JMenuItem("Settings", KeyEvent.VK_T);
-        menuFile.add(menuItemSettings);
-        menuItemSettings.addActionListener(
-                e -> JOptionPane.showMessageDialog(menuItemSettings,
-                        "File > Settings not implemented yet", "Todo", 0));
-
         // file > print
         JMenuItem menuItemPrint = new JMenuItem("Print", KeyEvent.VK_P);
         menuFile.add(menuItemPrint);
         menuItemPrint.addActionListener(
-                e -> JOptionPane.showMessageDialog(menuItemSettings, "File > Print not implemented yet",
+                e -> JOptionPane.showMessageDialog(menuFile, "File > Print not implemented yet",
                         "Todo", 0));
 
         // file > exit

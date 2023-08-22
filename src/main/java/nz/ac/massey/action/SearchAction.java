@@ -22,7 +22,7 @@ public class SearchAction extends TextEditorAction {
     /**
      * holds cursor offsets from 0 for start of all matches in search
      */
-    private ArrayList<Integer> offsets;
+    private ArrayList<Integer> offsets = new ArrayList<>();
 
     /**
      * default mouse listener backup, used to restore mouse behaviour. set once.
@@ -158,7 +158,7 @@ public class SearchAction extends TextEditorAction {
         HighlightPainter selected = new DefaultHighlighter.DefaultHighlightPainter(Color.CYAN);
 
         int offset = 0;
-        offsets = new ArrayList<>();
+        offsets.clear();
 
         // Perform search
         while (gui.getContent().indexOf(query, offset) != -1) {
