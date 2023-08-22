@@ -1,4 +1,4 @@
-package nz.ac.massey;
+package nz.ac.massey.config;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

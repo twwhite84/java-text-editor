@@ -1,10 +1,9 @@
-package nz.ac.massey;
+package nz.ac.massey.config;
 
 import org.yaml.snakeyaml.Yaml;
 
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Map;
@@ -17,9 +16,9 @@ public class TextEditorConfigLoader {
     /**
      * File of the .yml config
      */
-    private final InputStream configFile;
+    private final File configFile;
 
-    public TextEditorConfigLoader(InputStream configFile) {
+    public TextEditorConfigLoader(File configFile) {
         this.configFile = configFile;
     }
 
@@ -30,9 +29,11 @@ public class TextEditorConfigLoader {
         TextEditorConfig config = null;
 
         try {
+            InputStream inputStream = Files.newInputStream(this.configFile.toPath());
+
             // Load yaml data
             Yaml yaml = new Yaml();
-            Map<String, Object> data = yaml.load(configFile);
+            Map<String, Object> data = yaml.load(inputStream);
 
             // Read data into object
             int defaultFontSize = (int) data.getOrDefault("defaultFontSize", 16);

@@ -3,7 +3,7 @@ package nz.ac.massey.gui;
 import lombok.Getter;
 import lombok.Setter;
 import nz.ac.massey.PDFUtils;
-import nz.ac.massey.TextEditorConfig;
+import nz.ac.massey.config.TextEditorConfig;
 import nz.ac.massey.action.*;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
