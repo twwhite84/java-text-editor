@@ -135,13 +135,8 @@ public class TextEditorContentPane extends Container {
                 try {
                     int offset = textArea.getCaretPosition();
                     int line = textArea.getLineOfOffset(textArea.getCaretPosition());
-                    int column = textArea.getLineStartOffset(line);
-
-                    // rowstart: the offset at the start of a row
-                    int rowStart = Utilities.getRowStart(textArea, offset);
-                    
-                    
-                    
+                    int column = offset - Utilities.getRowStart(textArea, offset);
+                    System.out.println((line + 1) + ", " + (column + 1));
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
