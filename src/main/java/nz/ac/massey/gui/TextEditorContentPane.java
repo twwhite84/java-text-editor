@@ -101,7 +101,11 @@ public class TextEditorContentPane extends Container {
         textArea.setFont(new Font(gui.getConfig().getDefaultFont(), Font.PLAIN, gui.getConfig().getDefaultFontSize()));
         textArea.setForeground(gui.getConfig().getFontColour());
         textArea.setBackground(gui.getConfig().getBackground());
-        textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_C);
+        textArea.setHighlightCurrentLine(false);
+
+        // Default code formatting is none
+        textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
+
         // When updating text, set file to unsaved state
         textArea.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -124,20 +128,15 @@ public class TextEditorContentPane extends Container {
         });
 
         // update position displayed on status bar when cursor moves
-        textArea.addCaretListener(new CaretListener() {
-
-            @Override
-            public void caretUpdate(CaretEvent e) {
-                try {
-                    int offset = textArea.getCaretPosition();
-                    int line = textArea.getLineOfOffset(textArea.getCaretPosition());
-                    int column = offset - Utilities.getRowStart(textArea, offset);
-                    lblPosition.setText("Line " + (line + 1) + ", Column " + (column + 1));
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+        textArea.addCaretListener(e -> {
+            try {
+                int offset = textArea.getCaretPosition();
+                int line = textArea.getLineOfOffset(textArea.getCaretPosition());
+                int column = offset - Utilities.getRowStart(textArea, offset);
+                lblPosition.setText("Line " + (line + 1) + ", Column " + (column + 1));
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
-
         });
 
         RTextScrollPane scrollPane = new RTextScrollPane(textArea);
@@ -161,7 +160,7 @@ public class TextEditorContentPane extends Container {
         statusBarConstraints.ipadx = 20;
         statusBar.add(lblWordWrap, statusBarConstraints);
 
-        lblSyntax = new JLabel("Syntax: None");
+        lblSyntax = new JLabel("Syntax: text/plain");
         statusBarConstraints = new GridBagConstraints();
         statusBarConstraints.gridx = 2;
         statusBarConstraints.ipady = 20;
@@ -191,6 +190,16 @@ public class TextEditorContentPane extends Container {
         contentPaneConstraints.gridy = 2;
         add(statusBar, contentPaneConstraints);
 
+    }
+
+    /**
+     * Sets syntax highlighting of edtiro
+     *
+     * @param syntax Styntax to use see {@link SyntaxConstants}
+     */
+    public void setSyntax(String syntax) {
+        this.textArea.setSyntaxEditingStyle(syntax);
+        this.lblSyntax.setText("Syntax: " + syntax);
     }
 
     public void toggleWrapIndicator(Boolean wrapEnabled) {

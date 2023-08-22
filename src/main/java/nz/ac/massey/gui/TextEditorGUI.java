@@ -24,10 +24,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This is the main instance of the GUI for the text editor. It will hold all
@@ -358,6 +355,12 @@ public class TextEditorGUI {
                 // This method works for any other text-based files
                 String fileContent = new String(Files.readAllBytes(Paths.get(file.getPath())));
                 setContent(fileContent);
+
+                // Set syntax highlighting
+                String syntax = "text/" + Optional.of(file.getName())
+                        .filter(f -> f.contains("."))
+                        .map(f -> f.substring(file.getName().lastIndexOf(".") + 1)).get();
+                getGuiContentPane().setSyntax(syntax);
             }
         } catch (Exception ex) {
             if (System.getenv("GITHUB_ACTIONS") == null) {
