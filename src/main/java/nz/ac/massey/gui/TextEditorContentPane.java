@@ -2,6 +2,8 @@ package nz.ac.massey.gui;
 
 import lombok.Getter;
 import nz.ac.massey.SimpleKeybindAction;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
@@ -44,7 +46,7 @@ public class TextEditorContentPane extends Container {
      * The actual editable text area
      */
     @Getter
-    private JTextArea textArea;
+    private RSyntaxTextArea textArea;
 
     /**
      * Status bar object
@@ -65,7 +67,6 @@ public class TextEditorContentPane extends Container {
      * Get instance of the content pane
      */
     public void init() {
-
         // search panel
         searchPanel = new JPanel(new GridBagLayout());
         GridBagConstraints searchPanelConstraints = new GridBagConstraints();
@@ -95,7 +96,7 @@ public class TextEditorContentPane extends Container {
         searchPanel.add(btnSearchPrev, searchPanelConstraints);
 
         // main text area
-        textArea = new JTextArea(4, 30);
+        textArea = new RSyntaxTextArea(4, 30);
         textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 16));
         // When updating text, set file to unsaved state
         textArea.getDocument().addDocumentListener(new DocumentListener() {
@@ -135,7 +136,7 @@ public class TextEditorContentPane extends Container {
 
         });
 
-        JScrollPane scrollPane = new JScrollPane(textArea);
+        RTextScrollPane scrollPane = new RTextScrollPane(textArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         // status bar panel
