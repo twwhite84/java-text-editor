@@ -4,8 +4,12 @@ import lombok.Getter;
 import nz.ac.massey.SimpleKeybindAction;
 
 import javax.swing.*;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.Utilities;
+
 import java.awt.*;
 
 /**
@@ -50,11 +54,20 @@ public class TextEditorContentPane extends Container {
     /**
      * Labels for status bar
      */
-    private JLabel lblWordWrap, lblCurrentLine;
+    private JLabel lblWordWrap, lblPosition;
+
+    /**
+     * text area cursor position
+     * 
+     * @param gui
+     */
+    private int currentLine, currentColumn;
 
     public TextEditorContentPane(TextEditorGUI gui) {
         this.gui = gui;
         init();
+        currentColumn = textArea.getCaretPosition();
+        currentLine = textArea.getRows();
     }
 
     /**
@@ -113,6 +126,29 @@ public class TextEditorContentPane extends Container {
                 gui.setSaved(false);
             }
         });
+
+        // update cursor variable when cursor moves
+        textArea.addCaretListener(new CaretListener() {
+
+            @Override
+            public void caretUpdate(CaretEvent e) {
+                try {
+                    int offset = textArea.getCaretPosition();
+                    int line = textArea.getLineOfOffset(textArea.getCaretPosition());
+                    int column = textArea.getLineStartOffset(line);
+
+                    // rowstart: the offset at the start of a row
+                    int rowStart = Utilities.getRowStart(textArea, offset);
+                    
+                    
+                    
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+        });
+
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
@@ -120,12 +156,12 @@ public class TextEditorContentPane extends Container {
         statusBar = new JPanel(new GridBagLayout());
         GridBagConstraints statusBarConstraints;
 
-        lblCurrentLine = new JLabel("Current Line: 0");
+        lblPosition = new JLabel("Current Line: 0");
         statusBarConstraints = new GridBagConstraints();
         statusBarConstraints.gridx = 0;
         statusBarConstraints.ipady = 20;
         statusBarConstraints.ipadx = 20;
-        statusBar.add(lblCurrentLine, statusBarConstraints);
+        statusBar.add(lblPosition, statusBarConstraints);
 
         lblWordWrap = new JLabel("Word Wrap: OFF");
         statusBarConstraints = new GridBagConstraints();
