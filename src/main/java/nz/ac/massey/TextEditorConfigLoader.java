@@ -17,10 +17,10 @@ public class TextEditorConfigLoader {
     /**
      * File of the .yml config
      */
-    private final File configFile;
+    private final InputStream configFile;
 
-    public TextEditorConfigLoader(File confgiFile) {
-        this.configFile = confgiFile;
+    public TextEditorConfigLoader(InputStream configFile) {
+        this.configFile = configFile;
     }
 
     /**
@@ -30,19 +30,16 @@ public class TextEditorConfigLoader {
         TextEditorConfig config = null;
 
         try {
-            // Load file into stream
-            InputStream inputStream = Files.newInputStream(this.configFile.toPath());
-
             // Load yaml data
             Yaml yaml = new Yaml();
-            Map<String, Object> data = yaml.load(inputStream);
+            Map<String, Object> data = yaml.load(configFile);
 
             // Read data into object
-            int defaultFontSize = (int) data.getOrDefault("font.defaultFontSize", 16);
-            String defaultFont = (String) data.getOrDefault("font.defaultFont", Font.MONOSPACED);
+            int defaultFontSize = (int) data.getOrDefault("defaultFontSize", 16);
+            String defaultFont = (String) data.getOrDefault("defaultFont", Font.MONOSPACED);
 
             config = new TextEditorConfig(defaultFontSize, defaultFont);
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             System.err.println("Error loading config.yml");
             ex.printStackTrace();
         }

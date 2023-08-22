@@ -1,12 +1,10 @@
 # The TextEditor settings file
 
-# Font display options
-font:
-  # The default font size to display text at
-  defaultFontSize: 16
-  # Options: MONOSPACED, SERIF, SANS_SERIF
-  defaultFont: "MONOSPACED"
+# The default font size to display text at
+defaultFontSize: 16
+# Options: MONOSPACED, SERIF, SANS_SERIF
+defaultFont: "MONOSPACED"
 
 # Colour scheme options
-theme:
-  background: '#FFFFFF'
+background: '#FFFFFF'
+fontColour: "#000000"

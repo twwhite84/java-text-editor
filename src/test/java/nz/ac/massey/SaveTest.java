@@ -17,7 +17,7 @@ public class SaveTest extends TestCase {
     /**
      * Test instance of GUI to remove UI code
      */
-    TextEditorGUI gui = new TextEditorGUI(new TextEditorConfigLoader(new File("config.yml")).load());
+    TextEditorGUI gui = new TextEditorGUI(new TextEditorConfigLoader(ClassLoader.getSystemResourceAsStream("config.yml")).load());
 
     @Test
     public void testSavingFile() throws IOException {
