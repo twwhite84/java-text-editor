@@ -272,7 +272,8 @@ public class TextEditorGUI {
             } catch (IOException ex) {
                 if (System.getenv("GITHUB_ACTIONS") == null) {
                     // Error while saving
-                    JOptionPane.showMessageDialog(frame, "Error saving file to PDF format", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Error saving file to PDF format", "Error",
+                            JOptionPane.ERROR_MESSAGE);
                 } else {
                     System.err.println("Error saving file to PDF format");
                 }
