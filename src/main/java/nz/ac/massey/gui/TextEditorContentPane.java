@@ -54,20 +54,11 @@ public class TextEditorContentPane extends Container {
     /**
      * Labels for status bar
      */
-    private JLabel lblWordWrap, lblPosition;
-
-    /**
-     * text area cursor position
-     * 
-     * @param gui
-     */
-    private int currentLine, currentColumn;
+    private JLabel lblPosition, lblWordWrap, lblSyntax;
 
     public TextEditorContentPane(TextEditorGUI gui) {
         this.gui = gui;
         init();
-        currentColumn = textArea.getCaretPosition();
-        currentLine = textArea.getRows();
     }
 
     /**
@@ -127,7 +118,7 @@ public class TextEditorContentPane extends Container {
             }
         });
 
-        // update cursor variable when cursor moves
+        // update position displayed on status bar when cursor moves
         textArea.addCaretListener(new CaretListener() {
 
             @Override
@@ -164,6 +155,13 @@ public class TextEditorContentPane extends Container {
         statusBarConstraints.ipady = 20;
         statusBarConstraints.ipadx = 20;
         statusBar.add(lblWordWrap, statusBarConstraints);
+
+        lblSyntax = new JLabel("Syntax: None");
+        statusBarConstraints = new GridBagConstraints();
+        statusBarConstraints.gridx = 2;
+        statusBarConstraints.ipady = 20;
+        statusBarConstraints.ipadx = 20;
+        statusBar.add(lblSyntax, statusBarConstraints);
 
         // adding elements to the content pane
         setLayout(new GridBagLayout());
