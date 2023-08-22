@@ -127,8 +127,6 @@ public class TextEditorMenuBar extends JMenuBar {
         // help > about
         JMenuItem menuItemAbout = new JMenuItem("About", KeyEvent.VK_A);
         menuHelp.add(menuItemAbout);
-        menuItemAbout.addActionListener(
-                e -> JOptionPane.showMessageDialog(menuItemAbout, "Help > About not implemented yet",
-                        "Todo", 0));
+        menuItemAbout.setAction(new SimpleKeybindAction(gui, "About", null));
     }
 }

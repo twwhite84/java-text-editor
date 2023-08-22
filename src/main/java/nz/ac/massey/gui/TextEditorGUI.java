@@ -139,6 +139,7 @@ public class TextEditorGUI {
         registerAction(new SaveAction());
         registerAction(new SaveAsAction());
         registerAction(new ExitAction());
+        registerAction(new AboutAction());
     }
 
     /**
