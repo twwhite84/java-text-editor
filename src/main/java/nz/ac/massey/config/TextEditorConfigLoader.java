@@ -38,8 +38,10 @@ public class TextEditorConfigLoader {
             // Read data into object
             int defaultFontSize = (int) data.getOrDefault("defaultFontSize", 16);
             String defaultFont = (String) data.getOrDefault("defaultFont", Font.MONOSPACED);
+            Color background = Color.decode((String) data.getOrDefault("background", "#FFFFFF"));
+            Color fontColour = Color.decode((String) data.getOrDefault("fontColour", "#000000"));
 
-            config = new TextEditorConfig(defaultFontSize, defaultFont);
+            config = new TextEditorConfig(defaultFontSize, defaultFont, background, fontColour);
         } catch (Exception ex) {
             System.err.println("Error loading config.yml");
             ex.printStackTrace();

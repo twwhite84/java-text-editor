@@ -19,4 +19,16 @@ public class TextEditorConfig {
      */
     private final String defaultFont;
 
+    /**
+     * Background of text area
+     */
+    @Getter
+    private final Color background;
+
+    /**
+     * Default colour of font
+     */
+    @Getter
+    private final Color fontColour;
+
 }

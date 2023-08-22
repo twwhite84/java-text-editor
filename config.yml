@@ -6,5 +6,5 @@ defaultFontSize: 16
 defaultFont: "MONOSPACED"
 
 # Colour scheme options
-background: '#FFFFFF'
+background: "#FFFFFF"
 fontColour: "#000000"

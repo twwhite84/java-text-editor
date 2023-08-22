@@ -25,9 +25,10 @@ jobs:
     - name: Build with Maven
       run: mvn -B --update-snapshots package --file pom.xml
     - run: mkdir staging && cp target/*.jar staging
+    - run: cp target/config.yml staging
     - uses: actions/upload-artifact@v3
       with:
-        name: Application
+        name: Application Files
         path: staging
     - uses: pmd/pmd-github-action@v1
       with:
