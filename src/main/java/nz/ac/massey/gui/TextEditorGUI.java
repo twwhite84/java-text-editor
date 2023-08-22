@@ -255,11 +255,12 @@ public class TextEditorGUI {
      */
     public boolean saveAs(File file) {
         // Assign open file
+        // Not for PDF as that is exporting
         if (!file.getName().endsWith(".pdf")) {
             this.openFile = file;
         }
 
-        if (file.getName().endsWith(".txt")) {
+        if (!file.getName().endsWith(".pdf")) {
             // Update title of editor
             frame.setTitle(openFile.getName());
 
@@ -344,11 +345,7 @@ public class TextEditorGUI {
 
         // Read contents of file into text area
         try {
-            if (file.getName().toLowerCase().endsWith(".txt") || file.getName().toLowerCase().endsWith(".rtf")) {
-                // This method works for basic text-based files, .txt, .rtf
-                String fileContent = new String(Files.readAllBytes(Paths.get(file.getPath())));
-                setContent(fileContent);
-            } else if (file.getName().toLowerCase().endsWith(".odt")) {
+            if (file.getName().toLowerCase().endsWith(".odt")) {
                 // Process OpenDocument Text files (.odt)
                 OdfTextDocument document = (OdfTextDocument) OdfDocument.loadDocument(file);
 
@@ -358,12 +355,9 @@ public class TextEditorGUI {
 
                 document.close();
             } else {
-                if (System.getenv("GITHUB_ACTIONS") == null) {
-                    // Not supported extension if somehow opened
-                    JOptionPane.showMessageDialog(frame, "File type not supported", "Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    System.err.println("File type not supported");
-                }
+                // This method works for any other text-based files
+                String fileContent = new String(Files.readAllBytes(Paths.get(file.getPath())));
+                setContent(fileContent);
             }
         } catch (Exception ex) {
             if (System.getenv("GITHUB_ACTIONS") == null) {

@@ -3,6 +3,7 @@ package nz.ac.massey.gui;
 import lombok.Getter;
 import nz.ac.massey.SimpleKeybindAction;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
@@ -100,6 +101,7 @@ public class TextEditorContentPane extends Container {
         textArea.setFont(new Font(gui.getConfig().getDefaultFont(), Font.PLAIN, gui.getConfig().getDefaultFontSize()));
         textArea.setForeground(gui.getConfig().getFontColour());
         textArea.setBackground(gui.getConfig().getBackground());
+        textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_C);
         // When updating text, set file to unsaved state
         textArea.getDocument().addDocumentListener(new DocumentListener() {
             @Override
