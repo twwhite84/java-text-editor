@@ -407,12 +407,7 @@ public class TextEditorGUI {
      * @param saved If is saved or not
      */
     public void setSaved(boolean saved) {
-        System.out.println("Saved before setting: " + this.saved);
-
         this.saved = saved;
-
-        System.out.println("Setting saved as: " + saved);
-        System.out.println("Updated saved value: " + this.saved);
 
         if (System.getenv("GITHUB_ACTIONS") == null) {
             if (saved) {
@@ -424,8 +419,6 @@ public class TextEditorGUI {
                     frame.setTitle(this.openFile.getName() + "*");
             }
         }
-
-        System.out.println("End of setSaved function");
     }
 
     /**
