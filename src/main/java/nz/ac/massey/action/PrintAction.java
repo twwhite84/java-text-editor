@@ -16,8 +16,7 @@ public class PrintAction extends TextEditorAction {
 
     @Override
     public boolean performAction(TextEditorGUI gui) {
-        try {
-            PDDocument pddoc = gui.getPdfFile();
+        try (PDDocument pddoc = gui.getPdfFile()) {
             PrinterJob job = PrinterJob.getPrinterJob();
             job.setPageable(new PDFPageable(pddoc));
             if (job.printDialog()) {
