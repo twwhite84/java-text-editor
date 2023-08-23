@@ -60,10 +60,9 @@ public class TextEditorMenuBar extends JMenuBar {
 
         // file > print
         JMenuItem menuItemPrint = new JMenuItem("Print", KeyEvent.VK_P);
+        menuItemPrint.setAction(new SimpleKeybindAction(gui, "Print",
+                KeyStroke.getKeyStroke(KeyEvent.VK_P, Event.CTRL_MASK)));
         menuFile.add(menuItemPrint);
-        menuItemPrint.addActionListener(
-                e -> JOptionPane.showMessageDialog(menuFile, "File > Print not implemented yet",
-                        "Todo", 0));
 
         // file > exit
         JMenuItem menuItemExit = new JMenuItem("Exit", KeyEvent.VK_X);
