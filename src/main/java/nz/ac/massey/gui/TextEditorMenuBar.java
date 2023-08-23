@@ -112,6 +112,16 @@ public class TextEditorMenuBar extends JMenuBar {
                     "Todo", 0);
         });
 
+        // time and date menu
+        JMenu timeAndDate = new JMenu("Time & Date");
+        timeAndDate.setMnemonic(KeyEvent.VK_T);
+        add(timeAndDate);
+
+        // time and date > time and date
+        JMenuItem menuItemTimeDate = new JMenuItem("Time & Date", KeyEvent.VK_T);
+        menuItemTimeDate.setAction(new SimpleKeybindAction(gui, "Time and Date", KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0)));
+        timeAndDate.add(menuItemTimeDate);
+
         // help menu
         JMenu menuHelp = new JMenu("Help");
         menuHelp.setMnemonic(KeyEvent.VK_H);
