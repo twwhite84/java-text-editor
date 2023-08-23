@@ -314,11 +314,13 @@ public class TextEditorGUI {
             // Set state to saved
             setSaved(true);
 
-            // Set syntax highlighting
-            String syntax = "text/" + Optional.of(openFile.getName())
-                    .filter(f -> f.contains("."))
-                    .map(f -> f.substring(openFile.getName().lastIndexOf(".") + 1)).get();
-            getGuiContentPane().setSyntax(syntax);
+            if (System.getenv("GITHUB_ACTIONS") == null) {
+                // Set syntax highlighting
+                String syntax = "text/" + Optional.of(openFile.getName())
+                        .filter(f -> f.contains("."))
+                        .map(f -> f.substring(openFile.getName().lastIndexOf(".") + 1)).get();
+                getGuiContentPane().setSyntax(syntax);
+            }
 
             return true;
         } catch (IOException ex) {
@@ -363,11 +365,13 @@ public class TextEditorGUI {
                 String fileContent = new String(Files.readAllBytes(Paths.get(file.getPath())));
                 setContent(fileContent);
 
-                // Set syntax highlighting
-                String syntax = "text/" + Optional.of(file.getName())
-                        .filter(f -> f.contains("."))
-                        .map(f -> f.substring(file.getName().lastIndexOf(".") + 1)).get();
-                getGuiContentPane().setSyntax(syntax);
+                if (System.getenv("GITHUB_ACTIONS") == null) {
+                    // Set syntax highlighting
+                    String syntax = "text/" + Optional.of(file.getName())
+                            .filter(f -> f.contains("."))
+                            .map(f -> f.substring(file.getName().lastIndexOf(".") + 1)).get();
+                    getGuiContentPane().setSyntax(syntax);
+                }
             }
         } catch (Exception ex) {
             if (System.getenv("GITHUB_ACTIONS") == null) {
