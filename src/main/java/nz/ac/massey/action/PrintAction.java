@@ -26,7 +26,6 @@ public class PrintAction extends TextEditorAction {
 
             @Override
             protected Void doInBackground() throws Exception {
-                System.out.println("worker starting");
                 try (PDDocument pddoc = gui.getPdfFile()) {
                     PrinterJob job = PrinterJob.getPrinterJob();
                     job.setPageable(new PDFPageable(pddoc));
@@ -41,7 +40,6 @@ public class PrintAction extends TextEditorAction {
 
             @Override
             protected void done() {
-                System.out.println("worker done");
             }
         };
     }
