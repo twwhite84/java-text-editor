@@ -17,9 +17,6 @@ public class ExitAction extends TextEditorAction {
 
     @Override
     public boolean performAction(TextEditorGUI gui) {
-        Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
-        threadSet.forEach(thread -> System.out.println(thread));
-        
         if (!gui.isSaved()) {
             if (gui.getOpenFile() == null && gui.getGuiContentPane().getTextArea().getText().length() == 0) {
                 gui.getFrame().dispose();
