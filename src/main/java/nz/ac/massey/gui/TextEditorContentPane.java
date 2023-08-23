@@ -58,6 +58,7 @@ public class TextEditorContentPane extends Container {
     /**
      * Labels for status bar
      */
+    @Getter
     private JLabel lblPosition, lblWordWrap, lblSyntax;
 
     public TextEditorContentPane(TextEditorGUI gui) {
@@ -201,12 +202,5 @@ public class TextEditorContentPane extends Container {
     public void setSyntax(String syntax) {
         this.textArea.setSyntaxEditingStyle(syntax);
         this.lblSyntax.setText("Syntax: " + syntax);
-    }
-
-    public void toggleWrapIndicator(Boolean wrapEnabled) {
-        if (wrapEnabled)
-            lblWordWrap.setText("Word Wrap: ON");
-        else if (!wrapEnabled)
-            lblWordWrap.setText("Word Wrap: OFF");
     }
 }

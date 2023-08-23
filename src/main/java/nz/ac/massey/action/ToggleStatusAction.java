@@ -2,6 +2,9 @@ package nz.ac.massey.action;
 
 import nz.ac.massey.gui.TextEditorGUI;
 
+/**
+ * Action for showing or hiding the status bar
+ */
 public class ToggleStatusAction extends TextEditorAction {
 
     public ToggleStatusAction() {
