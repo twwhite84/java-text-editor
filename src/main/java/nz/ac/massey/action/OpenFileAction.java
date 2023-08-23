@@ -18,10 +18,9 @@ public class OpenFileAction extends TextEditorAction {
     @Override
     public boolean performAction(TextEditorGUI gui) {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setAcceptAllFileFilterUsed(true);
 
         // Add file filters for supported types
-        // @todo Add support for code based files, issue #14
         fileChooser.addChoosableFileFilter(new FileFilter() {
             public String getDescription() {
                 return "Text Files (*.txt)";

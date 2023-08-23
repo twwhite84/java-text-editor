@@ -2,6 +2,9 @@ package nz.ac.massey.gui;
 
 import lombok.Getter;
 import nz.ac.massey.SimpleKeybindAction;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
@@ -44,7 +47,7 @@ public class TextEditorContentPane extends Container {
      * The actual editable text area
      */
     @Getter
-    private JTextArea textArea;
+    private RSyntaxTextArea textArea;
 
     /**
      * Status bar object
@@ -65,7 +68,6 @@ public class TextEditorContentPane extends Container {
      * Get instance of the content pane
      */
     public void init() {
-
         // search panel
         searchPanel = new JPanel(new GridBagLayout());
         GridBagConstraints searchPanelConstraints = new GridBagConstraints();
@@ -95,10 +97,15 @@ public class TextEditorContentPane extends Container {
         searchPanel.add(btnSearchPrev, searchPanelConstraints);
 
         // main text area
-        textArea = new JTextArea(4, 30);
+        textArea = new RSyntaxTextArea(4, 30);
         textArea.setFont(new Font(gui.getConfig().getDefaultFont(), Font.PLAIN, gui.getConfig().getDefaultFontSize()));
         textArea.setForeground(gui.getConfig().getFontColour());
         textArea.setBackground(gui.getConfig().getBackground());
+        textArea.setHighlightCurrentLine(false);
+
+        // Default code formatting is none
+        textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
+
         // When updating text, set file to unsaved state
         textArea.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -121,23 +128,18 @@ public class TextEditorContentPane extends Container {
         });
 
         // update position displayed on status bar when cursor moves
-        textArea.addCaretListener(new CaretListener() {
-
-            @Override
-            public void caretUpdate(CaretEvent e) {
-                try {
-                    int offset = textArea.getCaretPosition();
-                    int line = textArea.getLineOfOffset(textArea.getCaretPosition());
-                    int column = offset - Utilities.getRowStart(textArea, offset);
-                    lblPosition.setText("Line " + (line + 1) + ", Column " + (column + 1));
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+        textArea.addCaretListener(e -> {
+            try {
+                int offset = textArea.getCaretPosition();
+                int line = textArea.getLineOfOffset(textArea.getCaretPosition());
+                int column = offset - Utilities.getRowStart(textArea, offset);
+                lblPosition.setText("Line " + (line + 1) + ", Column " + (column + 1));
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
-
         });
 
-        JScrollPane scrollPane = new JScrollPane(textArea);
+        RTextScrollPane scrollPane = new RTextScrollPane(textArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         // status bar panel
@@ -158,7 +160,7 @@ public class TextEditorContentPane extends Container {
         statusBarConstraints.ipadx = 20;
         statusBar.add(lblWordWrap, statusBarConstraints);
 
-        lblSyntax = new JLabel("Syntax: None");
+        lblSyntax = new JLabel("Syntax: text/plain");
         statusBarConstraints = new GridBagConstraints();
         statusBarConstraints.gridx = 2;
         statusBarConstraints.ipady = 20;
@@ -188,6 +190,16 @@ public class TextEditorContentPane extends Container {
         contentPaneConstraints.gridy = 2;
         add(statusBar, contentPaneConstraints);
 
+    }
+
+    /**
+     * Sets syntax highlighting of edtiro
+     *
+     * @param syntax Styntax to use see {@link SyntaxConstants}
+     */
+    public void setSyntax(String syntax) {
+        this.textArea.setSyntaxEditingStyle(syntax);
+        this.lblSyntax.setText("Syntax: " + syntax);
     }
 
     public void toggleWrapIndicator(Boolean wrapEnabled) {
