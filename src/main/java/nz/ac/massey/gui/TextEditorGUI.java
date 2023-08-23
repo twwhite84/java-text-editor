@@ -13,6 +13,8 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.odftoolkit.odfdom.doc.OdfDocument;
 import org.odftoolkit.odfdom.doc.OdfTextDocument;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.swing.*;
 
@@ -356,9 +358,17 @@ public class TextEditorGUI {
                 // Process OpenDocument Text files (.odt)
                 OdfTextDocument document = (OdfTextDocument) OdfDocument.loadDocument(file);
 
-                // Buggy, does not format correctly *sigh*
-                String textContent = document.getContentRoot().getTextContent();
-                setContent(textContent);
+                // Get base text nodes of documents and build content
+                StringBuilder textContent = new StringBuilder();
+                NodeList nodes = document.getContentRoot().getChildNodes();
+                for (int i = 0; i < nodes.getLength(); i++) {
+                    Node node = nodes.item(i);
+                    textContent.append(node.getTextContent());
+                    if (i != nodes.getLength() - 1) textContent.append("\n");
+                }
+
+                // Basic display of content
+                setContent(textContent.toString());
 
                 document.close();
             } else {
