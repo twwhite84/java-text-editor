@@ -1,7 +1,5 @@
 package nz.ac.massey.action;
 
-import javax.swing.JOptionPane;
-
 import nz.ac.massey.gui.TextEditorGUI;
 
 public class ToggleStatusAction extends TextEditorAction {
@@ -12,18 +10,13 @@ public class ToggleStatusAction extends TextEditorAction {
 
     @Override
     public boolean performAction(TextEditorGUI gui) {
-        System.out.println("toggle status bar");
 
-        /* menuItemStatusbar.addActionListener(e -> {
-            String message;
-            if (menuItemStatusbar.isSelected())
-                message = "Status bar on";
-            else
-                message = "Status bar off";
-            JOptionPane.showMessageDialog(menuItemWrap, message + "\nStatus bar not implemented yet",
-                    "Todo", 0);
-        }); */
-        
+        if (gui.getGuiContentPane().getStatusBar().isVisible()) {
+            gui.getGuiContentPane().getStatusBar().setVisible(false);
+        } else {
+            gui.getGuiContentPane().getStatusBar().setVisible(true);
+        }
+
         return true;
     }
 

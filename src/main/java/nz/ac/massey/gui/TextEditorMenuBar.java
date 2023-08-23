@@ -102,6 +102,7 @@ public class TextEditorMenuBar extends JMenuBar {
         menuItemStatusbar.setMnemonic(KeyEvent.VK_S);
         menuItemStatusbar.setAction(new SimpleKeybindAction(gui, "Status Bar",
                 KeyStroke.getKeyStroke(KeyEvent.VK_B, Event.CTRL_MASK)));
+        menuItemStatusbar.setSelected(true);
         menuView.add(menuItemStatusbar);
 
         // time and date menu

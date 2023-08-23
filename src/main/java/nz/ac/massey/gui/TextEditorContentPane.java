@@ -52,6 +52,7 @@ public class TextEditorContentPane extends Container {
     /**
      * Status bar object
      */
+    @Getter
     private JPanel statusBar;
 
     /**
