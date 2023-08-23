@@ -313,6 +313,13 @@ public class TextEditorGUI {
 
             // Set state to saved
             setSaved(true);
+
+            // Set syntax highlighting
+            String syntax = "text/" + Optional.of(openFile.getName())
+                    .filter(f -> f.contains("."))
+                    .map(f -> f.substring(openFile.getName().lastIndexOf(".") + 1)).get();
+            getGuiContentPane().setSyntax(syntax);
+
             return true;
         } catch (IOException ex) {
             ex.printStackTrace();
