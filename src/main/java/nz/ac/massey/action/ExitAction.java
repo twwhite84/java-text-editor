@@ -1,7 +1,5 @@
 package nz.ac.massey.action;
 
-import java.util.Set;
-
 import javax.swing.JOptionPane;
 
 import nz.ac.massey.gui.TextEditorGUI;
