@@ -1,10 +1,6 @@
 package nz.ac.massey.action;
 
-import java.awt.print.Printable;
-
 import javax.swing.JTextArea;
-
-import org.apache.pdfbox.pdmodel.PDDocument;
 
 import nz.ac.massey.gui.TextEditorGUI;
 
