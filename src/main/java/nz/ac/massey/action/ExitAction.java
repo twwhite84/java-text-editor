@@ -1,5 +1,7 @@
 package nz.ac.massey.action;
 
+import java.util.Set;
+
 import javax.swing.JOptionPane;
 
 import nz.ac.massey.gui.TextEditorGUI;
@@ -15,6 +17,9 @@ public class ExitAction extends TextEditorAction {
 
     @Override
     public boolean performAction(TextEditorGUI gui) {
+        Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
+        threadSet.forEach(thread -> System.out.println(thread));
+        
         if (!gui.isSaved()) {
             if (gui.getOpenFile() == null && gui.getGuiContentPane().getTextArea().getText().length() == 0) {
                 gui.getFrame().dispose();
