@@ -323,6 +323,8 @@ public class TextEditorGUI {
                         .filter(f -> f.contains("."))
                         .map(f -> f.substring(openFile.getName().lastIndexOf(".") + 1)).get();
                 getGuiContentPane().setSyntax(syntax);
+                // Make sure stays true as updating text area may auto set to false
+                setSaved(true);
             }
 
             return true;
@@ -405,7 +407,12 @@ public class TextEditorGUI {
      * @param saved If is saved or not
      */
     public void setSaved(boolean saved) {
+        System.out.println("Saved before setting: " + this.saved);
+
         this.saved = saved;
+
+        System.out.println("Setting saved as: " + saved);
+        System.out.println("Updated saved value: " + this.saved);
 
         if (System.getenv("GITHUB_ACTIONS") == null) {
             if (saved) {
@@ -417,6 +424,8 @@ public class TextEditorGUI {
                     frame.setTitle(this.openFile.getName() + "*");
             }
         }
+
+        System.out.println("End of setSaved function");
     }
 
     /**
