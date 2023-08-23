@@ -142,6 +142,7 @@ public class TextEditorGUI {
         registerAction(new PrintAction());
         registerAction(new TimeDateAction());
         registerAction(new ToggleStatusAction());
+        registerAction(new ToggleWrapAction());
     }
 
     /**

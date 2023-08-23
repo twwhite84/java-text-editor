@@ -90,12 +90,9 @@ public class TextEditorMenuBar extends JMenuBar {
         // view > word wrap
         JCheckBoxMenuItem menuItemWrap = new JCheckBoxMenuItem("Word Wrap");
         menuItemWrap.setMnemonic(KeyEvent.VK_W);
+        menuItemWrap.setAction(
+                new SimpleKeybindAction(gui, "Word Wrap", KeyStroke.getKeyStroke(KeyEvent.VK_W, Event.CTRL_MASK)));
         menuView.add(menuItemWrap);
-
-        menuItemWrap.addActionListener(e -> {
-            // not actually implemented yet, this just toggles the indicator
-            gui.getGuiContentPane().toggleWrapIndicator(menuItemWrap.isSelected());
-        });
 
         // view > status bar
         JCheckBoxMenuItem menuItemStatusbar = new JCheckBoxMenuItem("Status Bar");
