@@ -100,16 +100,9 @@ public class TextEditorMenuBar extends JMenuBar {
         // view > status bar
         JCheckBoxMenuItem menuItemStatusbar = new JCheckBoxMenuItem("Status Bar");
         menuItemStatusbar.setMnemonic(KeyEvent.VK_S);
+        menuItemStatusbar.setAction(new SimpleKeybindAction(gui, "Status Bar",
+                KeyStroke.getKeyStroke(KeyEvent.VK_B, Event.CTRL_MASK)));
         menuView.add(menuItemStatusbar);
-        menuItemStatusbar.addActionListener(e -> {
-            String message;
-            if (menuItemStatusbar.isSelected())
-                message = "Status bar on";
-            else
-                message = "Status bar off";
-            JOptionPane.showMessageDialog(menuItemWrap, message + "\nStatus bar not implemented yet",
-                    "Todo", 0);
-        });
 
         // time and date menu
         JMenu timeAndDate = new JMenu("Time & Date");
@@ -118,7 +111,8 @@ public class TextEditorMenuBar extends JMenuBar {
 
         // time and date > time and date
         JMenuItem menuItemTimeDate = new JMenuItem("Time & Date", KeyEvent.VK_T);
-        menuItemTimeDate.setAction(new SimpleKeybindAction(gui, "Time and Date", KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0)));
+        menuItemTimeDate.setAction(new SimpleKeybindAction(gui, "Time and Date",
+                KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0)));
         timeAndDate.add(menuItemTimeDate);
 
         // help menu
