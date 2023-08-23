@@ -11,7 +11,6 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.Utilities;
 
 import java.awt.*;
 
@@ -132,9 +131,8 @@ public class TextEditorContentPane extends Container {
         // update position displayed on status bar when cursor moves
         textArea.addCaretListener(e -> {
             try {
-                int offset = textArea.getCaretPosition();
                 int line = textArea.getLineOfOffset(textArea.getCaretPosition());
-                int column = offset - Utilities.getRowStart(textArea, offset);
+                int column = textArea.getCaretOffsetFromLineStart();
                 lblPosition.setText("Line " + (line + 1) + ", Column " + (column + 1));
             } catch (Exception ex) {
                 ex.printStackTrace();
