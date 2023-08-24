@@ -5,6 +5,9 @@ import lombok.RequiredArgsConstructor;
 
 import java.awt.*;
 
+/**
+ * Model of the config for the text editor
+ */
 @RequiredArgsConstructor
 @Getter
 public class TextEditorConfig {

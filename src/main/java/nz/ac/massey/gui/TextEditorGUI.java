@@ -82,7 +82,7 @@ public class TextEditorGUI {
      * manipulation and accessing in the CI environment.
      */
     @Getter
-    private String content;
+    private String content = "";
 
     public TextEditorGUI(TextEditorConfig config) {
         this.config = config;
@@ -242,7 +242,13 @@ public class TextEditorGUI {
             contentStream.endText();
             contentStream.close();
         } catch (Exception ex) {
-            System.err.println("There was an error converting file to PDF");
+            if (System.getenv("GITHUB_ACTIONS") == null) {
+                // Error while converting to PDF
+                JOptionPane.showMessageDialog(frame, "There was an error converting file to PDF", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                System.err.println("There was an error converting file to PDF");
+            }
             ex.printStackTrace();
         }
 
@@ -263,6 +269,7 @@ public class TextEditorGUI {
             this.openFile = file;
         }
 
+        // Default saving
         if (!file.getName().endsWith(".pdf")) {
             // Update title of editor
             frame.setTitle(openFile.getName());
@@ -300,7 +307,7 @@ public class TextEditorGUI {
         }
 
         // Read bytes from text editor
-        String content = guiContentPane.getTextArea().getText();
+        String content = getContent();
 
         // Save to file
         return save(content);
@@ -425,17 +432,17 @@ public class TextEditorGUI {
     }
 
     /**
-     * exit current window
+     * Exit current window
      */
     public void exit() {
-        new ExitAction().performAction(this);
+        runAction("Exit");
     }
 
     /**
      * Search the textarea, get count of matches
      */
     public int search(String query) {
-        return new SearchAction().searchTextArea(this, query);
+        return ((SearchAction) getAction("Search")).searchTextArea(this, query);
     }
 
     /**
@@ -472,6 +479,16 @@ public class TextEditorGUI {
         // Run action
         TextEditorAction foundAction = registeredActions.get(name);
         return foundAction.performAction(this);
+    }
+
+    /**
+     * Get a registered action
+     *
+     * @param name Name of the action
+     * @return Action if found otherwise null
+     */
+    public TextEditorAction getAction(String name) {
+        return this.registeredActions.get(name);
     }
 
     /**

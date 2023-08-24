@@ -1,13 +1,15 @@
 package nz.ac.massey;
 
+import lombok.Getter;
 import nz.ac.massey.gui.TextEditorGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 /**
- * Represents a menu action that is assigned to a keybind
+ * Represents a menu action that is assigned to a keybinding
  */
+@Getter
 public class SimpleKeybindAction extends AbstractAction {
 
     /**

@@ -17,18 +17,25 @@ public class PrintAction extends TextEditorAction {
 
     @Override
     public boolean performAction(TextEditorGUI gui) {
+        // Creates a background service to print document
         makePrintWorker(gui).execute();
         return true;
     }
 
+    /**
+     * Create a background service to start a print job
+     *
+     * @param gui GUI instance to print the document for
+     * @return The background service
+     */
     public SwingWorker<Void, Void> makePrintWorker(TextEditorGUI gui) {
         return new SwingWorker<Void, Void>() {
 
             @Override
-            protected Void doInBackground() throws Exception {
-                try (PDDocument pddoc = gui.getPdfFile()) {
+            protected Void doInBackground() {
+                try (PDDocument document = gui.getPdfFile()) {
                     PrinterJob job = PrinterJob.getPrinterJob();
-                    job.setPageable(new PDFPageable(pddoc));
+                    job.setPageable(new PDFPageable(document));
                     if (job.printDialog()) {
                         job.print();
                     }

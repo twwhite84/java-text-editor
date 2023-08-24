@@ -13,8 +13,6 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!-- turning cleanup off fixes a shutdown issue after printing -->
-        <exec.cleanupDaemonThreads>false</exec.cleanupDaemonThreads>
     </properties>
 
     <dependencies>
@@ -120,6 +118,8 @@
                 <version>3.0.0</version>
                 <configuration>
                     <mainClass>nz.ac.massey.TextEditor</mainClass>
+                    <!-- turning cleanup off fixes a shutdown issue after printing -->
+                    <cleanupDaemonThreads>false</cleanupDaemonThreads>
                 </configuration>
             </plugin>
             <plugin>

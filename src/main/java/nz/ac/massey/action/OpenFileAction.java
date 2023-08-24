@@ -20,7 +20,7 @@ public class OpenFileAction extends TextEditorAction {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setAcceptAllFileFilterUsed(true);
 
-        // Add file filters for supported types
+        // Text file filter
         fileChooser.addChoosableFileFilter(new FileFilter() {
             public String getDescription() {
                 return "Text Files (*.txt)";
@@ -36,6 +36,7 @@ public class OpenFileAction extends TextEditorAction {
             }
         });
 
+        // OpenDocument Text filter
         fileChooser.addChoosableFileFilter(new FileFilter() {
             public String getDescription() {
                 return "OpenDocument Text (*.odt)";
@@ -51,6 +52,7 @@ public class OpenFileAction extends TextEditorAction {
             }
         });
 
+        // Rich Text Format filter
         fileChooser.addChoosableFileFilter(new FileFilter() {
             public String getDescription() {
                 return "Rich Text Format (*.rtf)";
@@ -68,6 +70,7 @@ public class OpenFileAction extends TextEditorAction {
 
         int result = fileChooser.showOpenDialog(gui.getFrame());
 
+        // Open file if selected
         if (result == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             gui.openFile(file);
