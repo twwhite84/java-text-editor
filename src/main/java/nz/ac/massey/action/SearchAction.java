@@ -47,7 +47,7 @@ public class SearchAction extends TextEditorAction {
         toggleSearchPanel(gui);
 
         // removing any existing listeners when toggled
-        JButton btnNext = gui.getGuiContentPane().getSearchMenu().getButtonSearchNext();;
+        JButton btnNext = gui.getGuiContentPane().getSearchMenu().getButtonSearchNext();
         JButton btnPrev = gui.getGuiContentPane().getSearchMenu().getButtonSearchPrev();
         JTextField searchField = gui.getGuiContentPane().getSearchMenu().getSearchField();
         JTextArea txtArea = gui.getGuiContentPane().getTextArea();
