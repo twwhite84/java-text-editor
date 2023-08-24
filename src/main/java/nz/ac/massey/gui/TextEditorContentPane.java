@@ -21,6 +21,9 @@ public class TextEditorContentPane extends Container {
      */
     private final TextEditorGUI gui;
 
+    /**
+     * Search menu used to search text editor contents
+     */
     @Getter
     private TextEditorSearchMenu searchMenu;
 
@@ -31,7 +34,7 @@ public class TextEditorContentPane extends Container {
     private RSyntaxTextArea textArea;
 
     /**
-     * Status bar object
+     * Status bar panel at bottom of editor
      */
     @Getter
     private TextEditorStatusBar statusBar;
