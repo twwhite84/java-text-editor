@@ -13,13 +13,8 @@ public class ToggleStatusAction extends TextEditorAction {
 
     @Override
     public boolean performAction(TextEditorGUI gui) {
-
-        if (gui.getGuiContentPane().getStatusBar().isVisible()) {
-            gui.getGuiContentPane().getStatusBar().setVisible(false);
-        } else {
-            gui.getGuiContentPane().getStatusBar().setVisible(true);
-        }
-
+        // Toggle visibility of status bar
+        gui.getGuiContentPane().getStatusBar().setVisible(!gui.getGuiContentPane().getStatusBar().isVisible());
         return true;
     }
 

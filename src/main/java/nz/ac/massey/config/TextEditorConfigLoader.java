@@ -23,7 +23,7 @@ public class TextEditorConfigLoader {
     }
 
     /**
-     * Load the config file into this object
+     * Load the config from the file
      */
     public TextEditorConfig load() {
         TextEditorConfig config = null;

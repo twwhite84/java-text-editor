@@ -5,7 +5,7 @@ import nz.ac.massey.gui.TextEditorGUI;
 import javax.swing.*;
 
 /**
- * Create a new window with a new file object
+ * Create a new window with a new editor instance
  */
 public class NewFileAction extends TextEditorAction {
 

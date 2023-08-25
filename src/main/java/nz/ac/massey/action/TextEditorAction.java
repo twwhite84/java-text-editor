@@ -11,7 +11,6 @@ import nz.ac.massey.gui.TextEditorGUI;
 @RequiredArgsConstructor
 public abstract class TextEditorAction {
 
-
     /**
      * The name of the action
      */

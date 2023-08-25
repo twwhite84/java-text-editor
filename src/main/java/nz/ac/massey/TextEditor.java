@@ -12,7 +12,7 @@ import java.io.File;
 public class TextEditor {
     public static void main(String[] args) {
         try {
-            // Set look of OS
+            // Set look of UI to OS look
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
             // Load config

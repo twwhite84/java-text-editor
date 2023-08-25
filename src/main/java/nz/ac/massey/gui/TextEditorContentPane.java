@@ -1,14 +1,11 @@
 package nz.ac.massey.gui;
 
 import lombok.Getter;
-import nz.ac.massey.SimpleKeybindAction;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -25,22 +22,10 @@ public class TextEditorContentPane extends Container {
     private final TextEditorGUI gui;
 
     /**
-     * Search panel
+     * Search menu used to search text editor contents
      */
     @Getter
-    private JPanel searchPanel;
-
-    /**
-     * Search panel elements
-     */
-    @Getter
-    private JTextField txtSearchField;
-
-    @Getter
-    private JLabel lblMatches;
-
-    @Getter
-    private JButton btnSearchNext, btnSearchPrev;
+    private TextEditorSearchMenu searchMenu;
 
     /**
      * The actual editable text area
@@ -49,16 +34,10 @@ public class TextEditorContentPane extends Container {
     private RSyntaxTextArea textArea;
 
     /**
-     * Status bar object
+     * Status bar panel at bottom of editor
      */
     @Getter
-    private JPanel statusBar;
-
-    /**
-     * Labels for status bar
-     */
-    @Getter
-    private JLabel lblPosition, lblWordWrap, lblSyntax;
+    private TextEditorStatusBar statusBar;
 
     public TextEditorContentPane(TextEditorGUI gui) {
         this.gui = gui;
@@ -70,32 +49,7 @@ public class TextEditorContentPane extends Container {
      */
     public void init() {
         // search panel
-        searchPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints searchPanelConstraints = new GridBagConstraints();
-
-        searchPanelConstraints.gridx = 0;
-        searchPanelConstraints.gridy = 0;
-        searchPanelConstraints.anchor = GridBagConstraints.WEST;
-        lblMatches = new JLabel("Search Matches: 0");
-        searchPanel.add(lblMatches, searchPanelConstraints);
-
-        searchPanelConstraints = new GridBagConstraints();
-        searchPanelConstraints.gridx = 0;
-        searchPanelConstraints.gridy = 1;
-        txtSearchField = new JTextField(20);
-        searchPanel.add(txtSearchField, searchPanelConstraints);
-
-        searchPanelConstraints = new GridBagConstraints();
-        searchPanelConstraints.gridx = 1;
-        searchPanelConstraints.gridy = 0;
-        btnSearchNext = new JButton("Next");
-        searchPanel.add(btnSearchNext, searchPanelConstraints);
-
-        searchPanelConstraints = new GridBagConstraints();
-        searchPanelConstraints.gridx = 1;
-        searchPanelConstraints.gridy = 1;
-        btnSearchPrev = new JButton("Prev");
-        searchPanel.add(btnSearchPrev, searchPanelConstraints);
+        searchMenu = new TextEditorSearchMenu();
 
         // main text area
         textArea = new RSyntaxTextArea(4, 30);
@@ -133,50 +87,31 @@ public class TextEditorContentPane extends Container {
             try {
                 int line = textArea.getLineOfOffset(textArea.getCaretPosition());
                 int column = textArea.getCaretOffsetFromLineStart();
-                lblPosition.setText("Line " + (line + 1) + ", Column " + (column + 1));
+                this.statusBar.getLabelPosition().setText("Line " + (line + 1) + ", Column " + (column + 1));
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         });
 
+        // Add text area to scrollable area
         RTextScrollPane scrollPane = new RTextScrollPane(textArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         // status bar panel
-        statusBar = new JPanel(new GridBagLayout());
-        GridBagConstraints statusBarConstraints;
+        statusBar = new TextEditorStatusBar();
 
-        lblPosition = new JLabel("Line 1, Column 1");
-        statusBarConstraints = new GridBagConstraints();
-        statusBarConstraints.gridx = 0;
-        statusBarConstraints.ipady = 20;
-        statusBarConstraints.ipadx = 20;
-        statusBar.add(lblPosition, statusBarConstraints);
-
-        lblWordWrap = new JLabel("Word Wrap: OFF");
-        statusBarConstraints = new GridBagConstraints();
-        statusBarConstraints.gridx = 1;
-        statusBarConstraints.ipady = 20;
-        statusBarConstraints.ipadx = 20;
-        statusBar.add(lblWordWrap, statusBarConstraints);
-
-        lblSyntax = new JLabel("Syntax: text/plain");
-        statusBarConstraints = new GridBagConstraints();
-        statusBarConstraints.gridx = 2;
-        statusBarConstraints.ipady = 20;
-        statusBarConstraints.ipadx = 20;
-        statusBar.add(lblSyntax, statusBarConstraints);
-
-        // adding elements to the content pane
+        // Adding elements to the content pane
         setLayout(new GridBagLayout());
         GridBagConstraints contentPaneConstraints;
 
+        // Add toggleable search menu
         contentPaneConstraints = new GridBagConstraints();
         contentPaneConstraints.gridx = 0;
         contentPaneConstraints.gridy = 0;
-        searchPanel.setVisible(false);
-        add(searchPanel, contentPaneConstraints);
+        searchMenu.setVisible(false);
+        add(searchMenu, contentPaneConstraints);
 
+        // Add main text area
         contentPaneConstraints = new GridBagConstraints();
         contentPaneConstraints.fill = GridBagConstraints.BOTH;
         contentPaneConstraints.gridx = 0;
@@ -185,20 +120,20 @@ public class TextEditorContentPane extends Container {
         contentPaneConstraints.weighty = 1;
         add(scrollPane, contentPaneConstraints);
 
+        // Add status bar
         contentPaneConstraints = new GridBagConstraints();
         contentPaneConstraints.gridx = 0;
         contentPaneConstraints.gridy = 2;
         add(statusBar, contentPaneConstraints);
-
     }
 
     /**
-     * Sets syntax highlighting of edtiro
+     * Sets syntax highlighting of editor
      *
-     * @param syntax Styntax to use see {@link SyntaxConstants}
+     * @param syntax Syntax to use see {@link SyntaxConstants}
      */
     public void setSyntax(String syntax) {
         this.textArea.setSyntaxEditingStyle(syntax);
-        this.lblSyntax.setText("Syntax: " + syntax);
+        this.statusBar.getLabelSyntax().setText("Syntax: " + syntax);
     }
 }

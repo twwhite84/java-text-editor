@@ -21,7 +21,6 @@ public class SaveAsAction extends TextEditorAction {
         JFileChooser fileChooser = new JFileChooser();
 
         // Add file filters for supported types
-        // @todo Add support for code based files and PDF issue #14
         FileFilter textFilter = new FileFilter() {
             public String getDescription() {
                 return "Text Files (*.txt)";
@@ -61,14 +60,12 @@ public class SaveAsAction extends TextEditorAction {
         if (result == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             // Check extension
-            if (fileChooser.getFileFilter().getDescription().endsWith("(*.txt)")) {
-                // Make sure .txt
-                if (!file.getName().endsWith(".txt"))
-                    file = new File(file.getPath() + ".txt");
-            } else if (fileChooser.getFileFilter().getDescription().endsWith("(*.pdf)")) {
-                // Make sure .pdf
-                if (!file.getName().endsWith(".pdf"))
-                    file = new File(file.getPath() + ".pdf");
+            if (fileChooser.getFileFilter().getDescription().endsWith("(*.txt)") && !file.getName().endsWith(".txt")) {
+                // Make sure .txt if filter was text file
+                file = new File(file.getPath() + ".txt");
+            } else if (fileChooser.getFileFilter().getDescription().endsWith("(*.pdf)") && !file.getName().endsWith(".pdf")) {
+                // Make sure .pdf if filter was PDF
+                file = new File(file.getPath() + ".pdf");
             }
 
             gui.saveAs(file);

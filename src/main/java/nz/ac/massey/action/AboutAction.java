@@ -17,8 +17,8 @@ public class AboutAction extends TextEditorAction {
     public boolean performAction(TextEditorGUI gui) {
         String appName = "Text Editor";
         String appAuthors = "Jamin Stratford and Tom White, 2023";
-        String appDeets = "This app was created for Massey 159.251 Software Engineering";
-        String message = appName + "\n" + appAuthors + "\n\n" + appDeets;
+        String appDetails = "This app was created for Massey 159.251 Software Engineering";
+        String message = appName + "\n" + appAuthors + "\n\n" + appDetails;
         JOptionPane.showMessageDialog(null, message, "About", JOptionPane.INFORMATION_MESSAGE);
         return true;
     }

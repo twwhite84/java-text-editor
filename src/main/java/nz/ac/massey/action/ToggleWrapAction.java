@@ -15,11 +15,11 @@ public class ToggleWrapAction extends TextEditorAction {
     public boolean performAction(TextEditorGUI gui) {
         if (gui.getGuiContentPane().getTextArea().getLineWrap()) {
             // disable wrap
-            gui.getGuiContentPane().getLblWordWrap().setText("Word Wrap: OFF");
+            gui.getGuiContentPane().getStatusBar().getLabelWordWrap().setText("Word Wrap: Off");
             gui.getGuiContentPane().getTextArea().setLineWrap(false);
         } else {
             // enable wrap
-            gui.getGuiContentPane().getLblWordWrap().setText("Word Wrap: ON");
+            gui.getGuiContentPane().getStatusBar().getLabelWordWrap().setText("Word Wrap: On");
             gui.getGuiContentPane().getTextArea().setLineWrap(true);
         }
         return true;

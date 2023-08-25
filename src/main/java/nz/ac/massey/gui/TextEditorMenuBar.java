@@ -3,7 +3,7 @@ package nz.ac.massey.gui;
 import nz.ac.massey.SimpleKeybindAction;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 /**
@@ -36,38 +36,38 @@ public class TextEditorMenuBar extends JMenuBar {
         JMenuItem menuItemNew = new JMenuItem("New", KeyEvent.VK_N);
         menuItemNew
                 .setAction(new SimpleKeybindAction(gui, "New",
-                        KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK)));
+                        KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK)));
         menuFile.add(menuItemNew);
 
         // file > open
         JMenuItem menuItemOpen = new JMenuItem("Open", KeyEvent.VK_O);
         menuItemOpen.setAction(
                 new SimpleKeybindAction(gui, "Open",
-                        KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK)));
+                        KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK)));
         menuFile.add(menuItemOpen);
 
         // file > save
         JMenuItem menuItemSave = new JMenuItem("Save", KeyEvent.VK_S);
         menuItemSave.setAction(new SimpleKeybindAction(gui, "Save",
-                KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK)));
+                KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK)));
         menuFile.add(menuItemSave);
 
         // file > save as
         JMenuItem menuItemSaveAs = new JMenuItem("Save As", KeyEvent.VK_A);
         menuItemSaveAs.setAction(new SimpleKeybindAction(gui, "Save As",
-                KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.SHIFT_MASK | Event.CTRL_MASK)));
+                KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.SHIFT_DOWN_MASK | InputEvent.CTRL_DOWN_MASK)));
         menuFile.add(menuItemSaveAs);
 
         // file > print
         JMenuItem menuItemPrint = new JMenuItem("Print", KeyEvent.VK_P);
         menuItemPrint.setAction(new SimpleKeybindAction(gui, "Print",
-                KeyStroke.getKeyStroke(KeyEvent.VK_P, Event.CTRL_MASK)));
+                KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_DOWN_MASK)));
         menuFile.add(menuItemPrint);
 
         // file > exit
         JMenuItem menuItemExit = new JMenuItem("Exit", KeyEvent.VK_X);
         menuItemExit.setAction(new SimpleKeybindAction(gui, "Exit",
-                KeyStroke.getKeyStroke(KeyEvent.VK_F4, Event.ALT_MASK)));
+                KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.ALT_DOWN_MASK)));
         menuFile.add(menuItemExit);
 
         // search menu
@@ -80,7 +80,7 @@ public class TextEditorMenuBar extends JMenuBar {
         menuSearch.add(menuItemSearch);
         menuItemSearch.setAction(
                 new SimpleKeybindAction(gui, "Search",
-                        KeyStroke.getKeyStroke(KeyEvent.VK_F, Event.CTRL_MASK)));
+                        KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_DOWN_MASK)));
 
         // view menu
         JMenu menuView = new JMenu("View");
@@ -91,14 +91,15 @@ public class TextEditorMenuBar extends JMenuBar {
         JCheckBoxMenuItem menuItemWrap = new JCheckBoxMenuItem("Word Wrap");
         menuItemWrap.setMnemonic(KeyEvent.VK_W);
         menuItemWrap.setAction(
-                new SimpleKeybindAction(gui, "Word Wrap", KeyStroke.getKeyStroke(KeyEvent.VK_W, Event.CTRL_MASK)));
+                new SimpleKeybindAction(gui, "Word Wrap",
+                        KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_DOWN_MASK)));
         menuView.add(menuItemWrap);
 
         // view > status bar
         JCheckBoxMenuItem menuItemStatusbar = new JCheckBoxMenuItem("Status Bar");
         menuItemStatusbar.setMnemonic(KeyEvent.VK_S);
         menuItemStatusbar.setAction(new SimpleKeybindAction(gui, "Status Bar",
-                KeyStroke.getKeyStroke(KeyEvent.VK_B, Event.CTRL_MASK)));
+                KeyStroke.getKeyStroke(KeyEvent.VK_B, InputEvent.CTRL_DOWN_MASK)));
         menuItemStatusbar.setSelected(true);
         menuView.add(menuItemStatusbar);
 
