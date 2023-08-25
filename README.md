@@ -59,7 +59,7 @@ Below is a list of the more complicated features and how they are implemented (t
 
 ### Select Text, Copy, Paste, and Cut
 This functionality firstly works with the normal key binds:
-- Selecting text my holding mouse down
+- Selecting text by holding mouse down and dragging over text
 - Copy by Ctrl + C
 - Paste by Ctrl + V
 - Cut by Ctrl + X
