@@ -329,10 +329,7 @@ public class TextEditorGUI {
 
             if (System.getenv("GITHUB_ACTIONS") == null) {
                 // Set syntax highlighting
-                String syntax = "text/" + Optional.of(openFile.getName())
-                        .filter(f -> f.contains("."))
-                        .map(f -> f.substring(openFile.getName().lastIndexOf(".") + 1)).get();
-                getGuiContentPane().setSyntax(syntax);
+                detectSyntax();
                 // Make sure stays true as updating text area may auto set to false
                 setSaved(true);
             }
@@ -390,10 +387,7 @@ public class TextEditorGUI {
 
                 if (System.getenv("GITHUB_ACTIONS") == null) {
                     // Set syntax highlighting
-                    String syntax = "text/" + Optional.of(file.getName())
-                            .filter(f -> f.contains("."))
-                            .map(f -> f.substring(file.getName().lastIndexOf(".") + 1)).get();
-                    getGuiContentPane().setSyntax(syntax);
+                    detectSyntax();
                 }
             }
         } catch (Exception ex) {
@@ -443,6 +437,35 @@ public class TextEditorGUI {
      */
     public int search(String query) {
         return ((SearchAction) getAction("Search")).searchTextArea(this, query);
+    }
+
+    /**
+     * Detect the syntax of the current file and set the syntax
+     * highlighting to this syntax type
+     */
+    private void detectSyntax() {
+        // Get extension of open file
+        String extensionType = Optional.of(openFile.getName())
+                .filter(f -> f.contains("."))
+                .map(f -> f.substring(openFile.getName().lastIndexOf(".") + 1)).get();
+
+        // Handle syntax types that are different from extension
+        String syntax = "text/";
+        if (extensionType.equalsIgnoreCase("ts")) {
+            syntax += "typescript";
+        } else if (extensionType.equalsIgnoreCase("js")) {
+            syntax += "javascript";
+        } else if (extensionType.equalsIgnoreCase("py")) {
+            syntax += "python";
+        } else if (extensionType.equalsIgnoreCase("md")) {
+            syntax += "markdown";
+        } else if (extensionType.equalsIgnoreCase("kt")) {
+            syntax += "kotlin";
+        } else {
+            syntax += extensionType;
+        }
+
+        getGuiContentPane().setSyntax(syntax);
     }
 
     /**
