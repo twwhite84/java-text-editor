@@ -1,9 +1,6 @@
-<METRICS profile="Code Size (per class)" timestamp="Fri, 25 Aug 2023 20:47:04 NZST">
+<METRICS profile="Code Size (per class)" timestamp="Sat, 26 Aug 2023 17:23:04 NZST">
 	<METRIC category="Class" name="Coupling between objects" abbreviation="CBO">
-		<VALUE measured="nz.ac.massey.OpenTest" value="2.0"/>
 		<VALUE measured="nz.ac.massey.PDFUtils" value="1.0"/>
-		<VALUE measured="nz.ac.massey.SaveTest" value="2.0"/>
-		<VALUE measured="nz.ac.massey.SearchTest" value="2.0"/>
 		<VALUE measured="nz.ac.massey.SimpleKeybindAction" value="2.0"/>
 		<VALUE measured="nz.ac.massey.TextEditor" value="2.0"/>
 		<VALUE measured="nz.ac.massey.action.AboutAction" value="2.0"/>
@@ -27,10 +24,7 @@
 		<VALUE measured="nz.ac.massey.gui.TextEditorStatusBar" value="2.0"/>
 	</METRIC>
 	<METRIC category="Class" name="Javadoc lines of code" abbreviation="JLOC">
-		<VALUE measured="nz.ac.massey.OpenTest" value="7.0"/>
 		<VALUE measured="nz.ac.massey.PDFUtils" value="9.0"/>
-		<VALUE measured="nz.ac.massey.SaveTest" value="6.0"/>
-		<VALUE measured="nz.ac.massey.SearchTest" value="6.0"/>
 		<VALUE measured="nz.ac.massey.SimpleKeybindAction" value="12.0"/>
 		<VALUE measured="nz.ac.massey.TextEditor" value="3.0"/>
 		<VALUE measured="nz.ac.massey.action.AboutAction" value="3.0"/>
@@ -48,16 +42,13 @@
 		<VALUE measured="nz.ac.massey.config.TextEditorConfig" value="15.0"/>
 		<VALUE measured="nz.ac.massey.config.TextEditorConfigLoader" value="9.0"/>
 		<VALUE measured="nz.ac.massey.gui.TextEditorContentPane" value="23.0"/>
-		<VALUE measured="nz.ac.massey.gui.TextEditorGUI" value="101.0"/>
+		<VALUE measured="nz.ac.massey.gui.TextEditorGUI" value="105.0"/>
 		<VALUE measured="nz.ac.massey.gui.TextEditorMenuBar" value="10.0"/>
 		<VALUE measured="nz.ac.massey.gui.TextEditorSearchMenu" value="12.0"/>
 		<VALUE measured="nz.ac.massey.gui.TextEditorStatusBar" value="6.0"/>
 	</METRIC>
 	<METRIC category="Class" name="Lines of code" abbreviation="LOC">
-		<VALUE measured="nz.ac.massey.OpenTest" value="23.0"/>
 		<VALUE measured="nz.ac.massey.PDFUtils" value="20.0"/>
-		<VALUE measured="nz.ac.massey.SaveTest" value="25.0"/>
-		<VALUE measured="nz.ac.massey.SearchTest" value="18.0"/>
 		<VALUE measured="nz.ac.massey.SimpleKeybindAction" value="29.0"/>
 		<VALUE measured="nz.ac.massey.TextEditor" value="18.0"/>
 		<VALUE measured="nz.ac.massey.action.AboutAction" value="17.0"/>
@@ -75,16 +66,13 @@
 		<VALUE measured="nz.ac.massey.config.TextEditorConfig" value="25.0"/>
 		<VALUE measured="nz.ac.massey.config.TextEditorConfigLoader" value="34.0"/>
 		<VALUE measured="nz.ac.massey.gui.TextEditorContentPane" value="107.0"/>
-		<VALUE measured="nz.ac.massey.gui.TextEditorGUI" value="412.0"/>
+		<VALUE measured="nz.ac.massey.gui.TextEditorGUI" value="432.0"/>
 		<VALUE measured="nz.ac.massey.gui.TextEditorMenuBar" value="100.0"/>
 		<VALUE measured="nz.ac.massey.gui.TextEditorSearchMenu" value="49.0"/>
 		<VALUE measured="nz.ac.massey.gui.TextEditorStatusBar" value="36.0"/>
 	</METRIC>
 	<METRIC category="Class" name="Non-comment lines of code" abbreviation="NCLOC">
-		<VALUE measured="nz.ac.massey.OpenTest" value="12.0"/>
 		<VALUE measured="nz.ac.massey.PDFUtils" value="11.0"/>
-		<VALUE measured="nz.ac.massey.SaveTest" value="14.0"/>
-		<VALUE measured="nz.ac.massey.SearchTest" value="10.0"/>
 		<VALUE measured="nz.ac.massey.SimpleKeybindAction" value="17.0"/>
 		<VALUE measured="nz.ac.massey.TextEditor" value="12.0"/>
 		<VALUE measured="nz.ac.massey.action.AboutAction" value="14.0"/>
@@ -102,16 +90,13 @@
 		<VALUE measured="nz.ac.massey.config.TextEditorConfig" value="10.0"/>
 		<VALUE measured="nz.ac.massey.config.TextEditorConfigLoader" value="23.0"/>
 		<VALUE measured="nz.ac.massey.gui.TextEditorContentPane" value="73.0"/>
-		<VALUE measured="nz.ac.massey.gui.TextEditorGUI" value="270.0"/>
+		<VALUE measured="nz.ac.massey.gui.TextEditorGUI" value="284.0"/>
 		<VALUE measured="nz.ac.massey.gui.TextEditorMenuBar" value="74.0"/>
 		<VALUE measured="nz.ac.massey.gui.TextEditorSearchMenu" value="36.0"/>
 		<VALUE measured="nz.ac.massey.gui.TextEditorStatusBar" value="30.0"/>
 	</METRIC>
-	<METRIC category="Class" name="Number methods" abbreviation="NOM">
-		<VALUE measured="nz.ac.massey.OpenTest" value="1.0"/>
+	<METRIC category="Class" name="Number of methods" abbreviation="NOM">
 		<VALUE measured="nz.ac.massey.PDFUtils" value="1.0"/>
-		<VALUE measured="nz.ac.massey.SaveTest" value="1.0"/>
-		<VALUE measured="nz.ac.massey.SearchTest" value="1.0"/>
 		<VALUE measured="nz.ac.massey.SimpleKeybindAction" value="4.0"/>
 		<VALUE measured="nz.ac.massey.TextEditor" value="1.0"/>
 		<VALUE measured="nz.ac.massey.action.AboutAction" value="1.0"/>
@@ -129,7 +114,7 @@
 		<VALUE measured="nz.ac.massey.config.TextEditorConfig" value="4.0"/>
 		<VALUE measured="nz.ac.massey.config.TextEditorConfigLoader" value="1.0"/>
 		<VALUE measured="nz.ac.massey.gui.TextEditorContentPane" value="5.0"/>
-		<VALUE measured="nz.ac.massey.gui.TextEditorGUI" value="23.0"/>
+		<VALUE measured="nz.ac.massey.gui.TextEditorGUI" value="24.0"/>
 		<VALUE measured="nz.ac.massey.gui.TextEditorMenuBar" value="1.0"/>
 		<VALUE measured="nz.ac.massey.gui.TextEditorSearchMenu" value="5.0"/>
 		<VALUE measured="nz.ac.massey.gui.TextEditorStatusBar" value="4.0"/>
